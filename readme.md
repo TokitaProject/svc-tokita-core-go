@@ -2,6 +2,8 @@
 
 ## Instalasi golang
 
+Ikuti instruksi ini untuk instalasi golang: [Tutorial instalasi golang] (https://go.dev/dl/go1.17.6.darwin-amd64.pkg)
+
 ## Menjalankan service secara lokal
 
 Jika kamu ingin menjalankan service ini secara lokal dengan database lokal, kamu tinggal copy *run_example.sh* ke *run_local.sh*.
@@ -24,7 +26,7 @@ Jalankan shell script untuk menjalankan service
 sh ./run_local.sh
 ```
 
-Jangan lupa, kamu perlu install **nodemon** terlebih dahulu. lihat [**"Tutorial instalasi nodemon"**] (https://www.npmjs.com/package/nodemon) ini bila kamu belum mengetahui cara instalasi nodemon.
+Jangan lupa, kamu perlu install **nodemon** terlebih dahulu. lihat ["Tutorial instalasi nodemon"] (https://www.npmjs.com/package/nodemon) ini bila kamu belum mengetahui cara instalasi nodemon.
 
 ```bash
 npm install -g nodemon
