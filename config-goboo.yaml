@@ -2,5 +2,5 @@ configuration:
   service_name: svc-boilerplate-golang
   domains:
   - add new domain name here
-goboo_only_can_write:
+only_goboo_can_write: 
   service_name: svc-boilerplate-golang
