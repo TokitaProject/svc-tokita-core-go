@@ -1,4 +1,6 @@
 configuration:
   service_name: svc-boilerplate-golang
+  domains:
+  - mahasiswa tarif
 goboo_only_can_write:
   service_name: svc-boilerplate-golang
