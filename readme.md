@@ -3,6 +3,7 @@
 ## Instalasi golang
 
 Ikuti instruksi ini untuk melakukan instalasi golang: [Tutorial instalasi golang](https://go.dev/doc/install)
+
 Versi golang yang dipakai pada boilerplate ini: **go version go1.16.4 darwin/amd64**
 
 Disarankan menggunakan versi golang terbaru. Cara update golang adalah seperti ini:
