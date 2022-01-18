@@ -1,9 +1,13 @@
+# Readme, please, biar kamu paham.
+
+## Instalasi golang
+
 ## Menjalankan service secara lokal
 
-Jika kamu ingin menjalankan service ini secara lokal dengan database lokal, kamu tinggal copy *run_local.sh.example* ke *run_local.sh*.
+Jika kamu ingin menjalankan service ini secara lokal dengan database lokal, kamu tinggal copy *run_example.sh* ke *run_local.sh*.
 
 ```bash
-cp run_local.sh.example run_local.sh
+cp run_example.sh run_local.sh
 ```
 
 Ubah variabel dalam *run_local.sh*.
