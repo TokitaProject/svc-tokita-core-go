@@ -32,11 +32,11 @@ Jangan lupa, kamu perlu melakukan instalasi **nodemon** terlebih dahulu. Lihat [
 npm install -g nodemon
 ```
 
-## *Cloning* boilerplate menjadi *service*
+## *Cloning boilerplate* menjadi *service*
 
 1. Buat repositori baru pada gitlab: [Meciptakan *service* baru](https://gitlab-cloud.uii.ac.id/projects/new)
 
-2. *Clone* repositori *boilerplate*
+2. *Clone repositori boilerplate*
 
 ```bash
 git clone git@gitlab-cloud.uii.ac.id:finance/backend/svc-boilerplate-golang.git
