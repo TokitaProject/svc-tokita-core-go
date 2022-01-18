@@ -1,0 +1,6 @@
+configuration:
+  service_name: "svc-boilerplate-go"
+
+# History that use for goboo. Only goboo can write this section. Don't Change!
+goboo_only_can_write:
+  service_name: "svc-boilerplate-golang"
