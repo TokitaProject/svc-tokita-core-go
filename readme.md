@@ -84,16 +84,10 @@ Jangan lupa, ubah variabel **TIM_KAMU** dan **NAMA_SERVICE_KAMU** di bawah ini. 
 git remote add origin git@gitlab-cloud.uii.ac.id:TIM_KAMU/backend/NAMA_SERVICE_KAMU
 ```
 
-7. Penting, konfigurasi **config-goboo.yaml** serta menjalankan **goboo** sebelum melanjutkan ke langkah berikutnya.
+7. Penting, konfigurasi **config-goboo.yaml** serta menjalankan **goboo** sebelum melanjutkan ke langkah berikutnya. Ulasan lengkap tentang **goboo** akan dibahas pada section **Bonus: goboo - An artisan framework** paling bawah yak.
 
 ```bash
 ./goboo config
-```
-
-Ulasan lengkap tentang **goboo** akan dibahas ketika kamu menjalankan perintah:
-
-```bash
-./goboo
 ```
 
 8. Ubah **yaml** di direktori **deploy** dengan teliti juga ya.
