@@ -1,6 +1,6 @@
 configuration:
   service_name: svc-boilerplate-golang
   domains:
-  - add new domain name here
+  - # add new domain name here
 only_goboo_can_write: 
   service_name: svc-boilerplate-golang
