@@ -41,11 +41,11 @@ spec:
             - name: DB_DRIVERNAME
               value: "mysql"
             - name: DB_USERNAME
-              value: "dev"
+              value: "default"
             - name: DB_PASSWORD
-              value: "bismillah"
+              value: "default"
             - name: DB_HOST
-              value: "dbdev.bsi.io"
+              value: "dbstaging.bsi.io"
             - name: DB_PORT
               value: "6033"
             - name: DB_NAME
