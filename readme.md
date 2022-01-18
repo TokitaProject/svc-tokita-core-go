@@ -3,6 +3,21 @@
 ## Instalasi golang
 
 Ikuti instruksi ini untuk melakukan instalasi golang: [Tutorial instalasi golang](https://go.dev/doc/install)
+Versi golang yang dipakai pada boilerplate ini: **go version go1.16.4 darwin/amd64**
+
+Disarankan menggunakan versi golang terbaru. Cara update golang adalah seperti ini:
+
+```bash
+git clone https://github.com/udhos/update-golang
+cd update-golang
+sudo ./update-golang.sh
+```
+
+Ketika cloning dan error, jalankan perintah:
+
+```bash
+go mod tidy
+```
 
 ## Menjalankan service secara lokal
 
@@ -68,7 +83,11 @@ Jangan lupa, ubah variabel **TIM_KAMU** dan **NAMA_SERVICE_KAMU** di bawah ini. 
 git remote add origin git@gitlab-cloud.uii.ac.id:TIM_KAMU/backend/NAMA_SERVICE_KAMU
 ```
 
-7. Penting, ubah string **svc-boilerplate-golang** di dalam semua file menjadi nama service baru kamu (misal: svc-bill-spp-go). Kamu bisa gunakan IDE favorit kamu. Jika kamu menggunakan VS Code, kamu bisa gunakan shortcut **Command-Shift-F** untuk melakukan find di semua file dan melakukan replace dalam satu waktu.
+7. Penting, jalankan **goboo** sebelum melanjutkan ke langkah berikutnya. Ulasan lengkap tentang **goboo** akan dibahas di section paling bawah.
+
+```bash
+./goboo config
+```
 
 8. Ubah **yaml** di direktori **deploy** dengan teliti juga ya.
 
