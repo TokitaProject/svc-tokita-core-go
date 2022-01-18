@@ -50,11 +50,21 @@ rm -Rf .git
 
 4. Inisialisasi git baru
 
-Jangan lupa, ubah variabel **TIM_KAMU** dan **NAMA_SERVICE_KAMU** di bawah ini. Atau, *copy* alamat url dari repositori yang baru kamu buat barusan.
-
 ```bash
 git init
+```
+
+5. Ubah alamat repositori
+
+Jangan lupa, ubah variabel **TIM_KAMU** dan **NAMA_SERVICE_KAMU** di bawah ini. Atau, *copy* alamat *url* dari repositori yang baru kamu buat barusan.
+
+```bash
 git remote add origin git@gitlab-cloud.uii.ac.id:TIM_KAMU/backend/NAMA_SERVICE_KAMU
+```
+
+6. Unggah repositori
+
+```bash
 git add .
 git commit -m "Initial commit"
 git push -u origin master
