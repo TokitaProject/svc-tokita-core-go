@@ -6,7 +6,6 @@ export DB_PORT="3306"
 export DB_NAME="svc_boilerlate_golang"
 
 export PORT="80"
-export ENV="local"
 
 export GIN_MODE=debug
 

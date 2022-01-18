@@ -68,7 +68,11 @@ Jangan lupa, ubah variabel **TIM_KAMU** dan **NAMA_SERVICE_KAMU** di bawah ini. 
 git remote add origin git@gitlab-cloud.uii.ac.id:TIM_KAMU/backend/NAMA_SERVICE_KAMU
 ```
 
-7. Unggah repositori
+7. Penting, ubah string **svc-boilerplate-golang** di dalam semua file menjadi nama service baru kamu (misal: svc-bill-spp-go). Kamu bisa gunakan IDE favorit kamu. Jika kamu menggunakan VS Code, kamu bisa gunakan shortcut **Command-Shift-F** untuk melakukan find di semua file dan melakukan replace dalam satu waktu.
+
+8. Ubah **deploy.yaml** dengan teliti juga ya.
+
+9. Unggah repositori
 
 ```bash
 git add .

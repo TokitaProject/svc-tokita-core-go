@@ -1,0 +1,104 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: svc-boilerplate-golang
+  labels:
+    svc: svc-boilerplate-golang
+    tier: backend
+  namespace: finance-production
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      svc: svc-boilerplate-golang
+      tier: backend
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  revisionHistoryLimit: 5
+  template:
+    metadata:
+      labels:
+        svc: svc-boilerplate-golang
+        tier: backend
+    spec:
+      imagePullSecrets:
+        - name: gcr-uii-key
+      containers:
+        - name: svc-boilerplate-golang
+          image: asia.gcr.io/uii-cloud-project/finance/backend/svc-boilerplate-golang:prod
+          imagePullPolicy: Always
+          resources:
+            requests:
+              cpu: 10m
+              memory: 64Mi
+            limits:
+              memory: 256Mi
+          env:
+            - name: DB_DRIVERNAME
+              value: "mysql"
+            - name: DB_USERNAME
+              value: "dev"
+            - name: DB_PASSWORD
+              value: "bismillah"
+            - name: DB_HOST
+              value: "dbdev.bsi.io"
+            - name: DB_PORT
+              value: "6033"
+            - name: DB_NAME
+              value: "boilerplate"
+            - name: PORT
+              value: "80"
+            - name: GIN_MODE
+              value: "release"
+          ports:
+            - name: http-api
+              containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: svc-boilerplate-golang
+  labels:
+    svc: svc-boilerplate-golang
+    tier: backend
+  namespace: finance-production
+  annotations:
+    getambassador.io/config: |
+      ---
+      apiVersion: ambassador/v1
+      kind:  Mapping
+      name:  svc-boilerplate-golang-mapping
+      prefix: /v2/finance/boilerplate
+      rewrite: /public/api/v2
+      service: svc-boilerplate-golang.finance-production
+      timeout_ms: 180000
+spec:
+  selector:
+    svc: svc-boilerplate-golang
+    tier: backend
+  ports:
+    - name: http
+      port: 80
+      targetPort: http-api
+      protocol: TCP
+---
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+  labels:
+    svc: svc-boilerplate-golang
+    tier: backend
+  name: svc-boilerplate-golang
+  namespace: finance-production
+spec:
+  maxReplicas: 10
+  minReplicas: 1
+  scaleTargetRef:
+    apiVersion: apps/v1beta2
+    kind: Deployment
+    name: svc-boilerplate-golang
+  targetCPUUtilizationPercentage: 80
