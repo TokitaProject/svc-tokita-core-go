@@ -4,7 +4,7 @@
 
 Ikuti instruksi ini untuk melakukan instalasi golang: [Tutorial instalasi golang](https://go.dev/doc/install)
 
-## Menjalankan service secara lokal
+## Menjalankan *service* secara lokal
 
 Jika kamu ingin menjalankan *service* ini secara lokal dengan *database* lokal, kamu tinggal *copy* **run_example.sh** ke **run_local.sh**.
 
@@ -12,7 +12,7 @@ Jika kamu ingin menjalankan *service* ini secara lokal dengan *database* lokal, 
 cp run_example.sh run_local.sh
 ```
 
-Ubah variabel dalam *run_local.sh*.
+Ubah variabel dalam **run_local.sh**.
 
 ```bash
 export DB_USERNAME="USERNAME_MYSQL_KAMU"
@@ -32,29 +32,35 @@ Jangan lupa, kamu perlu melakukan instalasi **nodemon** terlebih dahulu. Lihat [
 npm install -g nodemon
 ```
 
-## *Cloning* boilerplate menjadi service
+## *Cloning* boilerplate menjadi *service*
 
-1. Buat repositori baru pada gitlab: [Meciptakan service baru](https://gitlab-cloud.uii.ac.id/projects/new)
+1. Buat repositori baru pada gitlab: [Meciptakan *service* baru](https://gitlab-cloud.uii.ac.id/projects/new)
 
-2. *Clone* repositori boilerplate
+2. *Clone* repositori *boilerplate*
 
 ```bash
 git clone git@gitlab-cloud.uii.ac.id:finance/backend/svc-boilerplate-golang.git
 ```
 
-3. Buang .git bawaan
+3. Masuk ke direktori *boilerplate*
+
+```bash
+cd svc-boilerplate-golang
+```
+
+4. Buang .git bawaan
 
 ```bash
 rm -Rf .git
 ```
 
-4. Inisialisasi git baru
+5. Inisialisasi git baru
 
 ```bash
 git init
 ```
 
-5. Ubah alamat repositori
+6. Ubah alamat repositori
 
 Jangan lupa, ubah variabel **TIM_KAMU** dan **NAMA_SERVICE_KAMU** di bawah ini. Atau, *copy* alamat *url* dari repositori yang baru kamu buat barusan.
 
@@ -62,7 +68,7 @@ Jangan lupa, ubah variabel **TIM_KAMU** dan **NAMA_SERVICE_KAMU** di bawah ini. 
 git remote add origin git@gitlab-cloud.uii.ac.id:TIM_KAMU/backend/NAMA_SERVICE_KAMU
 ```
 
-6. Unggah repositori
+7. Unggah repositori
 
 ```bash
 git add .
