@@ -34,7 +34,7 @@ npm install -g nodemon
 
 ## Mengubah boilerplate menjadi service
 
-1. Buat repositori baru pada gitlab: [Meciptakan service baru](https://gitlab-cloud.uii.ac.id/projects/new)
+1. Buat repositori baru pada gitlab: [Meciptakan service baru](https://gitlab-cloud.uii.ac.id/projects/new) (Pastikan VPN BSI kamu sudah aktif ya...)
 
 2. Clone repositori boilerplate
 
