@@ -1,4 +1,5 @@
 configuration:
+  # Wajib mengubah service_name sebelum pertama kali menjalankan goboo
   service_name: svc-boilerplate-golang
   domains:
   - # add new domain name here
