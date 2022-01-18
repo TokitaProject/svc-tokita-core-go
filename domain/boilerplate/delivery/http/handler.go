@@ -17,7 +17,7 @@ func NewBoilerplateHttpHandler(boilerplate boilerplate.Usecase, httpRouter *gin.
 		boilerplateUsecase: boilerplate,
 	}
 
-	// Public untuk service2frontend
+	// public untuk service2frontend | v1 untuk lumen, v2 untuk golang.
 	public := httpRouter.Group("/public/api/v2")
 	public.GET("/boilerplate", handler.GetAll)
 	public.GET("/boilerplate/:uuid", handler.GetByUUID)
@@ -25,7 +25,7 @@ func NewBoilerplateHttpHandler(boilerplate boilerplate.Usecase, httpRouter *gin.
 	public.PUT("/boilerplate", handler.Update)
 	public.DELETE("/boilerplate", handler.Delete)
 
-	// Private untuk service2service
+	// private untuk service2service | v1 untuk lumen, v2 untuk golang.
 	private := httpRouter.Group("/private/api/v2")
 	private.GET("/boilerplate", handler.GetAll)
 	private.GET("/boilerplate/:uuid", handler.GetByUUID)
