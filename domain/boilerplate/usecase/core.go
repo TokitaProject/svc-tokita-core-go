@@ -20,7 +20,7 @@ func (boilerplate boilerplateUsecase) GetAll(param map[string]interface{}) (resp
 	return
 }
 
-func (boilerplate boilerplateUsecase) GetByUUID(param map[string]interface{}) (response models.Boilerplate, err error) {
+func (boilerplate boilerplateUsecase) GetOne(param map[string]interface{}) (response models.Boilerplate, err error) {
 	response, err = boilerplate.boilerplateRepository.GetOne(param)
 	return
 }

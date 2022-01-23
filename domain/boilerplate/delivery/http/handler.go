@@ -58,7 +58,7 @@ func (handler *HttpBoilerplateHandler) GetByUUID(ctx *gin.Context) {
 		"uuid": ctx.Param("uuid"),
 	}
 
-	response, err := handler.boilerplateUsecase.GetByUUID(param)
+	response, err := handler.boilerplateUsecase.GetOne(param)
 
 	if err != nil {
 		if err.Error() == "sql: no rows in result set" {
