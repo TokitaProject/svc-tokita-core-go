@@ -5,6 +5,7 @@ import (
 
 	"svc-boilerplate-golang/domain/boilerplate"
 	"svc-boilerplate-golang/models"
+	"svc-boilerplate-golang/utils/config"
 	"svc-boilerplate-golang/utils/message"
 )
 
@@ -42,7 +43,7 @@ func (handler *HttpBoilerplateHandler) GetAll(ctx *gin.Context) {
 	response, err := handler.boilerplateUsecase.GetAll(param)
 
 	if err != nil {
-		if err.Error() == "sql: no rows in result set" {
+		if err.Error() == config.Get("sql.not.found") {
 			message.ReturnOk(ctx, make(map[string]interface{}), param)
 			return
 		}
@@ -61,7 +62,7 @@ func (handler *HttpBoilerplateHandler) GetByUUID(ctx *gin.Context) {
 	response, err := handler.boilerplateUsecase.GetOne(param)
 
 	if err != nil {
-		if err.Error() == "sql: no rows in result set" {
+		if err.Error() == config.Get("sql.not.found") {
 			message.ReturnOk(ctx, make(map[string]interface{}), param)
 			return
 		}
