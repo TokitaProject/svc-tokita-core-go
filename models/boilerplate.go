@@ -1,7 +1,7 @@
 package models
 
 type Boilerplate struct {
-	ID   string `json:"-"`
+	ID   uint64 `json:"-"`
 	UUID string `json:"uuid"`
 }
 
