@@ -3,8 +3,8 @@ package main
 import (
 	"os"
 	_boilerplateHttpDeliver "svc-boilerplate-golang/domain/boilerplate/delivery/http"
-	_boilerplateRepo "svc-boilerplate-golang/domain/boilerplate/repository"
-	_boilerplateUcase "svc-boilerplate-golang/domain/boilerplate/usecase"
+	_boilerplateRepository "svc-boilerplate-golang/domain/boilerplate/repository"
+	_boilerplateUsecase "svc-boilerplate-golang/domain/boilerplate/usecase"
 	"svc-boilerplate-golang/utils/database"
 
 	"github.com/gin-gonic/gin"
@@ -14,8 +14,8 @@ func main() {
 	routers := gin.Default()
 	mysql := database.SetupMysqlDatabaseConnection()
 
-	boilerplateRepository := _boilerplateRepo.NewMysqlBoilerplateRepository(mysql)
-	boilerplateUsecase := _boilerplateUcase.NewBoilerplateUsecase(boilerplateRepository)
+	boilerplateRepository := _boilerplateRepository.NewMysqlBoilerplateRepository(mysql)
+	boilerplateUsecase := _boilerplateUsecase.NewBoilerplateUsecase(boilerplateRepository)
 	_boilerplateHttpDeliver.NewBoilerplateHttpHandler(boilerplateUsecase, routers)
 
 	routers.Run(":" + os.Getenv("PORT"))
