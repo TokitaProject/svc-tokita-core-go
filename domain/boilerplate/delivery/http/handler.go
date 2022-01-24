@@ -79,18 +79,18 @@ func (handler *HttpBoilerplateHandler) Store(ctx *gin.Context) {
 	err := ctx.ShouldBindJSON(&payload)
 
 	if err != nil {
-		message.ReturnBadRequest(ctx, err, payload)
+		message.ReturnBadRequest(ctx, err, config.Get("error.bind.json"))
 		return
 	}
 
 	err = handler.boilerplateUsecase.Store(payload)
 
 	if err != nil {
-		message.ReturnBadRequest(ctx, err, payload)
+		message.ReturnInternalServerError(ctx)
 		return
 	}
 
-	message.ReturnSuccessInsert(ctx, payload)
+	message.ReturnSuccessInsert(ctx, payload.Data)
 }
 
 func (handler *HttpBoilerplateHandler) Update(ctx *gin.Context) {
@@ -99,7 +99,7 @@ func (handler *HttpBoilerplateHandler) Update(ctx *gin.Context) {
 	err := ctx.ShouldBindJSON(&payload)
 
 	if err != nil {
-		message.ReturnBadRequest(ctx, err, payload)
+		message.ReturnBadRequest(ctx, err, config.Get("error.bind.json"))
 		return
 	}
 
@@ -114,7 +114,7 @@ func (handler *HttpBoilerplateHandler) Update(ctx *gin.Context) {
 	err = handler.boilerplateUsecase.Update(param, data)
 
 	if err != nil {
-		message.ReturnBadRequest(ctx, err, param)
+		message.ReturnInternalServerError(ctx)
 		return
 	}
 
@@ -127,7 +127,7 @@ func (handler *HttpBoilerplateHandler) Delete(ctx *gin.Context) {
 	err := ctx.ShouldBindJSON(&payload)
 
 	if err != nil {
-		message.ReturnBadRequest(ctx, err, payload)
+		message.ReturnBadRequest(ctx, err, config.Get("error.bind.json"))
 		return
 	}
 
@@ -138,7 +138,7 @@ func (handler *HttpBoilerplateHandler) Delete(ctx *gin.Context) {
 	err = handler.boilerplateUsecase.Delete(param)
 
 	if err != nil {
-		message.ReturnBadRequest(ctx, err, param)
+		message.ReturnInternalServerError(ctx)
 		return
 	}
 
