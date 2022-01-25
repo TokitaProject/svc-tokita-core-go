@@ -50,10 +50,16 @@ func (db *mysqlBoilerplateRepository) GetAll(param map[string]interface{}) (resp
 	defer query.Close()
 
 	for query.Next() {
-		query.Scan(
+		err = query.Scan(
 			&result.ID,
 			&result.UUID,
 		)
+
+		if err != nil {
+			log.Println(err.Error())
+			return
+		}
+
 		response = append(response, result)
 	}
 
@@ -110,10 +116,16 @@ func (db *mysqlBoilerplateRepository) GetIn(where string, in []interface{}) (res
 	defer query.Close()
 
 	for query.Next() {
-		query.Scan(
+		err = query.Scan(
 			&result.ID,
 			&result.UUID,
 		)
+
+		if err != nil {
+			log.Println(err.Error())
+			return
+		}
+
 		response = append(response, result)
 	}
 
