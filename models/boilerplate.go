@@ -1,8 +1,14 @@
 package models
 
+import "time"
+
 type Boilerplate struct {
-	ID   uint64 `json:"-"`
-	UUID string `json:"uuid"`
+	ID            uint64     `json:"-"`
+	UserInput     string     `json:"user_input"`
+	TanggalInput  time.Time  `json:"tgl_input"`
+	UserUpdate    *string    `json:"user_update"`
+	TanggalUpdate *time.Time `json:"tgl_update"`
+	UUID          string     `json:"uuid"`
 }
 
 type BoilerplatePayloadInsert struct {
