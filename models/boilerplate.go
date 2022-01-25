@@ -1,8 +1,12 @@
 package models
 
-import "time"
+import (
+	"svc-boilerplate-golang/entity"
+	"time"
+)
 
 type Boilerplate struct {
+	entity.BoilerplateData
 	ID            uint64     `json:"-"`
 	UserInput     string     `json:"user_input"`
 	TanggalInput  time.Time  `json:"tgl_input"`
@@ -16,7 +20,7 @@ type BoilerplatePayloadInsert struct {
 }
 
 type BoilerplateDataInsert struct {
-	Column string `json:"column"`
+	entity.BoilerplateData
 }
 
 type BoilerplatePayloadUpdate struct {
@@ -25,13 +29,13 @@ type BoilerplatePayloadUpdate struct {
 }
 
 type BoilerplateParamUpdate struct {
-	Flag int `json:"flag"`
+	entity.BoilerplateParameterUpdate
 }
 
 type BoilerplateDataUpdate struct {
-	Column string `json:"column"`
+	entity.BoilerplateData
 }
 
 type BoilerplatePayloadDetele struct {
-	Flag int `json:"flag" binding:"required"`
+	entity.BoilerplateParameterDelete
 }
