@@ -48,6 +48,22 @@ Jangan lupa, kamu perlu melakukan instalasi **nodemon** terlebih dahulu. Lihat [
 npm install -g nodemon
 ```
 
+## Menghubungkan service dengan oracle secara lokal
+
+Install sqlplus dan instantclient di MacBook kamu dengan cara sebagai berikut:
+
+```bash
+brew tap InstantClientTap/instantclient
+brew install instantclient-basic
+brew install instantclient-sqlplus
+```
+
+Bila kamu belum menggunakan brew, silakan install brew terlebih dahulu dengan [Mengikuti tutorial install brew ini.](https://brew.sh)
+
+```bash
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+```
+
 ## Mengubah boilerplate menjadi service
 
 1. Buat repositori baru pada gitlab: [Meciptakan service baru](https://gitlab-cloud.uii.ac.id/projects/new) (Pastikan VPN BSI kamu sudah aktif ya...)
