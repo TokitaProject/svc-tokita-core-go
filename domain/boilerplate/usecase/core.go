@@ -6,22 +6,22 @@ import (
 )
 
 type boilerplateUsecase struct {
-	boilerplateRepository boilerplate.Repository
+	mysqlRepository boilerplate.Repository
 }
 
-func NewBoilerplateUsecase(boilerplate boilerplate.Repository) boilerplate.Usecase {
+func NewBoilerplateUsecase(mysql boilerplate.Repository) boilerplate.Usecase {
 	return &boilerplateUsecase{
-		boilerplateRepository: boilerplate,
+		mysqlRepository: mysql,
 	}
 }
 
 func (boilerplate boilerplateUsecase) GetAll(param map[string]interface{}) (response []models.Boilerplate, err error) {
-	response, err = boilerplate.boilerplateRepository.GetAll(param)
+	response, err = boilerplate.mysqlRepository.GetAll(param)
 	return
 }
 
 func (boilerplate boilerplateUsecase) GetOne(param map[string]interface{}) (response models.Boilerplate, err error) {
-	response, err = boilerplate.boilerplateRepository.GetOne(param)
+	response, err = boilerplate.mysqlRepository.GetOne(param)
 	return
 }
 
@@ -36,16 +36,16 @@ func (boilerplate boilerplateUsecase) Store(payload models.BoilerplatePayloadIns
 		data = append(data, e)
 	}
 
-	_, err = boilerplate.boilerplateRepository.Store(data)
+	_, err = boilerplate.mysqlRepository.Store(data)
 	return
 }
 
 func (boilerplate boilerplateUsecase) Update(param map[string]interface{}, data map[string]interface{}) (err error) {
-	err = boilerplate.boilerplateRepository.Update(param, data)
+	err = boilerplate.mysqlRepository.Update(param, data)
 	return
 }
 
 func (boilerplate boilerplateUsecase) Delete(param map[string]interface{}) (err error) {
-	err = boilerplate.boilerplateRepository.Delete(param)
+	err = boilerplate.mysqlRepository.Delete(param)
 	return
 }

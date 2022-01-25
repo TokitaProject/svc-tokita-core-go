@@ -15,8 +15,8 @@ func main() {
 	mysql := database.SetupMysqlDatabaseConnection()
 	// oracle := database.SetupOracleDatabaseConnection()
 
-	boilerplateRepository := _boilerplateRepository.NewMysqlBoilerplateRepository(mysql)
-	boilerplateUsecase := _boilerplateUsecase.NewBoilerplateUsecase(boilerplateRepository)
+	boilerplateMysqlRepository := _boilerplateRepository.NewMysqlBoilerplateRepository(mysql)
+	boilerplateUsecase := _boilerplateUsecase.NewBoilerplateUsecase(boilerplateMysqlRepository)
 	_boilerplateHttpDeliver.NewBoilerplateHttpHandler(boilerplateUsecase, routers)
 
 	routers.Run(":" + os.Getenv("PORT"))
