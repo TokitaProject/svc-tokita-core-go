@@ -2,17 +2,12 @@ package models
 
 import (
 	"svc-boilerplate-golang/entity"
-	"time"
 )
 
 type Boilerplate struct {
 	entity.BoilerplateData
-	ID            uint64     `json:"-"`
-	UserInput     string     `json:"user_input"`
-	TanggalInput  time.Time  `json:"tgl_input"`
-	UserUpdate    *string    `json:"user_update"`
-	TanggalUpdate *time.Time `json:"tgl_update"`
-	UUID          string     `json:"uuid"`
+	entity.UUID
+	entity.Time
 }
 
 type BoilerplatePayloadInsert struct {
