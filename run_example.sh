@@ -5,6 +5,12 @@ export DB_HOST="localhost"
 export DB_PORT="3306"
 export DB_NAME="svc_boilerlate_golang"
 
+export ORACLE_DB_DRIVERNAME="godror"
+export ORACLE_DB_USERNAME="keubank"
+export ORACLE_DB_PASSWORD="testing#"
+export ORACLE_DB_HOST="10.30.21.17"
+export ORACLE_DB_PORT="1521"
+
 export PORT="80"
 
 export GIN_MODE=debug

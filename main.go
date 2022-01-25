@@ -13,6 +13,7 @@ import (
 func main() {
 	routers := gin.Default()
 	mysql := database.SetupMysqlDatabaseConnection()
+	// oracle := database.SetupOracleDatabaseConnection()
 
 	boilerplateRepository := _boilerplateRepository.NewMysqlBoilerplateRepository(mysql)
 	boilerplateUsecase := _boilerplateUsecase.NewBoilerplateUsecase(boilerplateRepository)
