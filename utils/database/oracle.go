@@ -16,10 +16,10 @@ func SetupOracleDatabaseConnection() (db *sql.DB) {
 		password = os.Getenv("ORACLE_DB_PASSWORD")
 		host     = os.Getenv("ORACLE_DB_HOST")
 		port     = os.Getenv("ORACLE_DB_PORT")
+		service  = os.Getenv("ORACLE_DB_SERVICE_NAME")
 	)
 
-	description := fmt.Sprintf("(DESCRIPTION=(ADDRESS_LIST=(ADDRESS=(PROTOCOL=TCP)(HOST=%s)(PORT=%s))(CONNECT_DATA=(SERVICE_NAME=UII))))", host, port)
-	connection := fmt.Sprintf("%s/%s@%s", username, password, description)
+	connection := fmt.Sprintf(`user="%s" password="%s" connectString="%s:%s/%s"`, username, password, host, port, service)
 
 	db, err := sql.Open(driver, connection)
 

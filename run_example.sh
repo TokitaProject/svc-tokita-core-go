@@ -10,6 +10,7 @@ export ORACLE_DB_USERNAME="keubank"
 export ORACLE_DB_PASSWORD="testing#"
 export ORACLE_DB_HOST="10.30.21.17"
 export ORACLE_DB_PORT="1521"
+export ORACLE_DB_SERVICE_NAME="transdb1"
 
 export PORT="80"
 
