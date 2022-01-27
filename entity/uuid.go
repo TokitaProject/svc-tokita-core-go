@@ -2,7 +2,7 @@ package entity
 
 import "time"
 
-type UUID struct {
+type StandardKey struct {
 	ID   uint64 `json:"-"`
 	UUID string `json:"uuid"`
 }

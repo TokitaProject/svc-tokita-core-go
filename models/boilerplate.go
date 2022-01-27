@@ -6,7 +6,7 @@ import (
 
 type Boilerplate struct {
 	entity.BoilerplateData
-	entity.UUID
+	entity.StandardKey
 	entity.Time
 }
 
