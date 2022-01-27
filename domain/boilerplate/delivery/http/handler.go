@@ -79,7 +79,7 @@ func (handler *HttpBoilerplateHandler) Store(ctx *gin.Context) {
 	err := ctx.ShouldBindJSON(&payload)
 
 	if err != nil {
-		message.ReturnBadRequest(ctx, err, config.Get("error.bind.json"))
+		message.ReturnBadRequest(ctx, err.Error(), config.Get("error.bind.json"))
 		return
 	}
 
@@ -99,7 +99,7 @@ func (handler *HttpBoilerplateHandler) Update(ctx *gin.Context) {
 	err := ctx.ShouldBindJSON(&payload)
 
 	if err != nil {
-		message.ReturnBadRequest(ctx, err, config.Get("error.bind.json"))
+		message.ReturnBadRequest(ctx, err.Error(), config.Get("error.bind.json"))
 		return
 	}
 
@@ -127,7 +127,7 @@ func (handler *HttpBoilerplateHandler) Delete(ctx *gin.Context) {
 	err := ctx.ShouldBindJSON(&payload)
 
 	if err != nil {
-		message.ReturnBadRequest(ctx, err, config.Get("error.bind.json"))
+		message.ReturnBadRequest(ctx, err.Error(), config.Get("error.bind.json"))
 		return
 	}
 
