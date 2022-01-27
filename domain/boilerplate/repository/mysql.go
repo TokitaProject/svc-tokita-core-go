@@ -132,7 +132,7 @@ func (db *mysqlBoilerplateRepository) GetIn(where string, in []interface{}) (res
 	return
 }
 
-func (db *mysqlBoilerplateRepository) Store(data [][]interface{}) (IDs []int64, err error) {
+func (db *mysqlBoilerplateRepository) Store(data [][]interface{}) (IDs []uint64, err error) {
 	var p []interface{}
 
 	tx, err := db.sqlDB.Begin()
