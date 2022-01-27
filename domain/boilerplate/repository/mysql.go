@@ -18,6 +18,10 @@ func NewMysqlBoilerplateRepository(databaseConnection *sql.DB) boilerplate.Repos
 	return &mysqlBoilerplateRepository{databaseConnection}
 }
 
+func (db *mysqlBoilerplateRepository) GenerateUUID() (uuid uint64, err error) {
+	return database.GenerateUUID(db.sqlDB)
+}
+
 func (db *mysqlBoilerplateRepository) GetAll(param map[string]interface{}) (response []models.Boilerplate, err error) {
 	var result models.Boilerplate
 	var p []interface{}
@@ -149,7 +153,7 @@ func (db *mysqlBoilerplateRepository) Store(data [][]interface{}) (IDs []uint64,
 	for _, x := range data {
 		q += ` (?` + strings.Repeat(",?", len(x)) + `),`
 
-		ID, _ := database.GenerateUUID(tx)
+		ID, _ := db.GenerateUUID()
 		IDs = append(IDs, ID)
 		p = append(p, ID)
 		p = append(p, x...)

@@ -3,6 +3,7 @@ package boilerplate
 import "svc-boilerplate-golang/models"
 
 type Repository interface {
+	GenerateUUID() (uint64, error)
 	GetIn(where string, in []interface{}) ([]models.Boilerplate, error)
 	GetAll(param map[string]interface{}) ([]models.Boilerplate, error)
 	GetOne(param map[string]interface{}) (models.Boilerplate, error)
