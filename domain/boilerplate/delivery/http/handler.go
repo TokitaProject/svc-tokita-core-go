@@ -37,7 +37,9 @@ func NewBoilerplateHttpHandler(boilerplate boilerplate.Usecase, httpRouter *gin.
 
 func (handler *HttpBoilerplateHandler) GetAll(ctx *gin.Context) {
 	var param = map[string]interface{}{
-		"param": ctx.Query("param"),
+		"AND": map[string]interface{}{
+			"param": ctx.Query("param"),
+		},
 	}
 
 	response, err := handler.boilerplateUsecase.GetAll(param)
@@ -56,7 +58,9 @@ func (handler *HttpBoilerplateHandler) GetAll(ctx *gin.Context) {
 
 func (handler *HttpBoilerplateHandler) GetByUUID(ctx *gin.Context) {
 	var param = map[string]interface{}{
-		"uuid": ctx.Param("uuid"),
+		"AND": map[string]interface{}{
+			"uuid": ctx.Query("uuid"),
+		},
 	}
 
 	response, err := handler.boilerplateUsecase.GetOne(param)
@@ -104,7 +108,9 @@ func (handler *HttpBoilerplateHandler) Update(ctx *gin.Context) {
 	}
 
 	var param = map[string]interface{}{
-		"flag": payload.Param.Flag,
+		"AND": map[string]interface{}{
+			"flag": payload.Param.Flag,
+		},
 	}
 
 	var data = map[string]interface{}{
@@ -132,7 +138,9 @@ func (handler *HttpBoilerplateHandler) Delete(ctx *gin.Context) {
 	}
 
 	var param = map[string]interface{}{
-		"flag": payload.Flag,
+		"AND": map[string]interface{}{
+			"flag": payload.Flag,
+		},
 	}
 
 	err = handler.boilerplateUsecase.Delete(param)

@@ -24,27 +24,15 @@ func (db *mysqlBoilerplateRepository) GenerateUUID() (uuid uint64, err error) {
 
 func (db *mysqlBoilerplateRepository) GetAll(param map[string]interface{}) (response []models.Boilerplate, err error) {
 	var result models.Boilerplate
-	var p []interface{}
 
-	c := 0
 	q := `
 		SELECT id, uuid
 		FROM boilerplate
 	`
 
-	for i, x := range param {
-		if x != "" {
-			if c > 0 {
-				q += ` AND ` + i + ` = ?`
-			} else {
-				q += ` WHERE ` + i + ` = ?`
-			}
-			p = append(p, x)
-			c++
-		}
-	}
+	s, p := database.QueryBuilder(param)
 
-	query, err := db.sqlDB.Query(q, p...)
+	query, err := db.sqlDB.Query(q+s, p...)
 
 	if err != nil {
 		log.Println(err.Error())
@@ -71,67 +59,19 @@ func (db *mysqlBoilerplateRepository) GetAll(param map[string]interface{}) (resp
 }
 
 func (db *mysqlBoilerplateRepository) GetOne(param map[string]interface{}) (response models.Boilerplate, err error) {
-	var p []interface{}
-
-	c := 0
 	q := `
 		SELECT id, uuid
 		FROM boilerplate
 	`
 
-	for i, x := range param {
-		if x != "" {
-			if c > 0 {
-				q += ` AND ` + i + ` = ?`
-			} else {
-				q += ` WHERE ` + i + ` = ?`
-			}
-			p = append(p, x)
-			c++
-		}
-	}
+	s, p := database.QueryBuilder(param)
 
-	query := db.sqlDB.QueryRow(q, p...)
+	query := db.sqlDB.QueryRow(q+s, p...)
 
 	err = query.Scan(
 		&response.ID,
 		&response.UUID,
 	)
-
-	return
-}
-
-func (db *mysqlBoilerplateRepository) GetIn(where string, in []interface{}) (response []models.Boilerplate, err error) {
-	var result models.Boilerplate
-
-	q := `
-		SELECT id, uuid
-		FROM boilerplate
-	`
-	q += ` WHERE ` + where + ` IN (?` + strings.Repeat(",?", len(in)-1) + `)`
-
-	query, err := db.sqlDB.Query(q, in...)
-
-	if err != nil {
-		log.Println(err.Error())
-		return
-	}
-
-	defer query.Close()
-
-	for query.Next() {
-		err = query.Scan(
-			&result.ID,
-			&result.UUID,
-		)
-
-		if err != nil {
-			log.Println(err.Error())
-			return
-		}
-
-		response = append(response, result)
-	}
 
 	return
 }
@@ -158,7 +98,6 @@ func (db *mysqlBoilerplateRepository) Store(data [][]interface{}) (IDs []uint64,
 		p = append(p, ID)
 		p = append(p, x...)
 	}
-
 	q = q[0 : len(q)-1] // TRIM THE LAST `,`
 
 	statement, err := tx.Prepare(q)
@@ -180,9 +119,7 @@ func (db *mysqlBoilerplateRepository) Store(data [][]interface{}) (IDs []uint64,
 	}
 
 	tx.Commit()
-
 	result.RowsAffected()
-
 	return
 }
 
@@ -196,7 +133,6 @@ func (db *mysqlBoilerplateRepository) Update(param map[string]interface{}, data 
 		return
 	}
 
-	c := 0
 	q := `
 		UPDATE boilerplate SET 
 	`
@@ -205,22 +141,11 @@ func (db *mysqlBoilerplateRepository) Update(param map[string]interface{}, data 
 		q += i + ` = ?,`
 		p = append(p, x)
 	}
-
 	q = q[0 : len(q)-1] // TRIM THE LAST `,`
 
-	for i, x := range param {
-		if x != "" {
-			if c > 0 {
-				q += ` AND ` + i + ` = ?`
-			} else {
-				q += ` WHERE ` + i + ` = ?`
-			}
-			p = append(p, x)
-			c++
-		}
-	}
-
-	statement, err := tx.Prepare(q)
+	s, p2 := database.QueryBuilder(param)
+	p = append(p, p2)
+	statement, err := tx.Prepare(q + s)
 
 	if err != nil {
 		log.Println(err.Error())
@@ -239,32 +164,11 @@ func (db *mysqlBoilerplateRepository) Update(param map[string]interface{}, data 
 	}
 
 	tx.Commit()
-
 	result.RowsAffected()
-
 	return
 }
 
 func (db *mysqlBoilerplateRepository) Delete(param map[string]interface{}) (err error) {
-	var p []interface{}
-
-	c := 0
-	q := `
-		DELETE FROM boilerplate
-	`
-
-	for i, x := range param {
-		if x != "" {
-			if c > 0 {
-				q += ` AND ` + i + ` = ?`
-			} else {
-				q += ` WHERE ` + i + ` = ?`
-			}
-			p = append(p, x)
-			c++
-		}
-	}
-
 	tx, err := db.sqlDB.Begin()
 
 	if err != nil {
@@ -272,7 +176,12 @@ func (db *mysqlBoilerplateRepository) Delete(param map[string]interface{}) (err 
 		return
 	}
 
-	statement, err := tx.Prepare(q)
+	q := `
+		DELETE FROM boilerplate
+	`
+
+	s, p := database.QueryBuilder(param)
+	statement, err := tx.Prepare(q + s)
 
 	if err != nil {
 		log.Println(err.Error())
@@ -291,8 +200,6 @@ func (db *mysqlBoilerplateRepository) Delete(param map[string]interface{}) (err 
 	}
 
 	tx.Commit()
-
 	result.RowsAffected()
-
 	return
 }
