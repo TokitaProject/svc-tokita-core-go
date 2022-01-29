@@ -26,17 +26,22 @@ func (boilerplate boilerplateUsecase) GetOne(param map[string]interface{}) (resp
 }
 
 func (boilerplate boilerplateUsecase) Store(payload models.BoilerplatePayloadInsert) (IDs []uint64, err error) {
-	var data [][]interface{}
+	var (
+		data []interface{}
+	)
 
 	// PREPARE THE DATA AND INSERT TO "data"
 	for _, x := range payload.Data {
+		ID, _ := boilerplate.mysqlRepository.GenerateUUID()
+		IDs = append(IDs, ID)
 		e := []interface{}{
+			ID,
 			x.Column, // Custom on this line...
 		}
 		data = append(data, e)
 	}
 
-	IDs, err = boilerplate.mysqlRepository.Store(data)
+	err = boilerplate.mysqlRepository.Store(data)
 	return
 }
 

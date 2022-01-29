@@ -3,7 +3,6 @@ package repository
 import (
 	"database/sql"
 	"log"
-	"strings"
 
 	"svc-boilerplate-golang/domain/boilerplate"
 	"svc-boilerplate-golang/models"
@@ -25,14 +24,21 @@ func (db *mysqlBoilerplateRepository) GenerateUUID() (uuid uint64, err error) {
 func (db *mysqlBoilerplateRepository) GetAll(param map[string]interface{}) (response []models.Boilerplate, err error) {
 	var result models.Boilerplate
 
-	q := `
-		SELECT id, uuid
-		FROM boilerplate
-	`
+	builder := database.QueryConfig{
+		TableInfo: database.TableInfo{
+			TechStack: "mysql",
+			Table:     "boilerplate",
+			Action:    "select",
+		},
+		OnSelect: database.OnSelect{
+			Column: []string{"id", "uuid"},
+			Where:  param,
+		},
+	}
 
-	s, p := database.QueryBuilder(param)
+	builder.QueryBuilder()
 
-	query, err := db.sqlDB.Query(q+s, p...)
+	query, err := db.sqlDB.Query(builder.Result.Query, builder.Result.Value...)
 
 	if err != nil {
 		log.Println(err.Error())
@@ -59,14 +65,21 @@ func (db *mysqlBoilerplateRepository) GetAll(param map[string]interface{}) (resp
 }
 
 func (db *mysqlBoilerplateRepository) GetOne(param map[string]interface{}) (response models.Boilerplate, err error) {
-	q := `
-		SELECT id, uuid
-		FROM boilerplate
-	`
+	builder := database.QueryConfig{
+		TableInfo: database.TableInfo{
+			TechStack: "mysql",
+			Table:     "boilerplate",
+			Action:    "select",
+		},
+		OnSelect: database.OnSelect{
+			Column: []string{"id", "uuid"},
+			Where:  param,
+		},
+	}
 
-	s, p := database.QueryBuilder(param)
+	builder.QueryBuilder()
 
-	query := db.sqlDB.QueryRow(q+s, p...)
+	query := db.sqlDB.QueryRow(builder.Result.Query, builder.Result.Value...)
 
 	err = query.Scan(
 		&response.ID,
@@ -76,9 +89,7 @@ func (db *mysqlBoilerplateRepository) GetOne(param map[string]interface{}) (resp
 	return
 }
 
-func (db *mysqlBoilerplateRepository) Store(data [][]interface{}) (IDs []uint64, err error) {
-	var p []interface{}
-
+func (db *mysqlBoilerplateRepository) Store(data []interface{}) (err error) {
 	tx, err := db.sqlDB.Begin()
 
 	if err != nil {
@@ -86,21 +97,21 @@ func (db *mysqlBoilerplateRepository) Store(data [][]interface{}) (IDs []uint64,
 		return
 	}
 
-	q := `
-		INSERT INTO boilerplate (id, column) VALUES
-	`
-
-	for _, x := range data {
-		q += ` (?` + strings.Repeat(",?", len(x)) + `),`
-
-		ID, _ := db.GenerateUUID()
-		IDs = append(IDs, ID)
-		p = append(p, ID)
-		p = append(p, x...)
+	builder := database.QueryConfig{
+		TableInfo: database.TableInfo{
+			TechStack: "mysql",
+			Table:     "boilerplate",
+			Action:    "insert",
+		},
+		OnInsert: database.OnInsert{
+			Column: []string{"id", "uuid"},
+			Data:   data,
+		},
 	}
-	q = q[0 : len(q)-1] // TRIM THE LAST `,`
 
-	statement, err := tx.Prepare(q)
+	builder.QueryBuilder()
+
+	statement, err := tx.Prepare(builder.Result.Query)
 
 	if err != nil {
 		log.Println(err.Error())
@@ -110,7 +121,7 @@ func (db *mysqlBoilerplateRepository) Store(data [][]interface{}) (IDs []uint64,
 
 	defer statement.Close()
 
-	result, err := statement.Exec(p...)
+	result, err := statement.Exec(builder.Result.Value...)
 
 	if err != nil {
 		log.Println(err.Error())
@@ -124,8 +135,6 @@ func (db *mysqlBoilerplateRepository) Store(data [][]interface{}) (IDs []uint64,
 }
 
 func (db *mysqlBoilerplateRepository) Update(param map[string]interface{}, data map[string]interface{}) (err error) {
-	var p []interface{}
-
 	tx, err := db.sqlDB.Begin()
 
 	if err != nil {
@@ -133,19 +142,21 @@ func (db *mysqlBoilerplateRepository) Update(param map[string]interface{}, data 
 		return
 	}
 
-	q := `
-		UPDATE boilerplate SET 
-	`
-
-	for i, x := range data {
-		q += i + ` = ?,`
-		p = append(p, x)
+	builder := database.QueryConfig{
+		TableInfo: database.TableInfo{
+			TechStack: "mysql",
+			Table:     "boilerplate",
+			Action:    "update",
+		},
+		OnUpdate: database.OnUpdate{
+			Where: param,
+			Data:  data,
+		},
 	}
-	q = q[0 : len(q)-1] // TRIM THE LAST `,`
 
-	s, p2 := database.QueryBuilder(param)
-	p = append(p, p2)
-	statement, err := tx.Prepare(q + s)
+	builder.QueryBuilder()
+
+	statement, err := tx.Prepare(builder.Result.Query)
 
 	if err != nil {
 		log.Println(err.Error())
@@ -155,7 +166,7 @@ func (db *mysqlBoilerplateRepository) Update(param map[string]interface{}, data 
 
 	defer statement.Close()
 
-	result, err := statement.Exec(p...)
+	result, err := statement.Exec(builder.Result.Value...)
 
 	if err != nil {
 		log.Println(err.Error())
@@ -176,12 +187,20 @@ func (db *mysqlBoilerplateRepository) Delete(param map[string]interface{}) (err 
 		return
 	}
 
-	q := `
-		DELETE FROM boilerplate
-	`
+	builder := database.QueryConfig{
+		TableInfo: database.TableInfo{
+			TechStack: "mysql",
+			Table:     "boilerplate",
+			Action:    "delete",
+		},
+		OnDelete: database.OnDelete{
+			Where: param,
+		},
+	}
 
-	s, p := database.QueryBuilder(param)
-	statement, err := tx.Prepare(q + s)
+	builder.QueryBuilder()
+
+	statement, err := tx.Prepare(builder.Result.Query)
 
 	if err != nil {
 		log.Println(err.Error())
@@ -191,7 +210,7 @@ func (db *mysqlBoilerplateRepository) Delete(param map[string]interface{}) (err 
 
 	defer statement.Close()
 
-	result, err := statement.Exec(p...)
+	result, err := statement.Exec(builder.Result.Value...)
 
 	if err != nil {
 		log.Println(err.Error())

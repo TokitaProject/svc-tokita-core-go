@@ -1,6 +1,8 @@
 package http
 
 import (
+	"strings"
+
 	"github.com/gin-gonic/gin"
 
 	"svc-boilerplate-golang/domain/boilerplate"
@@ -39,6 +41,9 @@ func (handler *HttpBoilerplateHandler) GetAll(ctx *gin.Context) {
 	var param = map[string]interface{}{
 		"AND": map[string]interface{}{
 			"param": ctx.Query("param"),
+			"IN": map[string]interface{}{
+				"column_in": strings.Split(ctx.Query("column_in"), ","),
+			},
 		},
 	}
 
