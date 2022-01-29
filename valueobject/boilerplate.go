@@ -5,7 +5,7 @@ import (
 )
 
 type Boilerplate struct {
-	entity.BoilerplateData
+	entity.Boilerplate
 	entity.StandardKey
 	entity.Time
 }
@@ -15,7 +15,7 @@ type BoilerplatePayloadInsert struct {
 }
 
 type BoilerplateDataInsert struct {
-	entity.BoilerplateData
+	entity.Boilerplate
 }
 
 type BoilerplatePayloadUpdate struct {
@@ -24,13 +24,13 @@ type BoilerplatePayloadUpdate struct {
 }
 
 type BoilerplateParamUpdate struct {
-	entity.BoilerplateParameterUpdate
+	Flag string `json:"flag"`
 }
 
 type BoilerplateDataUpdate struct {
-	entity.BoilerplateData
+	entity.Boilerplate
 }
 
 type BoilerplatePayloadDetele struct {
-	entity.BoilerplateParameterDelete
+	Flag string `json:"flag" binding:"required"`
 }
