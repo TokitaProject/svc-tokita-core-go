@@ -43,7 +43,7 @@ type QueryConfig struct {
 	Result
 }
 
-func (cfg QueryConfig) QueryBuilder() {
+func (cfg *QueryConfig) QueryBuilder() {
 	if cfg.Action == "select" {
 		cfg.selectBuilder()
 		cfg.whereBuilder(cfg.OnSelect.Where)
@@ -58,52 +58,59 @@ func (cfg QueryConfig) QueryBuilder() {
 	}
 }
 
-func (cfg QueryConfig) selectBuilder() {
+func (cfg *QueryConfig) selectBuilder() {
 	cfg.Result.Query += `SELECT `
 
 	for _, x := range cfg.OnSelect.Column {
 		cfg.Result.Query += x + ", "
 	}
 
-	cfg.Result.Query = cfg.Result.Query[0 : len(cfg.Result.Query)-1] // TRIM THE LAST `,`
+	cfg.Result.Query = cfg.Result.Query[0 : len(cfg.Result.Query)-2]
 
-	cfg.Result.Query += `FROM ` + cfg.Table
+	cfg.Result.Query += ` FROM ` + cfg.Table
 }
 
-func (cfg QueryConfig) insertBuilder() {
-	cfg.Result.Query += `INSERT INTO ` + cfg.Table
+func (cfg *QueryConfig) insertBuilder() {
+	cfg.Result.Query += `INSERT INTO ` + cfg.Table + ` (`
+
+	for _, x := range cfg.OnInsert.Column {
+		cfg.Result.Query += x + `, `
+	}
+
+	cfg.Result.Query = cfg.Result.Query[0 : len(cfg.Result.Query)-2]
+	cfg.Result.Query += `) VALUES `
 
 	for _, x := range cfg.OnInsert.Data {
-		count := len(x.([]interface{}))
+		count := len(x.([]interface{})) - 1
 
 		if count < 0 {
 			count = 0
 		}
 
-		cfg.Result.Query += ` (` + cfg.getQuestionMark() + strings.Repeat(","+cfg.getQuestionMark(), count) + `),`
+		cfg.Result.Query += `(` + cfg.getQuestionMark() + strings.Repeat(","+cfg.getQuestionMark(), count) + `),`
 
-		cfg.Result.Value = append(cfg.Result.Value, x.([]interface{}))
+		cfg.Result.Value = append(cfg.Result.Value, x.([]interface{})...)
 	}
 
-	cfg.Result.Query = cfg.Result.Query[0 : len(cfg.Result.Query)-1] // TRIM THE LAST `,`
+	cfg.Result.Query = cfg.Result.Query[0 : len(cfg.Result.Query)-1]
 }
 
-func (cfg QueryConfig) updateBuilder() {
+func (cfg *QueryConfig) updateBuilder() {
 	cfg.Result.Query += `UPDATE ` + cfg.Table + ` SET `
 
 	for i, x := range cfg.OnUpdate.Data {
-		cfg.Result.Query += i + ` = ` + cfg.getQuestionMark() + `,`
+		cfg.Result.Query += i + ` = ` + cfg.getQuestionMark() + `, `
 		cfg.Result.Value = append(cfg.Result.Value, x)
 	}
 
-	cfg.Result.Query = cfg.Result.Query[0 : len(cfg.Result.Query)-1] // TRIM THE LAST `,`
+	cfg.Result.Query = cfg.Result.Query[0 : len(cfg.Result.Query)-2]
 }
 
-func (cfg QueryConfig) deleteBuilder() {
+func (cfg *QueryConfig) deleteBuilder() {
 	cfg.Result.Query += `SELECT FROM ` + cfg.Table
 }
 
-func (cfg QueryConfig) whereBuilder(param map[string]interface{}) {
+func (cfg *QueryConfig) whereBuilder(param map[string]interface{}) {
 	c := 0
 
 	if len(param) > 0 {
@@ -131,12 +138,12 @@ func (cfg QueryConfig) whereBuilder(param map[string]interface{}) {
 					c++
 				}
 			}
-			cfg.Result.Query = cfg.Result.Query[0 : len(cfg.Result.Query)-4] // TRIM THE LAST `AND `
+			cfg.Result.Query = cfg.Result.Query[0 : len(cfg.Result.Query)-4]
 		}
 	}
 }
 
-func (cfg QueryConfig) getQuestionMark() (questionMark string) {
+func (cfg *QueryConfig) getQuestionMark() (questionMark string) {
 	switch cfg.TechStack {
 	case "oracle":
 		questionMark = ":"
