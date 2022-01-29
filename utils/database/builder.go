@@ -120,6 +120,9 @@ func (cfg *QueryConfig) whereBuilder(param map[string]interface{}) {
 	for i, x := range param {
 		if i == "AND" {
 			for g, v := range x.(map[string]interface{}) {
+				if v == "" {
+					continue
+				}
 				if g == "IN" {
 					for o, f := range v.(map[string]interface{}) {
 						r := len(f.([]string)) - 1
