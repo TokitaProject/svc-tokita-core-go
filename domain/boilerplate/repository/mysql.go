@@ -5,8 +5,8 @@ import (
 	"log"
 
 	"svc-boilerplate-golang/domain/boilerplate"
-	"svc-boilerplate-golang/models"
 	"svc-boilerplate-golang/utils/database"
+	"svc-boilerplate-golang/valueobject"
 )
 
 type mysqlBoilerplateRepository struct {
@@ -21,8 +21,8 @@ func (db *mysqlBoilerplateRepository) GenerateUUID() (uuid uint64, err error) {
 	return database.GenerateUUID(db.sqlDB)
 }
 
-func (db *mysqlBoilerplateRepository) GetAll(param map[string]interface{}) (response []models.Boilerplate, err error) {
-	var result models.Boilerplate
+func (db *mysqlBoilerplateRepository) GetAll(param map[string]interface{}) (response []valueobject.Boilerplate, err error) {
+	var result valueobject.Boilerplate
 
 	builder := database.QueryConfig{
 		TableInfo: database.TableInfo{
@@ -64,7 +64,7 @@ func (db *mysqlBoilerplateRepository) GetAll(param map[string]interface{}) (resp
 	return
 }
 
-func (db *mysqlBoilerplateRepository) GetOne(param map[string]interface{}) (response models.Boilerplate, err error) {
+func (db *mysqlBoilerplateRepository) GetOne(param map[string]interface{}) (response valueobject.Boilerplate, err error) {
 	builder := database.QueryConfig{
 		TableInfo: database.TableInfo{
 			TechStack: "mysql",

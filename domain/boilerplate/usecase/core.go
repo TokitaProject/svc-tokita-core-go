@@ -2,7 +2,7 @@ package usecase
 
 import (
 	"svc-boilerplate-golang/domain/boilerplate"
-	"svc-boilerplate-golang/models"
+	"svc-boilerplate-golang/valueobject"
 )
 
 type boilerplateUsecase struct {
@@ -15,17 +15,17 @@ func NewBoilerplateUsecase(mysql boilerplate.Repository) boilerplate.Usecase {
 	}
 }
 
-func (boilerplate boilerplateUsecase) GetAll(param map[string]interface{}) (response []models.Boilerplate, err error) {
+func (boilerplate boilerplateUsecase) GetAll(param map[string]interface{}) (response []valueobject.Boilerplate, err error) {
 	response, err = boilerplate.mysqlRepository.GetAll(param)
 	return
 }
 
-func (boilerplate boilerplateUsecase) GetOne(param map[string]interface{}) (response models.Boilerplate, err error) {
+func (boilerplate boilerplateUsecase) GetOne(param map[string]interface{}) (response valueobject.Boilerplate, err error) {
 	response, err = boilerplate.mysqlRepository.GetOne(param)
 	return
 }
 
-func (boilerplate boilerplateUsecase) Store(payload models.BoilerplatePayloadInsert) (IDs []uint64, err error) {
+func (boilerplate boilerplateUsecase) Store(payload valueobject.BoilerplatePayloadInsert) (IDs []uint64, err error) {
 	var (
 		data []interface{}
 	)

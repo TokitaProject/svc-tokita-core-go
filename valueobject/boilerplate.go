@@ -1,4 +1,4 @@
-package models
+package valueobject
 
 import (
 	"svc-boilerplate-golang/entity"

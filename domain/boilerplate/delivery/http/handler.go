@@ -6,9 +6,9 @@ import (
 	"github.com/gin-gonic/gin"
 
 	"svc-boilerplate-golang/domain/boilerplate"
-	"svc-boilerplate-golang/models"
 	"svc-boilerplate-golang/utils/config"
 	"svc-boilerplate-golang/utils/message"
+	"svc-boilerplate-golang/valueobject"
 )
 
 type HttpBoilerplateHandler struct {
@@ -83,7 +83,7 @@ func (handler *HttpBoilerplateHandler) GetByUUID(ctx *gin.Context) {
 }
 
 func (handler *HttpBoilerplateHandler) Store(ctx *gin.Context) {
-	var payload models.BoilerplatePayloadInsert
+	var payload valueobject.BoilerplatePayloadInsert
 
 	err := ctx.ShouldBindJSON(&payload)
 
@@ -103,7 +103,7 @@ func (handler *HttpBoilerplateHandler) Store(ctx *gin.Context) {
 }
 
 func (handler *HttpBoilerplateHandler) Update(ctx *gin.Context) {
-	var payload models.BoilerplatePayloadUpdate
+	var payload valueobject.BoilerplatePayloadUpdate
 
 	err := ctx.ShouldBindJSON(&payload)
 
@@ -133,7 +133,7 @@ func (handler *HttpBoilerplateHandler) Update(ctx *gin.Context) {
 }
 
 func (handler *HttpBoilerplateHandler) Delete(ctx *gin.Context) {
-	var payload models.BoilerplatePayloadDetele
+	var payload valueobject.BoilerplatePayloadDetele
 
 	err := ctx.ShouldBindJSON(&payload)
 
