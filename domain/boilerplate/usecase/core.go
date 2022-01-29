@@ -26,9 +26,7 @@ func (boilerplate boilerplateUsecase) GetOne(param map[string]interface{}) (resp
 }
 
 func (boilerplate boilerplateUsecase) Store(payload valueobject.BoilerplatePayloadInsert) (IDs []uint64, err error) {
-	var (
-		data []interface{}
-	)
+	var data []interface{}
 
 	// PREPARE THE DATA AND INSERT TO "data"
 	for _, x := range payload.Data {
@@ -45,12 +43,30 @@ func (boilerplate boilerplateUsecase) Store(payload valueobject.BoilerplatePaylo
 	return
 }
 
-func (boilerplate boilerplateUsecase) Update(param map[string]interface{}, data map[string]interface{}) (err error) {
-	err = boilerplate.mysqlRepository.Update(param, data)
+func (boilerplate boilerplateUsecase) Update(payload valueobject.BoilerplatePayloadUpdate) (err error) {
+	for _, x := range payload.Data {
+		var param = map[string]interface{}{
+			"AND": map[string]interface{}{
+				"flag": x.Param.Flag,
+			},
+		}
+
+		var data = map[string]interface{}{
+			"column": x.Body.Column,
+		}
+		err = boilerplate.mysqlRepository.Update(param, data)
+	}
 	return
 }
 
-func (boilerplate boilerplateUsecase) Delete(param map[string]interface{}) (err error) {
-	err = boilerplate.mysqlRepository.Delete(param)
+func (boilerplate boilerplateUsecase) Delete(payload valueobject.BoilerplatePayloadDelete) (err error) {
+	for _, x := range payload.Param {
+		var param = map[string]interface{}{
+			"AND": map[string]interface{}{
+				"flag": x.Flag,
+			},
+		}
+		err = boilerplate.mysqlRepository.Delete(param)
+	}
 	return
 }

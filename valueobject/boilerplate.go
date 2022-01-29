@@ -19,18 +19,26 @@ type BoilerplateDataInsert struct {
 }
 
 type BoilerplatePayloadUpdate struct {
+	Data []BoilerplateDataUpdate `json:"data" binding:"required"`
+}
+
+type BoilerplateDataUpdate struct {
 	Param BoilerplateParamUpdate `json:"param" binding:"required"`
-	Data  BoilerplateDataUpdate  `json:"data" binding:"required"`
+	Body  BoilerplateBodyUpdate  `json:"body" binding:"required"`
 }
 
 type BoilerplateParamUpdate struct {
 	Flag string `json:"flag"`
 }
 
-type BoilerplateDataUpdate struct {
+type BoilerplateBodyUpdate struct {
 	entity.Boilerplate
 }
 
-type BoilerplatePayloadDetele struct {
-	Flag string `json:"flag" binding:"required"`
+type BoilerplatePayloadDelete struct {
+	Param []BoilerplateParamUpdate `json:"param" binding:"required"`
+}
+
+type BoilerplateParamDelete struct {
+	Flag string `json:"flag"`
 }

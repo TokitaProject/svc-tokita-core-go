@@ -112,28 +112,18 @@ func (handler *HttpBoilerplateHandler) Update(ctx *gin.Context) {
 		return
 	}
 
-	var param = map[string]interface{}{
-		"AND": map[string]interface{}{
-			"flag": payload.Param.Flag,
-		},
-	}
-
-	var data = map[string]interface{}{
-		"column": payload.Data.Column,
-	}
-
-	err = handler.boilerplateUsecase.Update(param, data)
+	err = handler.boilerplateUsecase.Update(payload)
 
 	if err != nil {
 		message.ReturnInternalServerError(ctx)
 		return
 	}
 
-	message.ReturnOk(ctx, data, param)
+	message.ReturnSuccessUpdate(ctx, "Berhasil melakukan pembaharuan data")
 }
 
 func (handler *HttpBoilerplateHandler) Delete(ctx *gin.Context) {
-	var payload valueobject.BoilerplatePayloadDetele
+	var payload valueobject.BoilerplatePayloadDelete
 
 	err := ctx.ShouldBindJSON(&payload)
 
@@ -142,13 +132,7 @@ func (handler *HttpBoilerplateHandler) Delete(ctx *gin.Context) {
 		return
 	}
 
-	var param = map[string]interface{}{
-		"AND": map[string]interface{}{
-			"flag": payload.Flag,
-		},
-	}
-
-	err = handler.boilerplateUsecase.Delete(param)
+	err = handler.boilerplateUsecase.Delete(payload)
 
 	if err != nil {
 		message.ReturnInternalServerError(ctx)

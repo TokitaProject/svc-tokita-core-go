@@ -35,3 +35,9 @@ func ReturnSuccessInsert(ctx *gin.Context, data interface{}) {
 		"data": data,
 	})
 }
+
+func ReturnSuccessUpdate(ctx *gin.Context, message string) {
+	ctx.JSON(http.StatusOK, gin.H{
+		"message": message,
+	})
+}

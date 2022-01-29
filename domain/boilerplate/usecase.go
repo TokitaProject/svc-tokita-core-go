@@ -6,6 +6,6 @@ type Usecase interface {
 	GetAll(param map[string]interface{}) (response []valueobject.Boilerplate, err error)
 	GetOne(param map[string]interface{}) (response valueobject.Boilerplate, err error)
 	Store(payload valueobject.BoilerplatePayloadInsert) (IDs []uint64, err error)
-	Update(param map[string]interface{}, data map[string]interface{}) error
-	Delete(param map[string]interface{}) error
+	Update(payload valueobject.BoilerplatePayloadUpdate) error
+	Delete(payload valueobject.BoilerplatePayloadDelete) error
 }
