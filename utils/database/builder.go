@@ -112,19 +112,18 @@ func (cfg *QueryConfig) deleteBuilder() {
 
 func (cfg *QueryConfig) whereBuilder(param map[string]interface{}) {
 	c := 0
+	found := false
 
-	if len(param) > 0 {
-		cfg.Result.Query += ` WHERE `
-	}
+	cfg.Result.Query += ` WHERE `
 
 	for i, x := range param {
 		if i == "AND" {
 			for g, v := range x.(map[string]interface{}) {
-				if v == "" {
-					continue
-				}
 				if g == "IN" {
 					for o, f := range v.(map[string]interface{}) {
+						if f.([]string)[0] == "" {
+							continue
+						}
 						r := len(f.([]string)) - 1
 						if r < 0 {
 							r = 0
@@ -134,15 +133,26 @@ func (cfg *QueryConfig) whereBuilder(param map[string]interface{}) {
 							cfg.Result.Value = append(cfg.Result.Value, w)
 						}
 						c++
+						found = true
 					}
 				} else {
+					if v == "" {
+						continue
+					}
 					cfg.Result.Query += g + ` = ` + cfg.getQuestionMark() + ` AND `
 					cfg.Result.Value = append(cfg.Result.Value, v)
 					c++
+					found = true
 				}
 			}
-			cfg.Result.Query = cfg.Result.Query[0 : len(cfg.Result.Query)-4]
+			if found {
+				cfg.Result.Query = cfg.Result.Query[0 : len(cfg.Result.Query)-4]
+			}
 		}
+	}
+
+	if !found {
+		cfg.Result.Query = cfg.Result.Query[0 : len(cfg.Result.Query)-7]
 	}
 }
 
