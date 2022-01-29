@@ -107,7 +107,7 @@ func (cfg *QueryConfig) updateBuilder() {
 }
 
 func (cfg *QueryConfig) deleteBuilder() {
-	cfg.Result.Query += `SELECT FROM ` + cfg.Table
+	cfg.Result.Query += `DELETE FROM ` + cfg.Table
 }
 
 func (cfg *QueryConfig) whereBuilder(param map[string]interface{}) {
