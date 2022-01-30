@@ -6,10 +6,10 @@ import (
 )
 
 type boilerplateUsecase struct {
-	mysqlRepository boilerplate.Repository
+	mysqlRepository boilerplate.MysqlRepository
 }
 
-func NewBoilerplateUsecase(mysql boilerplate.Repository) boilerplate.Usecase {
+func NewBoilerplateUsecase(mysql boilerplate.MysqlRepository) boilerplate.Usecase {
 	return &boilerplateUsecase{
 		mysqlRepository: mysql,
 	}

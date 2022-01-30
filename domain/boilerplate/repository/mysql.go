@@ -13,7 +13,7 @@ type mysqlBoilerplateRepository struct {
 	sqlDB *sql.DB
 }
 
-func NewMysqlBoilerplateRepository(databaseConnection *sql.DB) boilerplate.Repository {
+func NewMysqlBoilerplateRepository(databaseConnection *sql.DB) boilerplate.MysqlRepository {
 	return &mysqlBoilerplateRepository{databaseConnection}
 }
 

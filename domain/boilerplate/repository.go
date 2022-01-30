@@ -2,7 +2,7 @@ package boilerplate
 
 import "svc-boilerplate-golang/valueobject"
 
-type Repository interface {
+type MysqlRepository interface {
 	GenerateUUID() (uuid uint64, err error)
 	GetAll(param map[string]interface{}) (response []valueobject.Boilerplate, err error)
 	GetOne(param map[string]interface{}) (response valueobject.Boilerplate, err error)
