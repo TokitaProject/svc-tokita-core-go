@@ -1,9 +1,6 @@
 package database
 
-import (
-	"strconv"
-	"strings"
-)
+import "strconv"
 
 type OnSelect struct {
 	Column []string
@@ -90,7 +87,12 @@ func (cfg *QueryConfig) insertBuilder() {
 			count = 0
 		}
 
-		cfg.Result.Query += `(` + cfg.getQuestionMark() + strings.Repeat(","+cfg.getQuestionMark(), count) + `),`
+		cfg.Result.Query += `(`
+		for i := 0; i < count; i++ {
+			cfg.Result.Query += cfg.getQuestionMark() + `, `
+		}
+		cfg.Result.Query = cfg.Result.Query[0 : len(cfg.Result.Query)-2]
+		cfg.Result.Query += `),`
 
 		cfg.Result.Value = append(cfg.Result.Value, x.([]interface{})...)
 	}
@@ -131,7 +133,14 @@ func (cfg *QueryConfig) whereBuilder(param map[string]interface{}) {
 						if r < 0 {
 							r = 0
 						}
-						cfg.Result.Query += o + ` IN (` + cfg.getQuestionMark() + strings.Repeat(","+cfg.getQuestionMark(), r) + `) AND `
+
+						cfg.Result.Query += o + ` IN (`
+						for i := 0; i < r; i++ {
+							cfg.Result.Query += cfg.getQuestionMark() + `, `
+						}
+						cfg.Result.Query = cfg.Result.Query[0 : len(cfg.Result.Query)-2]
+						cfg.Result.Query += `) AND `
+
 						for _, w := range f.([]string) {
 							cfg.Result.Value = append(cfg.Result.Value, w)
 						}
