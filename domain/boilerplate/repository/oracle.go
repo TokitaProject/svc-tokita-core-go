@@ -104,7 +104,7 @@ func (db *oracleBoilerplateRepository) Store(data []interface{}) (err error) {
 			Action:    "insert",
 		},
 		OnInsert: database.OnInsert{
-			Column: []string{"id", "uuid"},
+			Column: []string{"id"},
 			Data:   data,
 		},
 	}
