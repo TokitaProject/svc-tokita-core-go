@@ -1,6 +1,7 @@
 package database
 
 import (
+	"strconv"
 	"strings"
 )
 
@@ -41,9 +42,11 @@ type QueryConfig struct {
 	OnUpdate
 	OnDelete
 	Result
+	counter int
 }
 
 func (cfg *QueryConfig) QueryBuilder() {
+	cfg.counter = 0
 	if cfg.Action == "select" {
 		cfg.selectBuilder()
 		cfg.whereBuilder(cfg.OnSelect.Where)
@@ -159,7 +162,8 @@ func (cfg *QueryConfig) whereBuilder(param map[string]interface{}) {
 func (cfg *QueryConfig) getQuestionMark() (questionMark string) {
 	switch cfg.TechStack {
 	case "oracle":
-		questionMark = ":"
+		questionMark = ":" + strconv.Itoa(cfg.counter)
+		cfg.counter++
 	case "mysql":
 		questionMark = "?"
 	}
