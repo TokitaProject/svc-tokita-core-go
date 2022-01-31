@@ -171,7 +171,7 @@ func (cfg *QueryConfig) whereBuilder(param map[string]interface{}) {
 func (cfg *QueryConfig) getQuestionMark() (questionMark string) {
 	switch cfg.TechStack {
 	case "oracle":
-		questionMark = ":" + strconv.Itoa(cfg.counter)
+		questionMark = ":x" + strconv.Itoa(cfg.counter)
 		cfg.counter++
 	case "mysql":
 		questionMark = "?"
