@@ -71,17 +71,20 @@ Environtment pada deployment.yaml memiliki variabel yang sama dengan **run_examp
 1. **ORACLE_DB_SERVICE_NAME** dan **ORACLE_DB_HOST**. Bila kamu menggunakan koneksi basis data oracle, SERVICE_NAME merupakan kode supaya service kamu dapat terhubung dengan basis data yang tepat. Berikut beberapa SERVICE_NAME berserta HOST oracle pada UII:
 
 **PRODUCTION**
-**SERVICE_NAME**: TRXAKADEMIK; **HOST**: 192.168.8.11;
-**SERVICE_NAME**: TRXPEGAWAI; **HOST**: 192.168.8.12;
-**SERVICE_NAME**: WHUTAMA; **HOST**: 192.168.8.13;
-**SERVICE_NAME**: TRXPMB; **HOST**: 192.168.8.17;
-**SERVICE_NAME**: TRXCBT; **HOST**: 192.168.8.51;
+
+- **SERVICE_NAME**: TRXAKADEMIK; **HOST**: 192.168.8.11;
+- **SERVICE_NAME**: TRXPEGAWAI; **HOST**: 192.168.8.12;
+- **SERVICE_NAME**: WHUTAMA; **HOST**: 192.168.8.13;
+- **SERVICE_NAME**: TRXPMB; **HOST**: 192.168.8.17;
+- **SERVICE_NAME**: TRXCBT; **HOST**: 192.168.8.51;
 
 **DEV**
-**SERVICE_NAME**: TRANSDB1; **HOST**: 10.30.21.17;
+
+- **SERVICE_NAME**: TRANSDB1; **HOST**: 10.30.21.17;
 
 **STAGING**
-**SERVICE_NAME**: TRANSMK; **HOST**: 10.30.21.18;
+
+- **SERVICE_NAME**: TRANSMK; **HOST**: 10.30.21.18;
 
 2. **GIN_MODE**. GIN_MODE merupakan mode server pada golang http. Terdapat dua value pada konfigurasi ini. **DEBUG** untuk dev dan staging. **RELEASE** untuk production.
 
