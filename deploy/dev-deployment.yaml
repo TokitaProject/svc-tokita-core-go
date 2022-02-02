@@ -50,6 +50,18 @@ spec:
               value: "6033"
             - name: DB_NAME
               value: "boilerplate"
+            - name: ORACLE_DB_DRIVERNAME
+              value: "godror"
+            - name: ORACLE_DB_USERNAME
+              value: "keubank"
+            - name: ORACLE_DB_PASSWORD
+              value: "testing#"
+            - name: ORACLE_DB_HOST
+              value: "10.30.21.17"
+            - name: ORACLE_DB_PORT
+              value: "1521"
+            - name: ORACLE_DB_SERVICE_NAME
+              value: "transdb1"
             - name: PORT
               value: "80"
             - name: GIN_MODE
