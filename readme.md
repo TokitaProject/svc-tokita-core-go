@@ -68,7 +68,9 @@ Bila kamu belum menggunakan brew, silakan install brew terlebih dahulu dengan [M
 
 Environtment pada deployment.yaml memiliki variabel yang sama dengan **run_example.sh**. Hanya saja, value-nya berbeda. Beberapa hal berikut ini penting untuk diperhatikan:
 
-1. **ORACLE_DB_SERVICE_NAME** dan **ORACLE_DB_HOST**. Bila kamu menggunakan koneksi basis data oracle, SERVICE_NAME merupakan kode supaya service kamu dapat terhubung dengan basis data yang tepat. Berikut beberapa SERVICE_NAME berserta HOST oracle pada UII:
+1. **GIN_MODE**. GIN_MODE merupakan mode server pada golang http. Terdapat dua value pada konfigurasi ini. **DEBUG** untuk dev dan staging. **RELEASE** untuk production.
+
+2. **ORACLE_DB_SERVICE_NAME** dan **ORACLE_DB_HOST**. Bila kamu menggunakan koneksi basis data oracle, SERVICE_NAME merupakan kode supaya service kamu dapat terhubung dengan basis data yang tepat. Berikut beberapa SERVICE_NAME berserta HOST oracle pada UII:
 
 **PRODUCTION**
 
@@ -85,8 +87,6 @@ Environtment pada deployment.yaml memiliki variabel yang sama dengan **run_examp
 **STAGING**
 
 - **SERVICE_NAME**: TRANSMK; **HOST**: 10.30.21.18;
-
-2. **GIN_MODE**. GIN_MODE merupakan mode server pada golang http. Terdapat dua value pada konfigurasi ini. **DEBUG** untuk dev dan staging. **RELEASE** untuk production.
 
 ## Mengubah boilerplate menjadi service
 
