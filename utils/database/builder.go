@@ -47,6 +47,9 @@ func (cfg *QueryConfig) QueryBuilder() {
 	if cfg.Action == "select" {
 		cfg.selectBuilder()
 		cfg.whereBuilder(cfg.OnSelect.Where)
+	} else if cfg.Action == "select-distinct" {
+		cfg.selectDistinctBuilder()
+		cfg.whereBuilder(cfg.OnSelect.Where)
 	} else if cfg.Action == "insert" {
 		cfg.insertBuilder()
 	} else if cfg.Action == "update" {
@@ -60,6 +63,18 @@ func (cfg *QueryConfig) QueryBuilder() {
 
 func (cfg *QueryConfig) selectBuilder() {
 	cfg.Result.Query += `SELECT `
+
+	for _, x := range cfg.OnSelect.Column {
+		cfg.Result.Query += x + ", "
+	}
+
+	cfg.Result.Query = cfg.Result.Query[0 : len(cfg.Result.Query)-2]
+
+	cfg.Result.Query += ` FROM ` + cfg.Table
+}
+
+func (cfg *QueryConfig) selectDistinctBuilder() {
+	cfg.Result.Query += `SELECT DISTINCT `
 
 	for _, x := range cfg.OnSelect.Column {
 		cfg.Result.Query += x + ", "
