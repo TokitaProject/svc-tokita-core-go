@@ -36,7 +36,7 @@ type BoilerplateBodyUpdate struct {
 }
 
 type BoilerplatePayloadDelete struct {
-	Param []BoilerplateParamUpdate `json:"param" binding:"required"`
+	Param []BoilerplateParamDelete `json:"param" binding:"required"`
 }
 
 type BoilerplateParamDelete struct {
