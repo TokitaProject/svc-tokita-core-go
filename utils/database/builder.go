@@ -51,7 +51,11 @@ func (cfg *QueryConfig) QueryBuilder() {
 		cfg.selectDistinctBuilder()
 		cfg.whereBuilder(cfg.OnSelect.Where)
 	} else if cfg.Action == "insert" {
-		cfg.insertBuilder()
+		if cfg.TechStack == "oracle" && len(cfg.OnInsert.Data) > 1 {
+			cfg.insertOracleBatchBuilder()
+		} else {
+			cfg.insertBuilder()
+		}
 	} else if cfg.Action == "update" {
 		cfg.updateBuilder()
 		cfg.whereBuilder(cfg.OnUpdate.Where)
@@ -96,7 +100,7 @@ func (cfg *QueryConfig) insertBuilder() {
 	cfg.Result.Query += `) VALUES `
 
 	for _, x := range cfg.OnInsert.Data {
-		count := len(x.([]interface{})) - 1
+		count := len(x.([]interface{}))
 
 		if count < 0 {
 			count = 0
@@ -113,6 +117,38 @@ func (cfg *QueryConfig) insertBuilder() {
 	}
 
 	cfg.Result.Query = cfg.Result.Query[0 : len(cfg.Result.Query)-1]
+}
+
+func (cfg *QueryConfig) insertOracleBatchBuilder() {
+	cfg.Result.Query += `INSERT ALL`
+
+	for _, x := range cfg.OnInsert.Data {
+		count := len(x.([]interface{}))
+
+		if count < 0 {
+			count = 0
+		}
+
+		cfg.Result.Query += ` INTO ` + cfg.Table + `(`
+
+		for _, x := range cfg.OnInsert.Column {
+			cfg.Result.Query += x + `, `
+		}
+
+		cfg.Result.Query = cfg.Result.Query[0 : len(cfg.Result.Query)-2]
+		cfg.Result.Query += `) VALUES `
+
+		cfg.Result.Query += `(`
+		for i := 0; i < count; i++ {
+			cfg.Result.Query += cfg.getQuestionMark() + `, `
+		}
+		cfg.Result.Query = cfg.Result.Query[0 : len(cfg.Result.Query)-2]
+		cfg.Result.Query += `) `
+
+		cfg.Result.Value = append(cfg.Result.Value, x.([]interface{})...)
+	}
+
+	cfg.Result.Query += `SELECT * FROM dual`
 }
 
 func (cfg *QueryConfig) updateBuilder() {
