@@ -180,7 +180,7 @@ func (cfg *QueryConfig) whereBuilder(param map[string]interface{}) {
 						if f.([]string)[0] == "" {
 							continue
 						}
-						r := len(f.([]string)) - 1
+						r := len(f.([]string))
 						if r < 0 {
 							r = 0
 						}
