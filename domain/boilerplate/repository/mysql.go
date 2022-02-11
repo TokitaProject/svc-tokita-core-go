@@ -90,13 +90,6 @@ func (db *mysqlBoilerplateRepository) GetOne(param map[string]interface{}) (resp
 }
 
 func (db *mysqlBoilerplateRepository) Store(column []string, data []interface{}) (err error) {
-	tx, err := db.sqlDB.Begin()
-
-	if err != nil {
-		log.Println(err.Error())
-		return
-	}
-
 	builder := database.QueryConfig{
 		TableInfo: database.TableInfo{
 			TechStack: "mysql",
@@ -108,40 +101,13 @@ func (db *mysqlBoilerplateRepository) Store(column []string, data []interface{})
 			Data:   data,
 		},
 	}
-
 	builder.QueryBuilder()
+	builder.ExecTransaction(db.sqlDB, builder)
 
-	statement, err := tx.Prepare(builder.Result.Query)
-
-	defer tx.Rollback()
-
-	if err != nil {
-		log.Println(err.Error())
-		return
-	}
-
-	defer statement.Close()
-
-	result, err := statement.Exec(builder.Result.Value...)
-
-	if err != nil {
-		log.Println(err.Error())
-		return
-	}
-
-	tx.Commit()
-	result.RowsAffected()
 	return
 }
 
 func (db *mysqlBoilerplateRepository) Update(param map[string]interface{}, data map[string]interface{}) (err error) {
-	tx, err := db.sqlDB.Begin()
-
-	if err != nil {
-		log.Println(err.Error())
-		return
-	}
-
 	builder := database.QueryConfig{
 		TableInfo: database.TableInfo{
 			TechStack: "mysql",
@@ -153,40 +119,13 @@ func (db *mysqlBoilerplateRepository) Update(param map[string]interface{}, data 
 			Data:  data,
 		},
 	}
-
 	builder.QueryBuilder()
+	builder.ExecTransaction(db.sqlDB, builder)
 
-	statement, err := tx.Prepare(builder.Result.Query)
-
-	defer tx.Rollback()
-
-	if err != nil {
-		log.Println(err.Error())
-		return
-	}
-
-	defer statement.Close()
-
-	result, err := statement.Exec(builder.Result.Value...)
-
-	if err != nil {
-		log.Println(err.Error())
-		return
-	}
-
-	tx.Commit()
-	result.RowsAffected()
 	return
 }
 
 func (db *mysqlBoilerplateRepository) Delete(param map[string]interface{}) (err error) {
-	tx, err := db.sqlDB.Begin()
-
-	if err != nil {
-		log.Println(err.Error())
-		return
-	}
-
 	builder := database.QueryConfig{
 		TableInfo: database.TableInfo{
 			TechStack: "mysql",
@@ -197,28 +136,8 @@ func (db *mysqlBoilerplateRepository) Delete(param map[string]interface{}) (err 
 			Where: param,
 		},
 	}
-
 	builder.QueryBuilder()
+	builder.ExecTransaction(db.sqlDB, builder)
 
-	statement, err := tx.Prepare(builder.Result.Query)
-
-	defer tx.Rollback()
-
-	if err != nil {
-		log.Println(err.Error())
-		return
-	}
-
-	defer statement.Close()
-
-	result, err := statement.Exec(builder.Result.Value...)
-
-	if err != nil {
-		log.Println(err.Error())
-		return
-	}
-
-	tx.Commit()
-	result.RowsAffected()
 	return
 }

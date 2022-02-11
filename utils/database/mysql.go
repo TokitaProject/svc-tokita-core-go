@@ -35,10 +35,10 @@ func SetupMysqlDatabaseConnection() (db *sql.DB) {
 	return
 }
 
-func GenerateUUID(tx *sql.DB) (uuid uint64, err error) {
+func GenerateUUID(db *sql.DB) (uuid uint64, err error) {
 	uuid = 0
 
-	queryGetUUID := tx.QueryRow(`SELECT UUID_SHORT()`)
+	queryGetUUID := db.QueryRow(`SELECT UUID_SHORT()`)
 
 	err = queryGetUUID.Scan(
 		&uuid,

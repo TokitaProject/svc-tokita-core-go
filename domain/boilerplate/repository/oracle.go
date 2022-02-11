@@ -90,13 +90,6 @@ func (db *oracleBoilerplateRepository) GetOne(param map[string]interface{}) (res
 }
 
 func (db *oracleBoilerplateRepository) Store(column []string, data []interface{}) (err error) {
-	tx, err := db.sqlDB.Begin()
-
-	if err != nil {
-		log.Println(err.Error())
-		return
-	}
-
 	builder := database.QueryConfig{
 		TableInfo: database.TableInfo{
 			TechStack: "oracle",
@@ -108,40 +101,13 @@ func (db *oracleBoilerplateRepository) Store(column []string, data []interface{}
 			Data:   data,
 		},
 	}
-
 	builder.QueryBuilder()
+	builder.ExecTransaction(db.sqlDB, builder)
 
-	statement, err := tx.Prepare(builder.Result.Query)
-
-	defer tx.Rollback()
-
-	if err != nil {
-		log.Println(err.Error())
-		return
-	}
-
-	defer statement.Close()
-
-	result, err := statement.Exec(builder.Result.Value...)
-
-	if err != nil {
-		log.Println(err.Error())
-		return
-	}
-
-	tx.Commit()
-	result.RowsAffected()
 	return
 }
 
 func (db *oracleBoilerplateRepository) Update(param map[string]interface{}, data map[string]interface{}) (err error) {
-	tx, err := db.sqlDB.Begin()
-
-	if err != nil {
-		log.Println(err.Error())
-		return
-	}
-
 	builder := database.QueryConfig{
 		TableInfo: database.TableInfo{
 			TechStack: "oracle",
@@ -153,40 +119,13 @@ func (db *oracleBoilerplateRepository) Update(param map[string]interface{}, data
 			Data:  data,
 		},
 	}
-
 	builder.QueryBuilder()
+	builder.ExecTransaction(db.sqlDB, builder)
 
-	statement, err := tx.Prepare(builder.Result.Query)
-
-	defer tx.Rollback()
-
-	if err != nil {
-		log.Println(err.Error())
-		return
-	}
-
-	defer statement.Close()
-
-	result, err := statement.Exec(builder.Result.Value...)
-
-	if err != nil {
-		log.Println(err.Error())
-		return
-	}
-
-	tx.Commit()
-	result.RowsAffected()
 	return
 }
 
 func (db *oracleBoilerplateRepository) Delete(param map[string]interface{}) (err error) {
-	tx, err := db.sqlDB.Begin()
-
-	if err != nil {
-		log.Println(err.Error())
-		return
-	}
-
 	builder := database.QueryConfig{
 		TableInfo: database.TableInfo{
 			TechStack: "oracle",
@@ -197,28 +136,8 @@ func (db *oracleBoilerplateRepository) Delete(param map[string]interface{}) (err
 			Where: param,
 		},
 	}
-
 	builder.QueryBuilder()
+	builder.ExecTransaction(db.sqlDB, builder)
 
-	statement, err := tx.Prepare(builder.Result.Query)
-
-	defer tx.Rollback()
-
-	if err != nil {
-		log.Println(err.Error())
-		return
-	}
-
-	defer statement.Close()
-
-	result, err := statement.Exec(builder.Result.Value...)
-
-	if err != nil {
-		log.Println(err.Error())
-		return
-	}
-
-	tx.Commit()
-	result.RowsAffected()
 	return
 }

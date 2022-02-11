@@ -28,7 +28,7 @@ func (boilerplate boilerplateUsecase) GetOne(param map[string]interface{}) (resp
 func (boilerplate boilerplateUsecase) Store(payload valueobject.BoilerplatePayloadInsert) (IDs []uint64, err error) {
 	var data []interface{}
 
-	// PREPARE THE DATA AND INSERT TO "data"
+	// Prepare the data and insert into []interface{}
 	for _, x := range payload.Data {
 		ID, _ := boilerplate.mysqlRepository.GenerateUUID()
 		IDs = append(IDs, ID)
@@ -56,6 +56,7 @@ func (boilerplate boilerplateUsecase) Update(payload valueobject.BoilerplatePayl
 		var data = map[string]interface{}{
 			"column": x.Body.Column,
 		}
+
 		err = boilerplate.mysqlRepository.Update(param, data)
 	}
 	return
@@ -68,6 +69,7 @@ func (boilerplate boilerplateUsecase) Delete(payload valueobject.BoilerplatePayl
 				"flag": x.Flag,
 			},
 		}
+
 		err = boilerplate.mysqlRepository.Delete(param)
 	}
 	return
