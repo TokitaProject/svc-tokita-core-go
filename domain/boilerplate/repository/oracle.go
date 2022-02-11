@@ -113,9 +113,10 @@ func (db *oracleBoilerplateRepository) Store(column []string, data []interface{}
 
 	statement, err := tx.Prepare(builder.Result.Query)
 
+	defer tx.Rollback()
+
 	if err != nil {
 		log.Println(err.Error())
-		tx.Rollback()
 		return
 	}
 
@@ -125,7 +126,6 @@ func (db *oracleBoilerplateRepository) Store(column []string, data []interface{}
 
 	if err != nil {
 		log.Println(err.Error())
-		tx.Rollback()
 		return
 	}
 
@@ -158,9 +158,10 @@ func (db *oracleBoilerplateRepository) Update(param map[string]interface{}, data
 
 	statement, err := tx.Prepare(builder.Result.Query)
 
+	defer tx.Rollback()
+
 	if err != nil {
 		log.Println(err.Error())
-		tx.Rollback()
 		return
 	}
 
@@ -170,7 +171,6 @@ func (db *oracleBoilerplateRepository) Update(param map[string]interface{}, data
 
 	if err != nil {
 		log.Println(err.Error())
-		tx.Rollback()
 		return
 	}
 
@@ -202,9 +202,10 @@ func (db *oracleBoilerplateRepository) Delete(param map[string]interface{}) (err
 
 	statement, err := tx.Prepare(builder.Result.Query)
 
+	defer tx.Rollback()
+
 	if err != nil {
 		log.Println(err.Error())
-		tx.Rollback()
 		return
 	}
 
@@ -214,7 +215,6 @@ func (db *oracleBoilerplateRepository) Delete(param map[string]interface{}) (err
 
 	if err != nil {
 		log.Println(err.Error())
-		tx.Rollback()
 		return
 	}
 
