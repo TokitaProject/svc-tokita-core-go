@@ -2,6 +2,7 @@ package usecase
 
 import (
 	"svc-boilerplate-golang/domain/boilerplate"
+	"svc-boilerplate-golang/utils/database"
 	"svc-boilerplate-golang/valueobject"
 )
 
@@ -26,7 +27,10 @@ func (boilerplate boilerplateUsecase) GetOne(param map[string]interface{}) (resp
 }
 
 func (boilerplate boilerplateUsecase) Store(payload valueobject.BoilerplatePayloadInsert) (IDs []uint64, err error) {
-	var data []interface{}
+	var (
+		data        []interface{}
+		queryConfig []database.QueryConfig
+	)
 
 	// Prepare the data and insert into []interface{}
 	for _, x := range payload.Data {
@@ -40,11 +44,15 @@ func (boilerplate boilerplateUsecase) Store(payload valueobject.BoilerplatePaylo
 	}
 	column := []string{"id"}
 
-	err = boilerplate.mysqlRepository.Store(column, data)
+	queryInsert := boilerplate.mysqlRepository.Store(column, data)
+	queryConfig = append(queryConfig, queryInsert)
+
+	boilerplate.mysqlRepository.Exec(queryConfig...)
 	return
 }
 
 func (boilerplate boilerplateUsecase) Update(payload valueobject.BoilerplatePayloadUpdate) (err error) {
+	var queryConfig []database.QueryConfig
 	for _, x := range payload.Data {
 		var param = map[string]interface{}{
 			"AND": map[string]interface{}{
@@ -54,19 +62,24 @@ func (boilerplate boilerplateUsecase) Update(payload valueobject.BoilerplatePayl
 		var data = map[string]interface{}{
 			"column": x.Body.Column,
 		}
-		err = boilerplate.mysqlRepository.Update(param, data)
+		queryUpdate := boilerplate.mysqlRepository.Update(param, data)
+		queryConfig = append(queryConfig, queryUpdate)
 	}
+	boilerplate.mysqlRepository.Exec(queryConfig...)
 	return
 }
 
 func (boilerplate boilerplateUsecase) Delete(payload valueobject.BoilerplatePayloadDelete) (err error) {
+	var queryConfig []database.QueryConfig
 	for _, x := range payload.Param {
 		var param = map[string]interface{}{
 			"AND": map[string]interface{}{
 				"flag": x.Flag,
 			},
 		}
-		err = boilerplate.mysqlRepository.Delete(param)
+		queryDelete := boilerplate.mysqlRepository.Delete(param)
+		queryConfig = append(queryConfig, queryDelete)
 	}
+	boilerplate.mysqlRepository.Exec(queryConfig...)
 	return
 }

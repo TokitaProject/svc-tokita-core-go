@@ -87,8 +87,8 @@ func (db *mysqlBoilerplateRepository) GetOne(param map[string]interface{}) (resp
 	return
 }
 
-func (db *mysqlBoilerplateRepository) Store(column []string, data []interface{}) (err error) {
-	builder := database.QueryConfig{
+func (db *mysqlBoilerplateRepository) Store(column []string, data []interface{}) (builder database.QueryConfig) {
+	builder = database.QueryConfig{
 		TableInfo: database.TableInfo{
 			TechStack: "mysql",
 			Table:     "boilerplate",
@@ -100,13 +100,11 @@ func (db *mysqlBoilerplateRepository) Store(column []string, data []interface{})
 		},
 	}
 	builder.QueryBuilder()
-	database.ExecTransaction(db.sqlDB, builder)
-
 	return
 }
 
-func (db *mysqlBoilerplateRepository) Update(param map[string]interface{}, data map[string]interface{}) (err error) {
-	builder := database.QueryConfig{
+func (db *mysqlBoilerplateRepository) Update(param map[string]interface{}, data map[string]interface{}) (builder database.QueryConfig) {
+	builder = database.QueryConfig{
 		TableInfo: database.TableInfo{
 			TechStack: "mysql",
 			Table:     "boilerplate",
@@ -118,13 +116,11 @@ func (db *mysqlBoilerplateRepository) Update(param map[string]interface{}, data 
 		},
 	}
 	builder.QueryBuilder()
-	database.ExecTransaction(db.sqlDB, builder)
-
 	return
 }
 
-func (db *mysqlBoilerplateRepository) Delete(param map[string]interface{}) (err error) {
-	builder := database.QueryConfig{
+func (db *mysqlBoilerplateRepository) Delete(param map[string]interface{}) (builder database.QueryConfig) {
+	builder = database.QueryConfig{
 		TableInfo: database.TableInfo{
 			TechStack: "mysql",
 			Table:     "boilerplate",
@@ -135,7 +131,10 @@ func (db *mysqlBoilerplateRepository) Delete(param map[string]interface{}) (err 
 		},
 	}
 	builder.QueryBuilder()
-	database.ExecTransaction(db.sqlDB, builder)
+	return
+}
 
+func (db *mysqlBoilerplateRepository) Exec(queryConfig ...database.QueryConfig) (err error) {
+	err = database.ExecTransaction(db.sqlDB, queryConfig...)
 	return
 }

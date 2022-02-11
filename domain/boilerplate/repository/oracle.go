@@ -87,8 +87,8 @@ func (db *oracleBoilerplateRepository) GetOne(param map[string]interface{}) (res
 	return
 }
 
-func (db *oracleBoilerplateRepository) Store(column []string, data []interface{}) (err error) {
-	builder := database.QueryConfig{
+func (db *oracleBoilerplateRepository) Store(column []string, data []interface{}) (builder database.QueryConfig) {
+	builder = database.QueryConfig{
 		TableInfo: database.TableInfo{
 			TechStack: "oracle",
 			Table:     "boilerplate",
@@ -100,13 +100,11 @@ func (db *oracleBoilerplateRepository) Store(column []string, data []interface{}
 		},
 	}
 	builder.QueryBuilder()
-	database.ExecTransaction(db.sqlDB, builder)
-
 	return
 }
 
-func (db *oracleBoilerplateRepository) Update(param map[string]interface{}, data map[string]interface{}) (err error) {
-	builder := database.QueryConfig{
+func (db *oracleBoilerplateRepository) Update(param map[string]interface{}, data map[string]interface{}) (builder database.QueryConfig) {
+	builder = database.QueryConfig{
 		TableInfo: database.TableInfo{
 			TechStack: "oracle",
 			Table:     "boilerplate",
@@ -118,13 +116,11 @@ func (db *oracleBoilerplateRepository) Update(param map[string]interface{}, data
 		},
 	}
 	builder.QueryBuilder()
-	database.ExecTransaction(db.sqlDB, builder)
-
 	return
 }
 
-func (db *oracleBoilerplateRepository) Delete(param map[string]interface{}) (err error) {
-	builder := database.QueryConfig{
+func (db *oracleBoilerplateRepository) Delete(param map[string]interface{}) (builder database.QueryConfig) {
+	builder = database.QueryConfig{
 		TableInfo: database.TableInfo{
 			TechStack: "oracle",
 			Table:     "boilerplate",
@@ -135,7 +131,10 @@ func (db *oracleBoilerplateRepository) Delete(param map[string]interface{}) (err
 		},
 	}
 	builder.QueryBuilder()
-	database.ExecTransaction(db.sqlDB, builder)
+	return
+}
 
+func (db *oracleBoilerplateRepository) Exec(queryConfig ...database.QueryConfig) (err error) {
+	err = database.ExecTransaction(db.sqlDB, queryConfig...)
 	return
 }
