@@ -35,7 +35,6 @@ func (db *oracleBoilerplateRepository) GetAll(param map[string]interface{}) (res
 			Where:  param,
 		},
 	}
-
 	builder.QueryBuilder()
 
 	query, err := db.sqlDB.Query(builder.Result.Query, builder.Result.Value...)
@@ -76,7 +75,6 @@ func (db *oracleBoilerplateRepository) GetOne(param map[string]interface{}) (res
 			Where:  param,
 		},
 	}
-
 	builder.QueryBuilder()
 
 	query := db.sqlDB.QueryRow(builder.Result.Query, builder.Result.Value...)

@@ -35,7 +35,6 @@ func (db *mysqlBoilerplateRepository) GetAll(param map[string]interface{}) (resp
 			Where:  param,
 		},
 	}
-
 	builder.QueryBuilder()
 
 	query, err := db.sqlDB.Query(builder.Result.Query, builder.Result.Value...)
@@ -76,7 +75,6 @@ func (db *mysqlBoilerplateRepository) GetOne(param map[string]interface{}) (resp
 			Where:  param,
 		},
 	}
-
 	builder.QueryBuilder()
 
 	query := db.sqlDB.QueryRow(builder.Result.Query, builder.Result.Value...)
