@@ -2,8 +2,7 @@
 
 ## NOTE
 
-Penting, branch master merupakan branch yang merupakan tahap development dan belum siap digunakan untuk production. Untuk production, 
-silakan gunakan branch tag paling akhir.
+Penting, branch master merupakan branch yang merupakan tahap development dan mungkin memiliki bug bila digunakan untuk production. Silakan gunakan branch tag paling akhir.
 
 ## Instalasi golang
 
