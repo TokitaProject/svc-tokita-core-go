@@ -102,7 +102,7 @@ func (db *oracleBoilerplateRepository) Store(column []string, data []interface{}
 		},
 	}
 	builder.QueryBuilder()
-	builder.ExecTransaction(db.sqlDB, builder)
+	database.ExecTransaction(db.sqlDB, builder)
 
 	return
 }
@@ -120,7 +120,7 @@ func (db *oracleBoilerplateRepository) Update(param map[string]interface{}, data
 		},
 	}
 	builder.QueryBuilder()
-	builder.ExecTransaction(db.sqlDB, builder)
+	database.ExecTransaction(db.sqlDB, builder)
 
 	return
 }
@@ -137,7 +137,7 @@ func (db *oracleBoilerplateRepository) Delete(param map[string]interface{}) (err
 		},
 	}
 	builder.QueryBuilder()
-	builder.ExecTransaction(db.sqlDB, builder)
+	database.ExecTransaction(db.sqlDB, builder)
 
 	return
 }
