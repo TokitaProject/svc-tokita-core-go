@@ -89,7 +89,7 @@ func (db *oracleBoilerplateRepository) GetOne(param map[string]interface{}) (res
 	return
 }
 
-func (db *oracleBoilerplateRepository) Store(data []interface{}) (err error) {
+func (db *oracleBoilerplateRepository) Store(column []string, data []interface{}) (err error) {
 	tx, err := db.sqlDB.Begin()
 
 	if err != nil {
@@ -104,7 +104,7 @@ func (db *oracleBoilerplateRepository) Store(data []interface{}) (err error) {
 			Action:    "insert",
 		},
 		OnInsert: database.OnInsert{
-			Column: []string{"id"},
+			Column: column,
 			Data:   data,
 		},
 	}

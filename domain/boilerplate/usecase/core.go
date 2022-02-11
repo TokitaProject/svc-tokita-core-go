@@ -39,7 +39,9 @@ func (boilerplate boilerplateUsecase) Store(payload valueobject.BoilerplatePaylo
 		data = append(data, e)
 	}
 
-	err = boilerplate.mysqlRepository.Store(data)
+	column := []string{"id"}
+
+	err = boilerplate.mysqlRepository.Store(column, data)
 	return
 }
 
