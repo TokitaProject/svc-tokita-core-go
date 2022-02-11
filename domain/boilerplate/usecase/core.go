@@ -51,11 +51,9 @@ func (boilerplate boilerplateUsecase) Update(payload valueobject.BoilerplatePayl
 				"flag": x.Param.Flag,
 			},
 		}
-
 		var data = map[string]interface{}{
 			"column": x.Body.Column,
 		}
-
 		err = boilerplate.mysqlRepository.Update(param, data)
 	}
 	return
@@ -68,7 +66,6 @@ func (boilerplate boilerplateUsecase) Delete(payload valueobject.BoilerplatePayl
 				"flag": x.Flag,
 			},
 		}
-
 		err = boilerplate.mysqlRepository.Delete(param)
 	}
 	return
