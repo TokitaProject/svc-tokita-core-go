@@ -1,5 +1,10 @@
 # Readme, please, biar kamu paham.
 
+## NOTE
+
+Penting, branch master merupakan branch yang merupakan tahap development dan belum siap digunakan untuk production. Untuk production, 
+silakan gunakan branch tag paling akhir.
+
 ## Instalasi golang
 
 Ikuti instruksi ini untuk melakukan instalasi golang: [Tutorial instalasi golang](https://go.dev/doc/install)
