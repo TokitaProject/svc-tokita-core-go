@@ -17,10 +17,6 @@ func NewOracleBoilerplateRepository(databaseConnection *sql.DB) boilerplate.Orac
 	return &oracleBoilerplateRepository{databaseConnection}
 }
 
-func (db *oracleBoilerplateRepository) GenerateUUID() (uuid uint64, err error) {
-	return database.GenerateUUID(db.sqlDB)
-}
-
 func (db *oracleBoilerplateRepository) GetAll(param map[string]interface{}) (response []valueobject.Boilerplate, err error) {
 	var result valueobject.Boilerplate
 

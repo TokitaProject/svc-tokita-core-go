@@ -18,7 +18,6 @@ type MysqlRepository interface {
 
 type OracleRepository interface {
 	Exec(...database.QueryConfig) error
-	GenerateUUID() (uuid uint64, err error)
 
 	GetAll(param map[string]interface{}) (response []valueobject.Boilerplate, err error)
 	GetOne(param map[string]interface{}) (response valueobject.Boilerplate, err error)
