@@ -7,19 +7,33 @@ import (
 
 func (boilerplate boilerplateUsecase) ProcessStore(payload valueobject.BoilerplatePayloadInsert) (queryConfig []database.QueryConfig, IDs []uint64, err error) {
 	var data []interface{}
-
-	// Prepare the data and insert into []interface{}
 	for _, x := range payload.Data {
+		/**
+		you can define the ID outside this function by adding on the payload insert
+		the algorithm below will detect automaticly
+		if you are not set the ID, the default value of ID will be zero
+		*/
 		if x.ID == 0 {
 			x.ID, _ = boilerplate.mysqlRepository.GenerateUUID()
 			IDs = append(IDs, x.ID)
 		}
+
+		/**
+		add data you wanted to insert on this interface{}...
+		*/
 		e := []interface{}{
 			x.ID,
-			x.Column, // Custom on this line...
+			x.Column,
 		}
 		data = append(data, e)
-		column := []string{"id"}
+
+		/**
+		column on data and this line should have same order
+		*/
+		column := []string{
+			"id",
+		}
+
 		queryInsert := boilerplate.mysqlRepository.Store(column, data)
 		queryConfig = append(queryConfig, queryInsert)
 	}
@@ -30,11 +44,11 @@ func (boilerplate boilerplateUsecase) ProcessUpdate(payload valueobject.Boilerpl
 	for _, x := range payload.Data {
 		var param = map[string]interface{}{
 			"AND": map[string]interface{}{
-				"flag": x.Param.Flag,
+				"flag": x.Param.Flag, // add the parameter to update the row
 			},
 		}
 		var data = map[string]interface{}{
-			"column": x.Body.Column,
+			"column": x.Body.Column, // add the data to update the row
 		}
 		queryUpdate := boilerplate.mysqlRepository.Update(param, data)
 		queryConfig = append(queryConfig, queryUpdate)
@@ -46,7 +60,7 @@ func (boilerplate boilerplateUsecase) ProcessDelete(payload valueobject.Boilerpl
 	for _, x := range payload.Param {
 		var param = map[string]interface{}{
 			"AND": map[string]interface{}{
-				"flag": x.Flag,
+				"flag": x.Flag, // add the parameter to delete the row
 			},
 		}
 		queryDelete := boilerplate.mysqlRepository.Delete(param)
