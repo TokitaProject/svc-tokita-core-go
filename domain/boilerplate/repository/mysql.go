@@ -1,21 +1,10 @@
 package repository
 
 import (
-	"database/sql"
 	"log"
-
-	"svc-boilerplate-golang/domain/boilerplate"
 	"svc-boilerplate-golang/utils/database"
 	"svc-boilerplate-golang/valueobject"
 )
-
-type mysqlBoilerplateRepository struct {
-	sqlDB *sql.DB
-}
-
-func NewMysqlBoilerplateRepository(databaseConnection *sql.DB) boilerplate.MysqlRepository {
-	return &mysqlBoilerplateRepository{databaseConnection}
-}
 
 func (db *mysqlBoilerplateRepository) GenerateUUID() (uuid uint64, err error) {
 	return database.GenerateUUID(db.sqlDB)
@@ -24,17 +13,13 @@ func (db *mysqlBoilerplateRepository) GenerateUUID() (uuid uint64, err error) {
 func (db *mysqlBoilerplateRepository) GetAll(param map[string]interface{}) (response []valueobject.Boilerplate, err error) {
 	var result valueobject.Boilerplate
 
-	builder := database.QueryConfig{
-		TableInfo: database.TableInfo{
-			TechStack: "mysql",
-			Table:     "boilerplate",
-			Action:    "select",
-		},
-		OnSelect: database.OnSelect{
-			Column: []string{"id", "uuid"},
-			Where:  param,
-		},
+	builder := database.New(MYSQL, MYSQL_TABLE, SELECT)
+
+	builder.OnSelect = database.OnSelect{
+		Column: []string{"id", "uuid"},
+		Where:  param,
 	}
+
 	builder.QueryBuilder()
 
 	query, err := db.sqlDB.Query(builder.Result.Query, builder.Result.Value...)
@@ -64,17 +49,13 @@ func (db *mysqlBoilerplateRepository) GetAll(param map[string]interface{}) (resp
 }
 
 func (db *mysqlBoilerplateRepository) GetOne(param map[string]interface{}) (response valueobject.Boilerplate, err error) {
-	builder := database.QueryConfig{
-		TableInfo: database.TableInfo{
-			TechStack: "mysql",
-			Table:     "boilerplate",
-			Action:    "select",
-		},
-		OnSelect: database.OnSelect{
-			Column: []string{"id", "uuid"},
-			Where:  param,
-		},
+	builder := database.New(MYSQL, MYSQL_TABLE, SELECT)
+
+	builder.OnSelect = database.OnSelect{
+		Column: []string{"id", "uuid"},
+		Where:  param,
 	}
+
 	builder.QueryBuilder()
 
 	query := db.sqlDB.QueryRow(builder.Result.Query, builder.Result.Value...)
@@ -88,48 +69,36 @@ func (db *mysqlBoilerplateRepository) GetOne(param map[string]interface{}) (resp
 }
 
 func (db *mysqlBoilerplateRepository) Store(column []string, data []interface{}) (builder database.QueryConfig) {
-	builder = database.QueryConfig{
-		TableInfo: database.TableInfo{
-			TechStack: "mysql",
-			Table:     "boilerplate",
-			Action:    "insert",
-		},
-		OnInsert: database.OnInsert{
-			Column: column,
-			Data:   data,
-		},
+	builder = database.New(MYSQL, MYSQL_TABLE, INSERT)
+
+	builder.OnInsert = database.OnInsert{
+		Column: column,
+		Data:   data,
 	}
+
 	builder.QueryBuilder()
 	return
 }
 
 func (db *mysqlBoilerplateRepository) Update(param map[string]interface{}, data map[string]interface{}) (builder database.QueryConfig) {
-	builder = database.QueryConfig{
-		TableInfo: database.TableInfo{
-			TechStack: "mysql",
-			Table:     "boilerplate",
-			Action:    "update",
-		},
-		OnUpdate: database.OnUpdate{
-			Where: param,
-			Data:  data,
-		},
+	builder = database.New(MYSQL, MYSQL_TABLE, UPDATE)
+
+	builder.OnUpdate = database.OnUpdate{
+		Where: param,
+		Data:  data,
 	}
+
 	builder.QueryBuilder()
 	return
 }
 
 func (db *mysqlBoilerplateRepository) Delete(param map[string]interface{}) (builder database.QueryConfig) {
-	builder = database.QueryConfig{
-		TableInfo: database.TableInfo{
-			TechStack: "mysql",
-			Table:     "boilerplate",
-			Action:    "delete",
-		},
-		OnDelete: database.OnDelete{
-			Where: param,
-		},
+	builder = database.New(MYSQL, MYSQL_TABLE, DELETE)
+
+	builder.OnDelete = database.OnDelete{
+		Where: param,
 	}
+
 	builder.QueryBuilder()
 	return
 }

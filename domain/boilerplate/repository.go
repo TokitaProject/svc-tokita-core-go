@@ -11,6 +11,7 @@ type MysqlRepository interface {
 
 	GetAll(param map[string]interface{}) (response []valueobject.Boilerplate, err error)
 	GetOne(param map[string]interface{}) (response valueobject.Boilerplate, err error)
+
 	Store(column []string, data []interface{}) database.QueryConfig
 	Update(param map[string]interface{}, data map[string]interface{}) database.QueryConfig
 	Delete(param map[string]interface{}) database.QueryConfig
@@ -21,6 +22,7 @@ type OracleRepository interface {
 
 	GetAll(param map[string]interface{}) (response []valueobject.Boilerplate, err error)
 	GetOne(param map[string]interface{}) (response valueobject.Boilerplate, err error)
+
 	Store(column []string, data []interface{}) database.QueryConfig
 	Update(param map[string]interface{}, data map[string]interface{}) database.QueryConfig
 	Delete(param map[string]interface{}) database.QueryConfig

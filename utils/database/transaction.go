@@ -5,6 +5,16 @@ import (
 	"log"
 )
 
+func New(tech string, table string, command string) QueryConfig {
+	return QueryConfig{
+		TableInfo: TableInfo{
+			TechStack: tech,
+			Table:     table,
+			Action:    command,
+		},
+	}
+}
+
 func ExecTransaction(db *sql.DB, query ...QueryConfig) (err error) {
 	tx, err := db.Begin()
 

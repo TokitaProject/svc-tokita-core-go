@@ -11,11 +11,7 @@ type Boilerplate struct {
 }
 
 type BoilerplatePayloadInsert struct {
-	Data []BoilerplateDataInsert `json:"data" binding:"required"`
-}
-
-type BoilerplateDataInsert struct {
-	entity.Boilerplate
+	Data []Boilerplate `json:"data" binding:"required"`
 }
 
 type BoilerplatePayloadUpdate struct {
@@ -23,22 +19,10 @@ type BoilerplatePayloadUpdate struct {
 }
 
 type BoilerplateDataUpdate struct {
-	Param BoilerplateParamUpdate `json:"param" binding:"required"`
-	Body  BoilerplateBodyUpdate  `json:"body" binding:"required"`
-}
-
-type BoilerplateParamUpdate struct {
-	Flag string `json:"flag"`
-}
-
-type BoilerplateBodyUpdate struct {
-	entity.Boilerplate
+	Param Boilerplate `json:"param" binding:"required"`
+	Body  Boilerplate `json:"body" binding:"required"`
 }
 
 type BoilerplatePayloadDelete struct {
-	Param []BoilerplateParamDelete `json:"param" binding:"required"`
-}
-
-type BoilerplateParamDelete struct {
-	Flag string `json:"flag"`
+	Param []Boilerplate `json:"param" binding:"required"`
 }
