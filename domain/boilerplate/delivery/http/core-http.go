@@ -65,7 +65,7 @@ func (handler *HttpBoilerplateHandler) Store(ctx *gin.Context) {
 		return
 	}
 
-	_, err = handler.boilerplateUsecase.Store(payload)
+	err = handler.boilerplateUsecase.Store(payload)
 
 	if err != nil {
 		message.ReturnInternalServerError(ctx)

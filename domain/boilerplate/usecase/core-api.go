@@ -14,8 +14,11 @@ func (boilerplate boilerplateUsecase) GetOne(param map[string]interface{}) (resp
 	return
 }
 
-func (boilerplate boilerplateUsecase) Store(payload valueobject.BoilerplatePayloadInsert) (IDs []uint64, err error) {
-	queryConfig, IDs := boilerplate.ProcessStore(payload)
+func (boilerplate boilerplateUsecase) Store(payload valueobject.BoilerplatePayloadInsert) (err error) {
+	for _, x := range payload.Data {
+		x.ID, _ = boilerplate.mysqlRepository.GenerateUUID()
+	}
+	queryConfig := boilerplate.ProcessStore(payload)
 
 	err = boilerplate.mysqlRepository.Exec(queryConfig...)
 	return

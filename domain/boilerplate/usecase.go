@@ -15,11 +15,11 @@ type Usecase interface {
 	GetAll(param map[string]interface{}) (response []valueobject.Boilerplate, err error)
 	GetOne(param map[string]interface{}) (response valueobject.Boilerplate, err error)
 
-	Store(payload valueobject.BoilerplatePayloadInsert) (IDs []uint64, err error)
+	Store(payload valueobject.BoilerplatePayloadInsert) error
 	Update(payload valueobject.BoilerplatePayloadUpdate) error
 	Delete(payload valueobject.BoilerplatePayloadDelete) error
 
-	ProcessStore(payload valueobject.BoilerplatePayloadInsert) (queryConfig []database.QueryConfig, IDs []uint64)
-	ProcessUpdate(payload valueobject.BoilerplatePayloadUpdate) (queryConfig []database.QueryConfig)
-	ProcessDelete(payload valueobject.BoilerplatePayloadDelete) (queryConfig []database.QueryConfig)
+	ProcessStore(payload valueobject.BoilerplatePayloadInsert) []database.QueryConfig
+	ProcessUpdate(payload valueobject.BoilerplatePayloadUpdate) []database.QueryConfig
+	ProcessDelete(payload valueobject.BoilerplatePayloadDelete) []database.QueryConfig
 }

@@ -5,19 +5,9 @@ import (
 	"svc-boilerplate-golang/valueobject"
 )
 
-func (boilerplate boilerplateUsecase) ProcessStore(payload valueobject.BoilerplatePayloadInsert) (queryConfig []database.QueryConfig, IDs []uint64) {
+func (boilerplate boilerplateUsecase) ProcessStore(payload valueobject.BoilerplatePayloadInsert) (queryConfig []database.QueryConfig) {
 	var data []interface{}
 	for _, x := range payload.Data {
-		/**
-		you can define the ID outside this function by adding on the payload insert
-		the algorithm below will detect automaticly
-		if you are not set the ID, the default value of ID will be zero
-		*/
-		if x.ID == 0 {
-			x.ID, _ = boilerplate.mysqlRepository.GenerateUUID()
-			IDs = append(IDs, x.ID)
-		}
-
 		/**
 		add data you wanted to insert on this interface{}...
 		*/
