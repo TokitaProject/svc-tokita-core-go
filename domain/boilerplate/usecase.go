@@ -12,8 +12,8 @@ why there's only one usecase interface while there can more than one repository 
 ... tl;dr: function name is telling what exactly are they doing.
 */
 type Usecase interface {
-	GetAll(param map[string]interface{}) (response []valueobject.Boilerplate, err error)
-	GetOne(param map[string]interface{}) (response valueobject.Boilerplate, err error)
+	GetAll(param map[string]interface{}) ([]valueobject.Boilerplate, error)
+	GetOne(param map[string]interface{}) (valueobject.Boilerplate, error)
 
 	Store(payload valueobject.BoilerplatePayloadInsert) error
 	Update(payload valueobject.BoilerplatePayloadUpdate) error

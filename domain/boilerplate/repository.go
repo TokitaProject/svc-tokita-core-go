@@ -7,23 +7,23 @@ import (
 
 type MysqlRepository interface {
 	Exec(...database.QueryConfig) error
-	GenerateUUID() (uuid uint64, err error)
+	GenerateUUID() (uint64, error)
 
-	GetAll(param map[string]interface{}) (response []valueobject.Boilerplate, err error)
-	GetOne(param map[string]interface{}) (response valueobject.Boilerplate, err error)
+	GetAll(map[string]interface{}) ([]valueobject.Boilerplate, error)
+	GetOne(map[string]interface{}) (valueobject.Boilerplate, error)
 
-	Store(column []string, data []interface{}) database.QueryConfig
-	Update(param map[string]interface{}, data map[string]interface{}) database.QueryConfig
-	Delete(param map[string]interface{}) database.QueryConfig
+	Store([]string, []interface{}) database.QueryConfig
+	Update(map[string]interface{}, map[string]interface{}) database.QueryConfig
+	Delete(map[string]interface{}) database.QueryConfig
 }
 
 type OracleRepository interface {
 	Exec(...database.QueryConfig) error
 
-	GetAll(param map[string]interface{}) (response []valueobject.Boilerplate, err error)
-	GetOne(param map[string]interface{}) (response valueobject.Boilerplate, err error)
+	GetAll(map[string]interface{}) (response []valueobject.Boilerplate, err error)
+	GetOne(map[string]interface{}) (response valueobject.Boilerplate, err error)
 
-	Store(column []string, data []interface{}) database.QueryConfig
-	Update(param map[string]interface{}, data map[string]interface{}) database.QueryConfig
-	Delete(param map[string]interface{}) database.QueryConfig
+	Store([]string, []interface{}) database.QueryConfig
+	Update(map[string]interface{}, map[string]interface{}) database.QueryConfig
+	Delete(map[string]interface{}) database.QueryConfig
 }
