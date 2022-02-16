@@ -5,7 +5,7 @@ import (
 	"svc-boilerplate-golang/valueobject"
 )
 
-func (boilerplate boilerplateUsecase) ProcessStore(payload valueobject.BoilerplatePayloadInsert) (queryConfig []database.QueryConfig, IDs []uint64, err error) {
+func (boilerplate boilerplateUsecase) ProcessStore(payload valueobject.BoilerplatePayloadInsert) (queryConfig []database.QueryConfig, IDs []uint64) {
 	var data []interface{}
 	for _, x := range payload.Data {
 		/**
@@ -40,7 +40,7 @@ func (boilerplate boilerplateUsecase) ProcessStore(payload valueobject.Boilerpla
 	return
 }
 
-func (boilerplate boilerplateUsecase) ProcessUpdate(payload valueobject.BoilerplatePayloadUpdate) (queryConfig []database.QueryConfig, err error) {
+func (boilerplate boilerplateUsecase) ProcessUpdate(payload valueobject.BoilerplatePayloadUpdate) (queryConfig []database.QueryConfig) {
 	for _, x := range payload.Data {
 		var param = map[string]interface{}{
 			"AND": map[string]interface{}{
@@ -56,7 +56,7 @@ func (boilerplate boilerplateUsecase) ProcessUpdate(payload valueobject.Boilerpl
 	return
 }
 
-func (boilerplate boilerplateUsecase) ProcessDelete(payload valueobject.BoilerplatePayloadDelete) (queryConfig []database.QueryConfig, err error) {
+func (boilerplate boilerplateUsecase) ProcessDelete(payload valueobject.BoilerplatePayloadDelete) (queryConfig []database.QueryConfig) {
 	for _, x := range payload.Param {
 		var param = map[string]interface{}{
 			"AND": map[string]interface{}{

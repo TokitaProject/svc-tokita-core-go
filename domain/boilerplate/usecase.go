@@ -19,7 +19,7 @@ type Usecase interface {
 	Update(payload valueobject.BoilerplatePayloadUpdate) error
 	Delete(payload valueobject.BoilerplatePayloadDelete) error
 
-	ProcessStore(payload valueobject.BoilerplatePayloadInsert) (queryConfig []database.QueryConfig, IDs []uint64, err error)
-	ProcessUpdate(payload valueobject.BoilerplatePayloadUpdate) (queryConfig []database.QueryConfig, err error)
-	ProcessDelete(payload valueobject.BoilerplatePayloadDelete) (queryConfig []database.QueryConfig, err error)
+	ProcessStore(payload valueobject.BoilerplatePayloadInsert) (queryConfig []database.QueryConfig, IDs []uint64)
+	ProcessUpdate(payload valueobject.BoilerplatePayloadUpdate) (queryConfig []database.QueryConfig)
+	ProcessDelete(payload valueobject.BoilerplatePayloadDelete) (queryConfig []database.QueryConfig)
 }
