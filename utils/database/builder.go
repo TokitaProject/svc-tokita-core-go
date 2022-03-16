@@ -169,7 +169,6 @@ func (cfg *QueryConfig) deleteBuilder() {
 }
 
 func (cfg *QueryConfig) whereBuilder(param map[string]interface{}) {
-	c := 0
 	found := false
 
 	cfg.Result.Query += ` WHERE `
@@ -179,35 +178,50 @@ func (cfg *QueryConfig) whereBuilder(param map[string]interface{}) {
 			for g, v := range x.(map[string]interface{}) {
 				if g == "IN" {
 					for o, f := range v.(map[string]interface{}) {
-						if f.([]string)[0] == "" {
-							continue
-						}
 						r := len(f.([]string))
-						if r < 0 {
-							r = 0
-						}
-
 						cfg.Result.Query += o + ` IN (`
 						for i := 0; i < r; i++ {
+							if f.([]string)[i] == "" {
+								continue
+							}
 							cfg.Result.Query += cfg.getQuestionMark() + `, `
 						}
 						cfg.Result.Query = cfg.Result.Query[0 : len(cfg.Result.Query)-2]
 						cfg.Result.Query += `) AND `
-
 						for _, w := range f.([]string) {
+							if w == "" {
+								continue
+							}
 							cfg.Result.Value = append(cfg.Result.Value, w)
 						}
-						c++
 						found = true
+					}
+				} else if g == "NOT" {
+					for o, f := range v.(map[string]interface{}) {
+						if f == "" {
+							continue
+						}
+						if f == nil {
+							cfg.Result.Query += o + ` IS NOT NULL AND `
+							found = true
+						} else {
+							cfg.Result.Query += `NOT ` + o + ` = ` + cfg.getQuestionMark() + ` AND `
+							cfg.Result.Value = append(cfg.Result.Value, f)
+							found = true
+						}
 					}
 				} else {
 					if v == "" {
 						continue
 					}
-					cfg.Result.Query += g + ` = ` + cfg.getQuestionMark() + ` AND `
-					cfg.Result.Value = append(cfg.Result.Value, v)
-					c++
-					found = true
+					if v == nil {
+						cfg.Result.Query += g + ` IS NULL AND `
+						found = true
+					} else {
+						cfg.Result.Query += g + ` = ` + cfg.getQuestionMark() + ` AND `
+						cfg.Result.Value = append(cfg.Result.Value, v)
+						found = true
+					}
 				}
 			}
 			if found {
