@@ -30,7 +30,7 @@ func ExecTransaction(db *sql.DB, query ...QueryConfig) (err error) {
 
 		if err != nil {
 			log.Println(err.Error())
-			break
+			return err
 		}
 
 		defer statement.Close()
@@ -39,13 +39,11 @@ func ExecTransaction(db *sql.DB, query ...QueryConfig) (err error) {
 
 		if err != nil {
 			log.Println(err.Error())
-			break
+			return err
 		}
 	}
 
-	if err == nil {
-		tx.Commit()
-	}
+	tx.Commit()
 
 	return
 }
