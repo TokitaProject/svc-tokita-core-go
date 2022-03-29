@@ -179,6 +179,9 @@ func (cfg *QueryConfig) whereBuilder(param map[string]interface{}) {
 				if g == "IN" {
 					for o, f := range v.(map[string]interface{}) {
 						r := len(f.([]string))
+						if r < 1 {
+							continue
+						}
 						cfg.Result.Query += o + ` IN (`
 						for i := 0; i < r; i++ {
 							if f.([]string)[i] == "" {
