@@ -2,16 +2,16 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: svc-boilerplate-golang
+  name: svc-bill-spp-go
   labels:
-    svc: svc-boilerplate-golang
+    svc: svc-bill-spp-go
     tier: backend
   namespace: finance-stag
 spec:
   replicas: 1
   selector:
     matchLabels:
-      svc: svc-boilerplate-golang
+      svc: svc-bill-spp-go
       tier: backend
   strategy:
     type: RollingUpdate
@@ -22,14 +22,14 @@ spec:
   template:
     metadata:
       labels:
-        svc: svc-boilerplate-golang
+        svc: svc-bill-spp-go
         tier: backend
     spec:
       imagePullSecrets:
         - name: gcr-uii-key
       containers:
-        - name: svc-boilerplate-golang
-          image: asia.gcr.io/uii-cloud-project/finance/backend/svc-boilerplate-golang:stag
+        - name: svc-bill-spp-go
+          image: asia.gcr.io/uii-cloud-project/finance/backend/svc-bill-spp-go:stag
           imagePullPolicy: Always
           resources:
             requests:
@@ -73,9 +73,9 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: svc-boilerplate-golang
+  name: svc-bill-spp-go
   labels:
-    svc: svc-boilerplate-golang
+    svc: svc-bill-spp-go
     tier: backend
   namespace: finance-stag
   annotations:
@@ -83,14 +83,14 @@ metadata:
       ---
       apiVersion: ambassador/v1
       kind:  Mapping
-      name:  svc-boilerplate-golang-mapping
-      prefix: /v2/finance/boilerplate
+      name:  svc-bill-spp-go-mapping
+      prefix: /v2/finance/bill-spp
       rewrite: /public/api/v2
-      service: svc-boilerplate-golang.finance-stag
+      service: svc-bill-spp-go.finance-stag
       timeout_ms: 180000
 spec:
   selector:
-    svc: svc-boilerplate-golang
+    svc: svc-bill-spp-go
     tier: backend
   ports:
     - name: http
@@ -102,9 +102,9 @@ apiVersion: autoscaling/v1
 kind: HorizontalPodAutoscaler
 metadata:
   labels:
-    svc: svc-boilerplate-golang
+    svc: svc-bill-spp-go
     tier: backend
-  name: svc-boilerplate-golang
+  name: svc-bill-spp-go
   namespace: finance-stag
 spec:
   maxReplicas: 5
@@ -112,5 +112,5 @@ spec:
   scaleTargetRef:
     apiVersion: apps/v1beta2
     kind: Deployment
-    name: svc-boilerplate-golang
+    name: svc-bill-spp-go
   targetCPUUtilizationPercentage: 80
