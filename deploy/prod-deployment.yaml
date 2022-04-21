@@ -2,16 +2,16 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: svc-bill-spp-go
+  name: svc-boilerplate-golang
   labels:
-    svc: svc-bill-spp-go
+    svc: svc-boilerplate-golang
     tier: backend
   namespace: finance-production
 spec:
   replicas: 1
   selector:
     matchLabels:
-      svc: svc-bill-spp-go
+      svc: svc-boilerplate-golang
       tier: backend
   strategy:
     type: RollingUpdate
@@ -22,14 +22,14 @@ spec:
   template:
     metadata:
       labels:
-        svc: svc-bill-spp-go
+        svc: svc-boilerplate-golang
         tier: backend
     spec:
       imagePullSecrets:
         - name: gcr-uii-key
       containers:
-        - name: svc-bill-spp-go
-          image: asia.gcr.io/uii-cloud-project/finance/backend/svc-bill-spp-go:prod
+        - name: svc-boilerplate-golang
+          image: asia.gcr.io/uii-cloud-project/finance/backend/svc-boilerplate-golang:prod
           imagePullPolicy: Always
           resources:
             requests:
@@ -73,9 +73,9 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: svc-bill-spp-go
+  name: svc-boilerplate-golang
   labels:
-    svc: svc-bill-spp-go
+    svc: svc-boilerplate-golang
     tier: backend
   namespace: finance-production
   annotations:
@@ -83,14 +83,14 @@ metadata:
       ---
       apiVersion: ambassador/v1
       kind:  Mapping
-      name:  svc-bill-spp-go-mapping
+      name:  svc-boilerplate-golang-mapping
       prefix: /v2/finance/bill-spp
       rewrite: /public/api/v2
-      service: svc-bill-spp-go.finance-production
+      service: svc-boilerplate-golang.finance-production
       timeout_ms: 180000
 spec:
   selector:
-    svc: svc-bill-spp-go
+    svc: svc-boilerplate-golang
     tier: backend
   ports:
     - name: http
@@ -98,19 +98,29 @@ spec:
       targetPort: http-api
       protocol: TCP
 ---
-apiVersion: autoscaling/v1
+apiVersion: autoscaling/v2beta2
 kind: HorizontalPodAutoscaler
 metadata:
   labels:
-    svc: svc-bill-spp-go
+    svc: svc-boilerplate-golang
     tier: backend
-  name: svc-bill-spp-go
-  namespace: finance-production
+  name: svc-boilerplate-golang
+  namespace: finance-stag
 spec:
-  maxReplicas: 10
-  minReplicas: 1
+  maxReplicas: 5
+  minReplicas: 3
   scaleTargetRef:
     apiVersion: apps/v1beta2
     kind: Deployment
-    name: svc-bill-spp-go
-  targetMemoryUtilizationPercentage: 50
+    name: svc-boilerplate-golang
+  metrics:
+    - resource:
+        name: memory
+        target:
+          averageUtilization: 50
+          type: Utilization
+      type: Resource
+  scaleTargetRef:
+    apiVersion: apps/v1beta2
+    kind: Deployment
+    name: svc-boilerplate-golang

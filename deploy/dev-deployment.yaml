@@ -2,16 +2,16 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: svc-bill-spp-go
+  name: svc-boilerplate-golang
   labels:
-    svc: svc-bill-spp-go
+    svc: svc-boilerplate-golang
     tier: backend
   namespace: finance-dev
 spec:
   replicas: 1
   selector:
     matchLabels:
-      svc: svc-bill-spp-go
+      svc: svc-boilerplate-golang
       tier: backend
   strategy:
     type: RollingUpdate
@@ -22,14 +22,14 @@ spec:
   template:
     metadata:
       labels:
-        svc: svc-bill-spp-go
+        svc: svc-boilerplate-golang
         tier: backend
     spec:
       imagePullSecrets:
         - name: gcr-uii-key
       containers:
-        - name: svc-bill-spp-go
-          image: asia.gcr.io/uii-cloud-project/finance/backend/svc-bill-spp-go:dev
+        - name: svc-boilerplate-golang
+          image: asia.gcr.io/uii-cloud-project/finance/backend/svc-boilerplate-golang:dev
           imagePullPolicy: Always
           resources:
             requests:
@@ -75,9 +75,9 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: svc-bill-spp-go
+  name: svc-boilerplate-golang
   labels:
-    svc: svc-bill-spp-go
+    svc: svc-boilerplate-golang
     tier: backend
   namespace: finance-dev
   annotations:
@@ -85,14 +85,14 @@ metadata:
       ---
       apiVersion: ambassador/v1
       kind:  Mapping
-      name:  svc-bill-spp-go-mapping
+      name:  svc-boilerplate-golang-mapping
       prefix: /v2/finance/bill-spp
       rewrite: /public/api/v2
-      service: svc-bill-spp-go.finance-dev
+      service: svc-boilerplate-golang.finance-dev
       timeout_ms: 180000
 spec:
   selector:
-    svc: svc-bill-spp-go
+    svc: svc-boilerplate-golang
     tier: backend
   ports:
     - name: http
