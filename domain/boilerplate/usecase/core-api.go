@@ -15,8 +15,8 @@ func (boilerplate boilerplateUsecase) GetOne(param map[string]interface{}) (resp
 }
 
 func (boilerplate boilerplateUsecase) Store(payload valueobject.BoilerplatePayloadInsert) (err error) {
-	for _, x := range payload.Data {
-		x.ID, _ = boilerplate.mysqlRepository.GenerateUUID()
+	for i := range payload.Data {
+		payload.Data[i].ID, _ = boilerplate.mysqlRepository.GenerateUUID()
 	}
 	queryConfig := boilerplate.ProcessStore(payload)
 
