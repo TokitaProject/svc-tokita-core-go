@@ -13,9 +13,14 @@ import (
 func (handler *HttpBoilerplateHandler) GetAll(ctx *gin.Context) {
 	var param = map[string]interface{}{
 		"AND": map[string]interface{}{
-			"param": ctx.Query("param"),
+			"param":     ctx.Query("param"),
+			"param_nil": nil,
 			"IN": map[string]interface{}{
 				"column_in": strings.Split(ctx.Query("column_in"), ","),
+			},
+			"NOT": map[string]interface{}{
+				"column_not":     strings.Split(ctx.Query("column_in"), ","),
+				"column_not_nil": nil,
 			},
 		},
 	}
@@ -37,7 +42,7 @@ func (handler *HttpBoilerplateHandler) GetAll(ctx *gin.Context) {
 func (handler *HttpBoilerplateHandler) GetByUUID(ctx *gin.Context) {
 	var param = map[string]interface{}{
 		"AND": map[string]interface{}{
-			"uuid": ctx.Query("uuid"),
+			"uuid": ctx.Param("uuid"),
 		},
 	}
 
