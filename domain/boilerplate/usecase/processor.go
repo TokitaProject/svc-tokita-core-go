@@ -6,16 +6,16 @@ import (
 )
 
 func (boilerplate boilerplateUsecase) ProcessStore(payload valueobject.BoilerplatePayloadInsert) (queryConfig []database.QueryConfig) {
-	var data []interface{}
 	for _, x := range payload.Data {
 		/**
 		add data you wanted to insert on this interface{}...
 		*/
-		e := []interface{}{
-			x.ID,
-			x.Column,
+		data := []interface{}{
+			[]interface{}{
+				x.ID,
+				x.Column,
+			},
 		}
-		data = append(data, e)
 
 		/**
 		column on data and this line should have same order
