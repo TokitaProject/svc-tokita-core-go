@@ -213,6 +213,16 @@ func (cfg *QueryConfig) whereBuilder(param map[string]interface{}) {
 							found = true
 						}
 					}
+				} else if g == "LIKE" {
+					for o, f := range v.(map[string]interface{}) {
+						if f == "" {
+							continue
+						} else {
+							cfg.Result.Query += o + ` LIKE ` + cfg.getQuestionMark() + ` AND `
+							cfg.Result.Value = append(cfg.Result.Value, f)
+							found = true
+						}
+					}
 				} else {
 					if v == "" {
 						continue

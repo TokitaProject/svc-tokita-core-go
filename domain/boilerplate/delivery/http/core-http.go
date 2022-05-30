@@ -19,8 +19,11 @@ func (handler *HttpBoilerplateHandler) GetAll(ctx *gin.Context) {
 				"column_in": strings.Split(ctx.Query("column_in"), ","),
 			},
 			"NOT": map[string]interface{}{
-				"column_not":     strings.Split(ctx.Query("column_in"), ","),
+				"column_not":     ctx.Query("param_not"),
 				"column_not_nil": nil,
+			},
+			"LIKE": map[string]interface{}{
+				"column_like": "%" + ctx.Query("param_like") + "%",
 			},
 		},
 	}
