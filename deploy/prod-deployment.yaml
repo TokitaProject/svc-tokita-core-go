@@ -36,7 +36,7 @@ spec:
               cpu: 10m
               memory: 64Mi
             limits:
-              memory: 256Mi
+              memory: 64Mi
           env:
             - name: DB_DRIVERNAME
               value: "mysql"
