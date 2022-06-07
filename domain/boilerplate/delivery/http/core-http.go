@@ -1,6 +1,7 @@
 package http
 
 import (
+	"log"
 	"strings"
 
 	"github.com/gin-gonic/gin"
@@ -36,6 +37,7 @@ func (handler *HttpBoilerplateHandler) GetAll(ctx *gin.Context) {
 			return
 		}
 		message.ReturnInternalServerError(ctx)
+		log.Println(err)
 		return
 	}
 
@@ -57,6 +59,7 @@ func (handler *HttpBoilerplateHandler) GetByUUID(ctx *gin.Context) {
 			return
 		}
 		message.ReturnInternalServerError(ctx)
+		log.Println(err)
 		return
 	}
 
@@ -77,6 +80,7 @@ func (handler *HttpBoilerplateHandler) Store(ctx *gin.Context) {
 
 	if err != nil {
 		message.ReturnInternalServerError(ctx)
+		log.Println(err)
 		return
 	}
 
@@ -97,6 +101,7 @@ func (handler *HttpBoilerplateHandler) Update(ctx *gin.Context) {
 
 	if err != nil {
 		message.ReturnInternalServerError(ctx)
+		log.Println(err)
 		return
 	}
 
@@ -117,6 +122,7 @@ func (handler *HttpBoilerplateHandler) Delete(ctx *gin.Context) {
 
 	if err != nil {
 		message.ReturnInternalServerError(ctx)
+		log.Println(err)
 		return
 	}
 
