@@ -16,7 +16,7 @@ func (handler *HttpBoilerplateHandler) GetAll(ctx *gin.Context) {
 		"AND": map[string]interface{}{
 			"param":     ctx.Query("param"),
 			"param_nil": nil,
-			"IN": map[string]interface{}{
+			"IN": map[string][]string{
 				"column_in": strings.Split(ctx.Query("column_in"), ","),
 			},
 			"NOT": map[string]interface{}{
