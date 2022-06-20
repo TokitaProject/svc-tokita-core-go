@@ -1,7 +1,6 @@
 package repository
 
 import (
-	"log"
 	"svc-boilerplate-golang/utils/database"
 	"svc-boilerplate-golang/valueobject"
 )
@@ -25,7 +24,6 @@ func (db *mysqlBoilerplateRepository) GetAll(param map[string]interface{}) (resp
 	query, err := db.sqlDB.Query(builder.Result.Query, builder.Result.Value...)
 
 	if err != nil {
-		log.Println(err.Error())
 		return
 	}
 
@@ -38,7 +36,6 @@ func (db *mysqlBoilerplateRepository) GetAll(param map[string]interface{}) (resp
 		)
 
 		if err != nil {
-			log.Println(err.Error())
 			return
 		}
 

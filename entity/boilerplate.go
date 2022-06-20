@@ -6,6 +6,5 @@ type BoilerplateKey struct {
 
 type Boilerplate struct {
 	BoilerplateKey
-	Flag   string `json:"flag,omitempty"`
 	Column string `json:"column,omitempty"`
 }

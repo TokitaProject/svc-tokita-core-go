@@ -1,8 +1,6 @@
 package repository
 
 import (
-	"log"
-
 	"svc-boilerplate-golang/utils/database"
 	"svc-boilerplate-golang/valueobject"
 )
@@ -22,7 +20,6 @@ func (db *oracleBoilerplateRepository) GetAll(param map[string]interface{}) (res
 	query, err := db.sqlDB.Query(builder.Result.Query, builder.Result.Value...)
 
 	if err != nil {
-		log.Println(err.Error())
 		return
 	}
 
@@ -35,7 +32,6 @@ func (db *oracleBoilerplateRepository) GetAll(param map[string]interface{}) (res
 		)
 
 		if err != nil {
-			log.Println(err.Error())
 			return
 		}
 

@@ -34,11 +34,11 @@ func (boilerplate boilerplateUsecase) ProcessUpdate(payload valueobject.Boilerpl
 	for _, x := range payload.Data {
 		var param = map[string]interface{}{
 			"AND": map[string]interface{}{
-				"flag": x.Param.Flag, // add the parameter to update the row
+				"uuid": x.Param.UUID, // add the parameter to update the row
 			},
 		}
 		var data = map[string]interface{}{
-			"column": x.Body.Column, // add the data to update the row
+			"uuid": x.Body.UUID, // add the data to update the row
 		}
 		queryUpdate := boilerplate.mysqlRepository.Update(param, data)
 		queryConfig = append(queryConfig, queryUpdate)
@@ -50,7 +50,7 @@ func (boilerplate boilerplateUsecase) ProcessDelete(payload valueobject.Boilerpl
 	for _, x := range payload.Param {
 		var param = map[string]interface{}{
 			"AND": map[string]interface{}{
-				"flag": x.Flag, // add the parameter to delete the row
+				"uuid": x.UUID, // add the parameter to delete the row
 			},
 		}
 		queryDelete := boilerplate.mysqlRepository.Delete(param)
