@@ -1,6 +1,9 @@
 package database
 
-import "database/sql"
+import (
+	"database/sql"
+	"log"
+)
 
 func New(tech string, table string, command string) QueryConfig {
 	return QueryConfig{
@@ -25,6 +28,7 @@ func ExecTransaction(db *sql.DB, query ...QueryConfig) (err error) {
 		defer tx.Rollback()
 
 		if err != nil {
+			log.Println("error prepare: ", builder.Result.Query, builder.Result.Value)
 			return err
 		}
 
@@ -33,6 +37,7 @@ func ExecTransaction(db *sql.DB, query ...QueryConfig) (err error) {
 		_, err = statement.Exec(builder.Result.Value...)
 
 		if err != nil {
+			log.Println("error exec: ", builder.Result.Query, builder.Result.Value)
 			return err
 		}
 	}
