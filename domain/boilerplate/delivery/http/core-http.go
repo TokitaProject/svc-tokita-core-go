@@ -32,7 +32,7 @@ func (handler *HttpBoilerplateHandler) GetAll(ctx *gin.Context) {
 	response, err := handler.boilerplateUsecase.GetAll(param)
 
 	if err != nil {
-		if err.Error() == config.Get("sql.not.found") {
+		if err.Error() == config.SQL_NOT_FOUND {
 			message.ReturnOk(ctx, make(map[string]interface{}), param)
 			return
 		}
@@ -54,7 +54,7 @@ func (handler *HttpBoilerplateHandler) GetByUUID(ctx *gin.Context) {
 	response, err := handler.boilerplateUsecase.GetOne(param)
 
 	if err != nil {
-		if err.Error() == config.Get("sql.not.found") {
+		if err.Error() == config.SQL_NOT_FOUND {
 			message.ReturnOk(ctx, make(map[string]interface{}), param)
 			return
 		}
@@ -72,7 +72,7 @@ func (handler *HttpBoilerplateHandler) Store(ctx *gin.Context) {
 	err := ctx.ShouldBindJSON(&payload)
 
 	if err != nil {
-		message.ReturnBadRequest(ctx, err.Error(), config.Get("error.bind.json"))
+		message.ReturnBadRequest(ctx, err.Error(), config.ERROR_BIND_JSON)
 		return
 	}
 
@@ -93,7 +93,7 @@ func (handler *HttpBoilerplateHandler) Update(ctx *gin.Context) {
 	err := ctx.ShouldBindJSON(&payload)
 
 	if err != nil {
-		message.ReturnBadRequest(ctx, err.Error(), config.Get("error.bind.json"))
+		message.ReturnBadRequest(ctx, err.Error(), config.ERROR_BIND_JSON)
 		return
 	}
 
@@ -105,7 +105,7 @@ func (handler *HttpBoilerplateHandler) Update(ctx *gin.Context) {
 		return
 	}
 
-	message.ReturnSuccessUpdate(ctx, "Berhasil melakukan pembaharuan data")
+	message.ReturnSuccessUpdate(ctx)
 }
 
 func (handler *HttpBoilerplateHandler) Delete(ctx *gin.Context) {
@@ -114,7 +114,7 @@ func (handler *HttpBoilerplateHandler) Delete(ctx *gin.Context) {
 	err := ctx.ShouldBindJSON(&payload)
 
 	if err != nil {
-		message.ReturnBadRequest(ctx, err.Error(), config.Get("error.bind.json"))
+		message.ReturnBadRequest(ctx, err.Error(), config.ERROR_BIND_JSON)
 		return
 	}
 

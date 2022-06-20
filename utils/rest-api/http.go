@@ -9,8 +9,15 @@ import (
 	"os"
 )
 
+const ENV = "ENV"
+const BEARER = "BEARER"
+const ENV_LOCAL = "local"
+const CONTENT_TYPE = "Content-Type"
+const AUTHORIZATION = "Authorization"
+const APPLICATION_JSON = "application/json"
+
 func HttpGet(param map[string]interface{}) (result map[string]interface{}, err error) {
-	request, err := http.NewRequest("GET", param["url"].(string), nil)
+	request, err := http.NewRequest(http.MethodGet, param["url"].(string), nil)
 
 	if err != nil {
 		return
@@ -23,8 +30,8 @@ func HttpGet(param map[string]interface{}) (result map[string]interface{}, err e
 	}
 
 	// FOR LOCAL ONLY
-	if os.Getenv("ENV") == "local" {
-		request.Header.Set("Authorization", os.Getenv("BEARER"))
+	if os.Getenv(ENV) == ENV_LOCAL {
+		request.Header.Set(AUTHORIZATION, os.Getenv(BEARER))
 	}
 
 	request.URL.RawQuery = query.Encode()
@@ -68,11 +75,11 @@ func HttpPost(param map[string]interface{}) (result map[string]interface{}, err 
 	}
 
 	// FOR LOCAL ONLY
-	if os.Getenv("ENV") == "local" {
-		request.Header.Set("Authorization", os.Getenv("BEARER"))
+	if os.Getenv(ENV) == ENV_LOCAL {
+		request.Header.Set(AUTHORIZATION, os.Getenv(BEARER))
 	}
 
-	request.Header.Set("Content-Type", "application/json")
+	request.Header.Set(CONTENT_TYPE, APPLICATION_JSON)
 
 	response, err := http.DefaultClient.Do(request)
 
@@ -112,11 +119,11 @@ func HttpPut(param map[string]interface{}) (result map[string]interface{}, err e
 		return
 	}
 
-	request.Header.Set("Content-Type", "application/json")
+	request.Header.Set(CONTENT_TYPE, APPLICATION_JSON)
 
 	// FOR LOCAL ONLY
-	if os.Getenv("ENV") == "local" {
-		request.Header.Set("Authorization", os.Getenv("BEARER"))
+	if os.Getenv(ENV) == ENV_LOCAL {
+		request.Header.Set(AUTHORIZATION, os.Getenv(BEARER))
 	}
 
 	response, err := http.DefaultClient.Do(request)

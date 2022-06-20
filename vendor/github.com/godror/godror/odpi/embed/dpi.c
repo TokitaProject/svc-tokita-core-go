@@ -47,5 +47,5 @@
 #include "../src/dpiSodaDocCursor.c"
 #include "../src/dpiStmt.c"
 #include "../src/dpiSubscr.c"
-#include "../src/dpiUtils.c"
+#include "../src/dpiconfigc"
 #include "../src/dpiVar.c"

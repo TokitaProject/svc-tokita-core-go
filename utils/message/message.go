@@ -6,6 +6,9 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+const ERROR_STATUS = "Layanan sedang mengalami gangguan"
+const SUCCESS_UPDATE_STATUS = "Berhasil melakukan pembaharuan data"
+
 func ReturnOk(ctx *gin.Context, data interface{}, param interface{}) {
 	ctx.JSON(http.StatusOK, gin.H{
 		"data":  data,
@@ -22,7 +25,7 @@ func ReturnBadRequest(ctx *gin.Context, message interface{}, param interface{}) 
 
 func ReturnInternalServerError(ctx *gin.Context) {
 	ctx.JSON(http.StatusInternalServerError, gin.H{
-		"message": "Layanan sedang mengalami gangguan",
+		"message": ERROR_STATUS,
 	})
 }
 
@@ -36,8 +39,8 @@ func ReturnSuccessInsert(ctx *gin.Context, data interface{}) {
 	})
 }
 
-func ReturnSuccessUpdate(ctx *gin.Context, message string) {
+func ReturnSuccessUpdate(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, gin.H{
-		"message": message,
+		"message": SUCCESS_UPDATE_STATUS,
 	})
 }
