@@ -61,7 +61,9 @@ func (cfg *QueryConfig) QueryBuilder() {
 		cfg.whereBuilder(cfg.OnUpdate.Where)
 	} else if cfg.Action == "delete" {
 		cfg.deleteBuilder()
-		cfg.whereBuilder(cfg.OnDelete.Where)
+		if found := cfg.whereBuilder(cfg.OnDelete.Where); !found {
+			cfg.Query = ""
+		}
 	}
 }
 
@@ -166,9 +168,7 @@ func (cfg *QueryConfig) deleteBuilder() {
 	cfg.Result.Query += `DELETE FROM ` + cfg.Table
 }
 
-func (cfg *QueryConfig) whereBuilder(param map[string]interface{}) {
-	found := false
-
+func (cfg *QueryConfig) whereBuilder(param map[string]interface{}) (found bool) {
 	cfg.Result.Query += ` WHERE `
 
 	for i, x := range param {
@@ -244,6 +244,8 @@ func (cfg *QueryConfig) whereBuilder(param map[string]interface{}) {
 	if !found {
 		cfg.Result.Query = cfg.Result.Query[0 : len(cfg.Result.Query)-7]
 	}
+
+	return
 }
 
 func (cfg *QueryConfig) getQuestionMark() (questionMark string) {
