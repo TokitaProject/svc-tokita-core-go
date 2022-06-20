@@ -16,7 +16,7 @@ func main() {
 	routers := gin.Default()
 
 	mysql := ConnectMySQL()
-	// oracle := ConnectOracle()
+	//orcl:= ConnectOracle()
 
 	boilerplateMysqlRepository := _boilerplateRepository.NewMysqlBoilerplateRepository(mysql)
 	boilerplateUsecase := _boilerplateUsecase.NewBoilerplateUsecase(boilerplateMysqlRepository)
