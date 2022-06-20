@@ -61,7 +61,9 @@ func (cfg *QueryConfig) QueryBuilder() (err error) {
 		}
 	} else if cfg.Action == "update" {
 		cfg.updateBuilder()
-		cfg.whereBuilder(cfg.OnUpdate.Where)
+		if found := cfg.whereBuilder(cfg.OnUpdate.Where); !found {
+			return errors.New("unsafe update with no where")
+		}
 	} else if cfg.Action == "delete" {
 		cfg.deleteBuilder()
 		if found := cfg.whereBuilder(cfg.OnDelete.Where); !found {
