@@ -2,7 +2,7 @@ package database
 
 import (
 	"database/sql"
-	"log"
+	"fmt"
 )
 
 func New(tech string, table string, command string) QueryConfig {
@@ -28,8 +28,7 @@ func ExecTransaction(db *sql.DB, query ...QueryConfig) (err error) {
 		defer tx.Rollback()
 
 		if err != nil {
-			log.Println("error prepare: ", builder.Result.Query, builder.Result.Value)
-			return err
+			return fmt.Errorf("query: %s | value: %s | message: %s", builder.Result.Query, builder.Result.Value, err.Error())
 		}
 
 		defer statement.Close()
@@ -37,8 +36,7 @@ func ExecTransaction(db *sql.DB, query ...QueryConfig) (err error) {
 		_, err = statement.Exec(builder.Result.Value...)
 
 		if err != nil {
-			log.Println("error exec: ", builder.Result.Query, builder.Result.Value)
-			return err
+			return fmt.Errorf("query: %s | value: %s | message: %s", builder.Result.Query, builder.Result.Value, err.Error())
 		}
 	}
 
