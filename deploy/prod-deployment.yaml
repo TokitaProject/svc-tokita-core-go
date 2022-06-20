@@ -49,7 +49,7 @@ spec:
             - name: DB_PORT
               value: "6033"
             - name: DB_NAME
-              value: "boilerplate"
+              value: "boilerplate_go"
             - name: PORT
               value: "80"
             - name: ORACLE_DB_DRIVERNAME
@@ -84,7 +84,7 @@ metadata:
       apiVersion: ambassador/v1
       kind:  Mapping
       name:  svc-boilerplate-golang-mapping
-      prefix: /v2/finance/bill-spp
+      prefix: /v2/finance/boilerplate
       rewrite: /public/api/v2
       service: svc-boilerplate-golang.finance-production
       timeout_ms: 180000

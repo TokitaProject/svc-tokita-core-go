@@ -86,11 +86,11 @@ Environtment pada deployment.yaml memiliki variabel yang sama dengan **run_examp
 
 **DEV**
 
-- **SERVICE_NAME**: TRANSDB1; **HOST**: 10.30.21.17;
+- **SERVICE_NAME**: TRANSDB1; **HOST**: 10.30.20.18;
 
 **STAGING**
 
-- **SERVICE_NAME**: TRANSMK; **HOST**: 10.30.21.18;
+- **SERVICE_NAME**: TRANSDB1; **HOST**: 10.30.21.17;
 
 ## Mengubah boilerplate menjadi service
 

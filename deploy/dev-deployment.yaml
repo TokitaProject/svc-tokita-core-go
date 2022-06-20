@@ -49,7 +49,7 @@ spec:
             - name: DB_PORT
               value: "6033"
             - name: DB_NAME
-              value: "tagihan_spp"
+              value: "boilerplate_go"
             - name: ORACLE_DB_DRIVERNAME
               value: "godror"
             - name: ORACLE_DB_USERNAME
@@ -57,7 +57,7 @@ spec:
             - name: ORACLE_DB_PASSWORD
               value: "testing#"
             - name: ORACLE_DB_HOST
-              value: "10.30.21.17"
+              value: "10.30.20.18"
             - name: ORACLE_DB_PORT
               value: "1521"
             - name: ORACLE_DB_SERVICE_NAME
@@ -86,7 +86,7 @@ metadata:
       apiVersion: ambassador/v1
       kind:  Mapping
       name:  svc-boilerplate-golang-mapping
-      prefix: /v2/finance/bill-spp
+      prefix: /v2/finance/boilerplate
       rewrite: /public/api/v2
       service: svc-boilerplate-golang.finance-dev
       timeout_ms: 180000
