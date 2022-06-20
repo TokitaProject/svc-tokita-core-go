@@ -1,8 +1,6 @@
 package database
 
-import (
-	"strconv"
-)
+import "strconv"
 
 type OnSelect struct {
 	Column []string

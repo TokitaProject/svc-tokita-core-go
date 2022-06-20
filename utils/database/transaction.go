@@ -1,8 +1,6 @@
 package database
 
-import (
-	"database/sql"
-)
+import "database/sql"
 
 func New(tech string, table string, command string) QueryConfig {
 	return QueryConfig{

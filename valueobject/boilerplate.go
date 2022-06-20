@@ -1,8 +1,6 @@
 package valueobject
 
-import (
-	"svc-boilerplate-golang/entity"
-)
+import "svc-boilerplate-golang/entity"
 
 type Boilerplate struct {
 	entity.Boilerplate
