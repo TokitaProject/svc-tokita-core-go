@@ -40,7 +40,5 @@ func ExecTransaction(db *sql.DB, query ...QueryConfig) (err error) {
 		}
 	}
 
-	tx.Commit()
-
-	return
+	return tx.Commit()
 }
