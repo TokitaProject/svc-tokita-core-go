@@ -3,14 +3,13 @@ package database
 import (
 	"database/sql"
 	"fmt"
-	"log"
 	"os"
 	"time"
 
 	_ "github.com/go-sql-driver/mysql"
 )
 
-func SetupMysqlDatabaseConnection() (db *sql.DB) {
+func SetupMysqlDatabaseConnection() (db *sql.DB, err error) {
 	var (
 		driver   = os.Getenv("DB_DRIVERNAME")
 		username = os.Getenv("DB_USERNAME")
@@ -22,11 +21,7 @@ func SetupMysqlDatabaseConnection() (db *sql.DB) {
 
 	connection := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?parseTime=true", username, password, host, port, name)
 
-	db, err := sql.Open(driver, connection)
-
-	if err != nil {
-		log.Fatal(err)
-	}
+	db, err = sql.Open(driver, connection)
 
 	db.SetMaxOpenConns(100)
 	db.SetMaxIdleConns(100)

@@ -1,6 +1,7 @@
 package main
 
 import (
+	"log"
 	"os"
 	_boilerplateHttpDeliver "svc-boilerplate-golang/domain/boilerplate/delivery/http"
 	_boilerplateRepository "svc-boilerplate-golang/domain/boilerplate/repository"
@@ -12,8 +13,15 @@ import (
 
 func main() {
 	routers := gin.Default()
-	mysql := database.SetupMysqlDatabaseConnection()
-	// oracle := database.SetupOracleDatabaseConnection()
+
+	mysql, err := database.SetupMysqlDatabaseConnection()
+	if err != nil {
+		log.Fatal(err.Error())
+	}
+	// oracle, err := database.SetupOracleDatabaseConnection()
+	// if err != nil {
+	// 	log.Fatal(err.Error())
+	// }
 
 	boilerplateMysqlRepository := _boilerplateRepository.NewMysqlBoilerplateRepository(mysql)
 	boilerplateUsecase := _boilerplateUsecase.NewBoilerplateUsecase(boilerplateMysqlRepository)

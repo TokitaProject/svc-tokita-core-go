@@ -3,13 +3,12 @@ package database
 import (
 	"database/sql"
 	"fmt"
-	"log"
 	"os"
 
 	_ "github.com/godror/godror"
 )
 
-func SetupOracleDatabaseConnection() (db *sql.DB) {
+func SetupOracleDatabaseConnection() (db *sql.DB, err error) {
 	var (
 		driver   = os.Getenv("ORACLE_DB_DRIVERNAME")
 		username = os.Getenv("ORACLE_DB_USERNAME")
@@ -21,11 +20,5 @@ func SetupOracleDatabaseConnection() (db *sql.DB) {
 
 	connection := fmt.Sprintf(`user="%s" password="%s" connectString="%s:%s/%s"`, username, password, host, port, service)
 
-	db, err := sql.Open(driver, connection)
-
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	return
+	return sql.Open(driver, connection)
 }
