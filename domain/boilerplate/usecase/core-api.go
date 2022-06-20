@@ -18,22 +18,32 @@ func (boilerplate boilerplateUsecase) Store(payload valueobject.BoilerplatePaylo
 	for i := range payload.Data {
 		payload.Data[i].ID, _ = boilerplate.mysqlRepository.GenerateUUID()
 	}
-	queryConfig := boilerplate.ProcessStore(payload)
 
-	err = boilerplate.mysqlRepository.Exec(queryConfig...)
-	return
+	queryConfig, err := boilerplate.ProcessStore(payload)
+
+	if err != nil {
+		return
+	}
+
+	return boilerplate.mysqlRepository.Exec(queryConfig...)
 }
 
 func (boilerplate boilerplateUsecase) Update(payload valueobject.BoilerplatePayloadUpdate) (err error) {
-	queryConfig := boilerplate.ProcessUpdate(payload)
+	queryConfig, err := boilerplate.ProcessUpdate(payload)
 
-	err = boilerplate.mysqlRepository.Exec(queryConfig...)
-	return
+	if err != nil {
+		return
+	}
+
+	return boilerplate.mysqlRepository.Exec(queryConfig...)
 }
 
 func (boilerplate boilerplateUsecase) Delete(payload valueobject.BoilerplatePayloadDelete) (err error) {
-	queryConfig := boilerplate.ProcessDelete(payload)
+	queryConfig, err := boilerplate.ProcessDelete(payload)
 
-	err = boilerplate.mysqlRepository.Exec(queryConfig...)
-	return
+	if err != nil {
+		return
+	}
+
+	return boilerplate.mysqlRepository.Exec(queryConfig...)
 }

@@ -19,7 +19,11 @@ func (db *mysqlBoilerplateRepository) GetAll(param map[string]interface{}) (resp
 		Where:  param,
 	}
 
-	builder.QueryBuilder()
+	err = builder.QueryBuilder()
+
+	if err != nil {
+		return
+	}
 
 	query, err := db.sqlDB.Query(builder.Result.Query, builder.Result.Value...)
 
@@ -53,7 +57,11 @@ func (db *mysqlBoilerplateRepository) GetOne(param map[string]interface{}) (resp
 		Where:  param,
 	}
 
-	builder.QueryBuilder()
+	err = builder.QueryBuilder()
+
+	if err != nil {
+		return
+	}
 
 	query := db.sqlDB.QueryRow(builder.Result.Query, builder.Result.Value...)
 
@@ -65,7 +73,7 @@ func (db *mysqlBoilerplateRepository) GetOne(param map[string]interface{}) (resp
 	return
 }
 
-func (db *mysqlBoilerplateRepository) Store(column []string, data []interface{}) (builder database.QueryConfig) {
+func (db *mysqlBoilerplateRepository) Store(column []string, data []interface{}) (builder database.QueryConfig, err error) {
 	builder = database.New(MYSQL, MYSQL_TABLE, INSERT)
 
 	builder.OnInsert = database.OnInsert{
@@ -73,11 +81,11 @@ func (db *mysqlBoilerplateRepository) Store(column []string, data []interface{})
 		Data:   data,
 	}
 
-	builder.QueryBuilder()
+	err = builder.QueryBuilder()
 	return
 }
 
-func (db *mysqlBoilerplateRepository) Update(param map[string]interface{}, data map[string]interface{}) (builder database.QueryConfig) {
+func (db *mysqlBoilerplateRepository) Update(param map[string]interface{}, data map[string]interface{}) (builder database.QueryConfig, err error) {
 	builder = database.New(MYSQL, MYSQL_TABLE, UPDATE)
 
 	builder.OnUpdate = database.OnUpdate{
@@ -85,18 +93,18 @@ func (db *mysqlBoilerplateRepository) Update(param map[string]interface{}, data 
 		Data:  data,
 	}
 
-	builder.QueryBuilder()
+	err = builder.QueryBuilder()
 	return
 }
 
-func (db *mysqlBoilerplateRepository) Delete(param map[string]interface{}) (builder database.QueryConfig) {
+func (db *mysqlBoilerplateRepository) Delete(param map[string]interface{}) (builder database.QueryConfig, err error) {
 	builder = database.New(MYSQL, MYSQL_TABLE, DELETE)
 
 	builder.OnDelete = database.OnDelete{
 		Where: param,
 	}
 
-	builder.QueryBuilder()
+	err = builder.QueryBuilder()
 	return
 }
 

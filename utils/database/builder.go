@@ -1,6 +1,9 @@
 package database
 
-import "strconv"
+import (
+	"errors"
+	"strconv"
+)
 
 type OnSelect struct {
 	Column []string
@@ -42,7 +45,7 @@ type QueryConfig struct {
 	counter int
 }
 
-func (cfg *QueryConfig) QueryBuilder() {
+func (cfg *QueryConfig) QueryBuilder() (err error) {
 	cfg.counter = 0
 	if cfg.Action == "select" {
 		cfg.selectBuilder()
@@ -62,9 +65,11 @@ func (cfg *QueryConfig) QueryBuilder() {
 	} else if cfg.Action == "delete" {
 		cfg.deleteBuilder()
 		if found := cfg.whereBuilder(cfg.OnDelete.Where); !found {
-			cfg.Query = ""
+			return errors.New("unsafe delete with no where")
 		}
 	}
+
+	return
 }
 
 func (cfg *QueryConfig) selectBuilder() {

@@ -15,7 +15,11 @@ func (db *oracleBoilerplateRepository) GetAll(param map[string]interface{}) (res
 		Where:  param,
 	}
 
-	builder.QueryBuilder()
+	err = builder.QueryBuilder()
+
+	if err != nil {
+		return
+	}
 
 	query, err := db.sqlDB.Query(builder.Result.Query, builder.Result.Value...)
 
@@ -49,7 +53,11 @@ func (db *oracleBoilerplateRepository) GetOne(param map[string]interface{}) (res
 		Where:  param,
 	}
 
-	builder.QueryBuilder()
+	err = builder.QueryBuilder()
+
+	if err != nil {
+		return
+	}
 
 	query := db.sqlDB.QueryRow(builder.Result.Query, builder.Result.Value...)
 
@@ -61,7 +69,7 @@ func (db *oracleBoilerplateRepository) GetOne(param map[string]interface{}) (res
 	return
 }
 
-func (db *oracleBoilerplateRepository) Store(column []string, data []interface{}) (builder database.QueryConfig) {
+func (db *oracleBoilerplateRepository) Store(column []string, data []interface{}) (builder database.QueryConfig, err error) {
 	builder = database.New(ORACLE, ORACLE_TABLE, INSERT)
 
 	builder.OnInsert = database.OnInsert{
@@ -69,11 +77,11 @@ func (db *oracleBoilerplateRepository) Store(column []string, data []interface{}
 		Data:   data,
 	}
 
-	builder.QueryBuilder()
+	err = builder.QueryBuilder()
 	return
 }
 
-func (db *oracleBoilerplateRepository) Update(param map[string]interface{}, data map[string]interface{}) (builder database.QueryConfig) {
+func (db *oracleBoilerplateRepository) Update(param map[string]interface{}, data map[string]interface{}) (builder database.QueryConfig, err error) {
 	builder = database.New(ORACLE, ORACLE_TABLE, UPDATE)
 
 	builder.OnUpdate = database.OnUpdate{
@@ -81,18 +89,18 @@ func (db *oracleBoilerplateRepository) Update(param map[string]interface{}, data
 		Data:  data,
 	}
 
-	builder.QueryBuilder()
+	err = builder.QueryBuilder()
 	return
 }
 
-func (db *oracleBoilerplateRepository) Delete(param map[string]interface{}) (builder database.QueryConfig) {
+func (db *oracleBoilerplateRepository) Delete(param map[string]interface{}) (builder database.QueryConfig, err error) {
 	builder = database.New(ORACLE, ORACLE_TABLE, DELETE)
 
 	builder.OnDelete = database.OnDelete{
 		Where: param,
 	}
 
-	builder.QueryBuilder()
+	err = builder.QueryBuilder()
 	return
 }
 
