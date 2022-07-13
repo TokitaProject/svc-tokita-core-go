@@ -2,6 +2,7 @@ package database
 
 import (
 	"errors"
+	"reflect"
 	"strconv"
 )
 
@@ -187,22 +188,23 @@ func (cfg *QueryConfig) whereBuilder(param map[string]interface{}) (found bool) 
 						if r < 1 {
 							continue
 						}
-						cfg.Result.Query += o + ` IN (`
-						for i := 0; i < r; i++ {
-							if f.([]string)[i] == "" {
-								continue
-							}
-							cfg.Result.Query += cfg.getQuestionMark() + `, `
-						}
-						cfg.Result.Query = cfg.Result.Query[0 : len(cfg.Result.Query)-2]
-						cfg.Result.Query += `) AND `
+						localFound := false
+						localQuery := ``
 						for _, w := range f.([]string) {
 							if w == "" {
 								continue
 							}
+							localFound = true
+							localQuery += cfg.getQuestionMark() + `, `
 							cfg.Result.Value = append(cfg.Result.Value, w)
 						}
-						found = true
+						if localFound {
+							cfg.Result.Query += o + ` IN (`
+							cfg.Result.Query += localQuery
+							cfg.Result.Query = cfg.Result.Query[0 : len(cfg.Result.Query)-2]
+							cfg.Result.Query += `) AND `
+							found = true
+						}
 					}
 				} else if g == "NOT" {
 					for o, f := range v.(map[string]interface{}) {
@@ -235,6 +237,10 @@ func (cfg *QueryConfig) whereBuilder(param map[string]interface{}) (found bool) 
 					if v == nil {
 						cfg.Result.Query += g + ` IS NULL AND `
 						found = true
+					} else if reflect.TypeOf(v).String() == "[]interface {}" {
+						cfg.Result.Query += g + ` ` + v.([]interface{})[0].(string) + ` ` + cfg.getQuestionMark() + ` AND `
+						cfg.Result.Value = append(cfg.Result.Value, v.([]interface{})[1])
+						found = true
 					} else {
 						cfg.Result.Query += g + ` = ` + cfg.getQuestionMark() + ` AND `
 						cfg.Result.Value = append(cfg.Result.Value, v)
@@ -252,6 +258,35 @@ func (cfg *QueryConfig) whereBuilder(param map[string]interface{}) (found bool) 
 		cfg.Result.Query = cfg.Result.Query[0 : len(cfg.Result.Query)-7]
 	}
 
+	return
+}
+
+func (cfg *QueryConfig) postWhereBuilder(param map[string]interface{}) (err error) {
+	for i, x := range param {
+		if i == "ORDER_BY" || i == "GROUP_BY" {
+			r := len(x.([]string))
+			if r < 1 {
+				continue
+			}
+			if i == "ORDER_BY" {
+				cfg.Result.Query += ` ORDER BY `
+			}
+			if i == "GROUP_BY" {
+				cfg.Result.Query += ` GROUP BY `
+			}
+			for _, w := range x.([]string) {
+				if w == "" {
+					continue
+				}
+				cfg.Result.Query += cfg.getQuestionMark() + `, `
+				cfg.Result.Value = append(cfg.Result.Value, w)
+			}
+			cfg.Result.Query = cfg.Result.Query[0 : len(cfg.Result.Query)-2]
+			cfg.Result.Query += cfg.getQuestionMark() + ` `
+		}
+	}
+
+	cfg.Result.Query = cfg.Result.Query[0 : len(cfg.Result.Query)-1]
 	return
 }
 

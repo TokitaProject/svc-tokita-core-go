@@ -23,10 +23,22 @@ func (handler *HttpBoilerplateHandler) GetAll(ctx *gin.Context) {
 				"column_not":     ctx.Query("param_not"),
 				"column_not_nil": nil,
 			},
+			"BETWEEN": map[string]interface{}{
+				"column_between": []interface{}{"A", "B"},
+			},
 			"LIKE": map[string]interface{}{
 				"column_like": "%" + ctx.Query("param_like") + "%",
 			},
+			"param_special": []interface{}{">", 1},
 		},
+		"ORDER_BY": []string{"column ASC, column DESC"},
+		"GROUP_BY": []string{"column"},
+		"HAVING": [][]interface{}{
+			{"column", ">", "unsigned int"},
+			{"column", "<", "unsigned int"},
+			{"column", "=", "int"},
+		},
+		"LIMIT": 100,
 	}
 
 	response, err := handler.boilerplateUsecase.GetAll(param)
