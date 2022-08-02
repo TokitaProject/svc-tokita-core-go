@@ -5,10 +5,6 @@ import (
 	"svc-boilerplate-golang/valueobject"
 )
 
-func (db *mysqlBoilerplateRepository) GenerateUUID() (uuid uint64, err error) {
-	return database.GenerateUUID(db.sqlDB)
-}
-
 func (db *mysqlBoilerplateRepository) GetAll(param map[string]interface{}) (response []valueobject.Boilerplate, err error) {
 	var result valueobject.Boilerplate
 
@@ -105,10 +101,5 @@ func (db *mysqlBoilerplateRepository) Delete(param map[string]interface{}) (buil
 	}
 
 	err = builder.QueryBuilder()
-	return
-}
-
-func (db *mysqlBoilerplateRepository) Exec(queryConfig ...database.QueryConfig) (err error) {
-	err = database.ExecTransaction(db.sqlDB, queryConfig...)
 	return
 }
