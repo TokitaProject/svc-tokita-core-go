@@ -48,8 +48,8 @@ func (handler *HttpBoilerplateHandler) GetAll(ctx *gin.Context) {
 			message.ReturnOk(ctx, make(map[string]interface{}), param)
 			return
 		}
-		message.ReturnInternalServerError(ctx)
-		log.Println(err)
+		message.ReturnInternalServerError(ctx, err.Error())
+		log.Println(err.Error())
 		return
 	}
 
@@ -70,8 +70,8 @@ func (handler *HttpBoilerplateHandler) GetByUUID(ctx *gin.Context) {
 			message.ReturnOk(ctx, make(map[string]interface{}), param)
 			return
 		}
-		message.ReturnInternalServerError(ctx)
-		log.Println(err)
+		message.ReturnInternalServerError(ctx, err.Error())
+		log.Println(err.Error())
 		return
 	}
 
@@ -91,8 +91,8 @@ func (handler *HttpBoilerplateHandler) Store(ctx *gin.Context) {
 	err = handler.boilerplateUsecase.Store(payload)
 
 	if err != nil {
-		message.ReturnInternalServerError(ctx)
-		log.Println(err)
+		message.ReturnInternalServerError(ctx, err.Error())
+		log.Println(err.Error())
 		return
 	}
 
@@ -112,8 +112,8 @@ func (handler *HttpBoilerplateHandler) Update(ctx *gin.Context) {
 	err = handler.boilerplateUsecase.Update(payload)
 
 	if err != nil {
-		message.ReturnInternalServerError(ctx)
-		log.Println(err)
+		message.ReturnInternalServerError(ctx, err.Error())
+		log.Println(err.Error())
 		return
 	}
 
@@ -133,8 +133,8 @@ func (handler *HttpBoilerplateHandler) Delete(ctx *gin.Context) {
 	err = handler.boilerplateUsecase.Delete(payload)
 
 	if err != nil {
-		message.ReturnInternalServerError(ctx)
-		log.Println(err)
+		message.ReturnInternalServerError(ctx, err.Error())
+		log.Println(err.Error())
 		return
 	}
 

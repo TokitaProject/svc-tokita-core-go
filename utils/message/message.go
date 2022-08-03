@@ -23,9 +23,10 @@ func ReturnBadRequest(ctx *gin.Context, message interface{}, param interface{}) 
 	})
 }
 
-func ReturnInternalServerError(ctx *gin.Context) {
+func ReturnInternalServerError(ctx *gin.Context, msg ...string) {
 	ctx.JSON(http.StatusInternalServerError, gin.H{
-		"message": ERROR_STATUS,
+		"message":               ERROR_STATUS,
+		"message for developer": msg,
 	})
 }
 
