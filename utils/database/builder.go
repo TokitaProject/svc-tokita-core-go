@@ -289,7 +289,7 @@ func (cfg *QueryConfig) postWhereBuilder(param map[string]interface{}) (err erro
 		}
 	}
 
-	if !found {
+	if found {
 		cfg.Result.Query = cfg.Result.Query[0 : len(cfg.Result.Query)-1]
 	}
 
