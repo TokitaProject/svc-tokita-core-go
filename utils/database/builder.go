@@ -51,6 +51,7 @@ func (cfg *QueryConfig) QueryBuilder() (err error) {
 	if cfg.Action == "select" {
 		cfg.selectBuilder()
 		cfg.whereBuilder(cfg.OnSelect.Where)
+		cfg.postWhereBuilder(cfg.OnSelect.Where)
 	} else if cfg.Action == "select-distinct" {
 		cfg.selectDistinctBuilder()
 		cfg.whereBuilder(cfg.OnSelect.Where)
@@ -278,11 +279,10 @@ func (cfg *QueryConfig) postWhereBuilder(param map[string]interface{}) (err erro
 				if w == "" {
 					continue
 				}
-				cfg.Result.Query += cfg.getQuestionMark() + `, `
-				cfg.Result.Value = append(cfg.Result.Value, w)
+				cfg.Result.Query += w + `, `
 			}
 			cfg.Result.Query = cfg.Result.Query[0 : len(cfg.Result.Query)-2]
-			cfg.Result.Query += cfg.getQuestionMark() + ` `
+			cfg.Result.Query += ` `
 		}
 	}
 
