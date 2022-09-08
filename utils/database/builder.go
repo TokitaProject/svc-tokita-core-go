@@ -263,6 +263,8 @@ func (cfg *QueryConfig) whereBuilder(param map[string]interface{}) (found bool) 
 }
 
 func (cfg *QueryConfig) postWhereBuilder(param map[string]interface{}) (err error) {
+	var found bool
+
 	for i, x := range param {
 		if i == "ORDER_BY" || i == "GROUP_BY" {
 			r := len(x.([]string))
@@ -283,10 +285,14 @@ func (cfg *QueryConfig) postWhereBuilder(param map[string]interface{}) (err erro
 			}
 			cfg.Result.Query = cfg.Result.Query[0 : len(cfg.Result.Query)-2]
 			cfg.Result.Query += ` `
+			found = true
 		}
 	}
 
-	cfg.Result.Query = cfg.Result.Query[0 : len(cfg.Result.Query)-1]
+	if !found {
+		cfg.Result.Query = cfg.Result.Query[0 : len(cfg.Result.Query)-1]
+	}
+
 	return
 }
 
