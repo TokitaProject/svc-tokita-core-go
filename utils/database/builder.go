@@ -73,6 +73,8 @@ func (cfg *QueryConfig) QueryBuilder() (err error) {
 		}
 	}
 
+	// For debuging logical error
+	// log.Println(cfg.Result.Query, cfg.Result.Value)
 	return
 }
 
