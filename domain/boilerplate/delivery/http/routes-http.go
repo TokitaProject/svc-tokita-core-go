@@ -15,16 +15,14 @@ func NewBoilerplateHttpHandler(boilerplate boilerplate.Usecase, httpRouter *gin.
 		boilerplateUsecase: boilerplate,
 	}
 
-	// public untuk service2frontend | v1 untuk lumen, v2 untuk golang.
-	public := httpRouter.Group("/public/api/v2")
+	public := httpRouter.Group("/public/api/v1")
 	public.GET("/boilerplate", handler.GetAll)
 	public.GET("/boilerplate/:uuid", handler.GetByUUID)
 	public.POST("/boilerplate", handler.Store)
 	public.PUT("/boilerplate", handler.Update)
 	public.DELETE("/boilerplate", handler.Delete)
 
-	// private untuk service2service | v1 untuk lumen, v2 untuk golang.
-	private := httpRouter.Group("/private/api/v2")
+	private := httpRouter.Group("/private/api/v1")
 	private.GET("/boilerplate", handler.GetAll)
 	private.GET("/boilerplate/:uuid", handler.GetByUUID)
 	private.POST("/boilerplate", handler.Store)
