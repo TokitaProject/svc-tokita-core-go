@@ -103,8 +103,3 @@ func (db *oracleBoilerplateRepository) Delete(param map[string]interface{}) (bui
 	err = builder.QueryBuilder()
 	return
 }
-
-func (db *oracleBoilerplateRepository) Exec(queryConfig ...database.QueryConfig) (err error) {
-	err = database.ExecTransaction(db.sqlDB, queryConfig...)
-	return
-}
