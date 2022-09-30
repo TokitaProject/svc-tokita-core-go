@@ -88,7 +88,9 @@ func (handler *HttpBoilerplateHandler) Store(ctx *gin.Context) {
 		return
 	}
 
-	err = handler.boilerplateUsecase.Store(payload)
+	payload.User = ctx.Request.Header.Get("X-Member")
+
+	feedback, err := handler.boilerplateUsecase.Store(payload)
 
 	if err != nil {
 		message.ReturnInternalServerError(ctx, err.Error())
@@ -96,7 +98,7 @@ func (handler *HttpBoilerplateHandler) Store(ctx *gin.Context) {
 		return
 	}
 
-	message.ReturnSuccessInsert(ctx, payload.Data)
+	message.ReturnSuccessInsert(ctx, feedback.Data)
 }
 
 func (handler *HttpBoilerplateHandler) Update(ctx *gin.Context) {
@@ -108,6 +110,8 @@ func (handler *HttpBoilerplateHandler) Update(ctx *gin.Context) {
 		message.ReturnBadRequest(ctx, err.Error(), config.ERROR_BIND_JSON)
 		return
 	}
+
+	payload.User = ctx.Request.Header.Get("X-Member")
 
 	err = handler.boilerplateUsecase.Update(payload)
 

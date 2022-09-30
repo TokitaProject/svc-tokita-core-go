@@ -10,10 +10,12 @@ type Boilerplate struct {
 
 type BoilerplatePayloadInsert struct {
 	Data []Boilerplate `json:"data" binding:"required"`
+	User string
 }
 
 type BoilerplatePayloadUpdate struct {
 	Data []BoilerplateDataUpdate `json:"data" binding:"required"`
+	User string
 }
 
 type BoilerplateDataUpdate struct {

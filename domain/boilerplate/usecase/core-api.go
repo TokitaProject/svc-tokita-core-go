@@ -14,21 +14,27 @@ func (boilerplate boilerplateUsecase) GetOne(param map[string]interface{}) (resp
 	return
 }
 
-func (boilerplate boilerplateUsecase) Store(payload valueobject.BoilerplatePayloadInsert) (err error) {
+func (boilerplate boilerplateUsecase) Store(payload valueobject.BoilerplatePayloadInsert) (valueobject.BoilerplatePayloadInsert, error) {
 	for i := range payload.Data {
-		payload.Data[i].ID, _ = boilerplate.mysqlRepository.GenerateUUID()
+		payload.Data[i].ID, _ = boilerplate.mysqlRepository.GenerateID()
+		payload.Data[i].UUID, _ = boilerplate.mysqlRepository.GenerateUUID()
+		payload.Data[i].UserInput = payload.User
 	}
 
 	queryConfig, err := boilerplate.ProcessStore(payload)
 
 	if err != nil {
-		return
+		return payload, err
 	}
 
-	return boilerplate.mysqlRepository.Exec(queryConfig...)
+	return payload, boilerplate.mysqlRepository.Exec(queryConfig...)
 }
 
 func (boilerplate boilerplateUsecase) Update(payload valueobject.BoilerplatePayloadUpdate) (err error) {
+	for i := range payload.Data {
+		payload.Data[i].Body.UserUpdate = payload.User
+	}
+
 	queryConfig, err := boilerplate.ProcessUpdate(payload)
 
 	if err != nil {

@@ -4,7 +4,11 @@ import (
 	"svc-boilerplate-golang/utils/database"
 )
 
-func (db *mysqlBoilerplateRepository) GenerateUUID() (uuid uint64, err error) {
+func (db *mysqlBoilerplateRepository) GenerateID() (id uint64, err error) {
+	return database.GenerateID(db.sqlDB)
+}
+
+func (db *mysqlBoilerplateRepository) GenerateUUID() (uuid string, err error) {
 	return database.GenerateUUID(db.sqlDB)
 }
 

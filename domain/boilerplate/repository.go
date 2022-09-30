@@ -7,7 +7,8 @@ import (
 
 type MysqlRepository interface {
 	Exec(...database.QueryConfig) error
-	GenerateUUID() (uint64, error)
+	GenerateID() (uint64, error)
+	GenerateUUID() (string, error)
 
 	GetAll(param map[string]interface{}) ([]valueobject.Boilerplate, error)
 	GetOne(param map[string]interface{}) (valueobject.Boilerplate, error)

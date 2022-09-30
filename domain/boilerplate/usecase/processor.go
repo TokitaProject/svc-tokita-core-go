@@ -13,7 +13,8 @@ func (boilerplate boilerplateUsecase) ProcessStore(payload valueobject.Boilerpla
 		data := []interface{}{
 			[]interface{}{
 				x.ID,
-				x.Column,
+				x.UUID,
+				x.UserInput,
 			},
 		}
 
@@ -21,7 +22,7 @@ func (boilerplate boilerplateUsecase) ProcessStore(payload valueobject.Boilerpla
 		column on data and this line should have same order
 		*/
 		column := []string{
-			"id",
+			"id", "uuid", "user_input",
 		}
 
 		queryInsert, err := boilerplate.mysqlRepository.Store(column, data)
@@ -43,7 +44,7 @@ func (boilerplate boilerplateUsecase) ProcessUpdate(payload valueobject.Boilerpl
 			},
 		}
 		var data = map[string]interface{}{
-			"uuid": x.Body.UUID, // add the data to update the row
+			"user_update": x.Body.UserUpdate, // add the data to update the row
 		}
 
 		queryUpdate, err := boilerplate.mysqlRepository.Update(param, data)

@@ -30,14 +30,14 @@ func ReturnInternalServerError(ctx *gin.Context, msg ...string) {
 	})
 }
 
-func ReturnSuccessDelete(ctx *gin.Context) {
-	ctx.JSON(http.StatusNoContent, gin.H{})
-}
-
 func ReturnSuccessInsert(ctx *gin.Context, data interface{}) {
 	ctx.JSON(http.StatusCreated, gin.H{
 		"data": data,
 	})
+}
+
+func ReturnSuccessDelete(ctx *gin.Context) {
+	ctx.JSON(http.StatusNoContent, gin.H{})
 }
 
 func ReturnSuccessUpdate(ctx *gin.Context) {
