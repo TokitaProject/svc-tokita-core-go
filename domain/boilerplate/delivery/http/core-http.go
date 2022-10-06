@@ -38,7 +38,8 @@ func (handler *HttpBoilerplateHandler) GetAll(ctx *gin.Context) {
 			{"column", "<", "unsigned int"},
 			{"column", "=", "int"},
 		},
-		"LIMIT": 100,
+		"OFFSET": 100,
+		"LIMIT":  100,
 	}
 
 	response, err := handler.boilerplateUsecase.GetAll(param)
