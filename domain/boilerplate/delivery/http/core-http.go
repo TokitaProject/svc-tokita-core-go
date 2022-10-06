@@ -31,15 +31,21 @@ func (handler *HttpBoilerplateHandler) GetAll(ctx *gin.Context) {
 			},
 			"param_special": []interface{}{">", 1},
 		},
-		"ORDER_BY": []string{"column ASC, column DESC"},
-		"GROUP_BY": []string{"column", "column"},
-		"HAVING": [][]interface{}{
-			{"column", ">", "unsigned int"},
-			{"column", "<", "unsigned int"},
-			{"column", "=", "int"},
+		"GROUP": map[string]interface{}{
+			"GROUP_BY": []string{"column", "column"},
+			"HAVING": [][]interface{}{
+				{"column", ">", "unsigned int"},
+				{"column", "<", "unsigned int"},
+				{"column", "=", "int"},
+			},
 		},
-		"OFFSET": 100,
-		"LIMIT":  100,
+		"ORDER": map[string]interface{}{
+			"ORDER_BY": []string{"column ASC, column DESC"},
+		},
+		"LIMIT": map[string]interface{}{
+			"OFFSET": 100,
+			"LIMIT":  100,
+		},
 	}
 
 	response, err := handler.boilerplateUsecase.GetAll(param)
