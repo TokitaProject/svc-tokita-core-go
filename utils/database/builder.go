@@ -186,14 +186,14 @@ func (cfg *QueryConfig) whereBuilder(param map[string]interface{}) (found bool) 
 		if i == "AND" {
 			for g, v := range x.(map[string]interface{}) {
 				if g == "IN" {
-					for o, f := range v.(map[string]interface{}) {
-						r := len(f.([]string))
+					for o, f := range v.(map[string][]string) {
+						r := len(f)
 						if r < 1 {
 							continue
 						}
 						localFound := false
 						localQuery := ``
-						for _, w := range f.([]string) {
+						for _, w := range f {
 							if w == "" {
 								continue
 							}
@@ -230,6 +230,16 @@ func (cfg *QueryConfig) whereBuilder(param map[string]interface{}) (found bool) 
 						} else {
 							cfg.Result.Query += o + ` LIKE ` + cfg.getQuestionMark() + ` AND `
 							cfg.Result.Value = append(cfg.Result.Value, f)
+							found = true
+						}
+					}
+				} else if g == "BETWEEN" {
+					for o, f := range v.(map[string][]interface{}) {
+						if len(f) != 2 {
+							continue
+						} else {
+							cfg.Result.Query += o + ` BETWEEN ` + cfg.getQuestionMark() + ` AND ` + cfg.getQuestionMark() + ` AND `
+							cfg.Result.Value = append(cfg.Result.Value, f...)
 							found = true
 						}
 					}
