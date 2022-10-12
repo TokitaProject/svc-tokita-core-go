@@ -51,7 +51,8 @@ func (cfg *QueryConfig) QueryBuilder() (err error) {
 	if cfg.Action == "select" {
 		cfg.selectBuilder()
 		cfg.whereBuilder(cfg.OnSelect.Where)
-		cfg.postWhereBuilder(cfg.OnSelect.Where)
+		cfg.groupByBuilder(cfg.OnSelect.Where)
+		cfg.orderByBuilder(cfg.OnSelect.Where)
 	} else if cfg.Action == "select-distinct" {
 		cfg.selectDistinctBuilder()
 		cfg.whereBuilder(cfg.OnSelect.Where)
@@ -274,30 +275,62 @@ func (cfg *QueryConfig) whereBuilder(param map[string]interface{}) (found bool) 
 	return
 }
 
-func (cfg *QueryConfig) postWhereBuilder(param map[string]interface{}) (err error) {
+func (cfg *QueryConfig) groupByBuilder(param map[string]interface{}) (err error) {
 	var found bool
 
-	for i, x := range param {
-		if i == "ORDER_BY" || i == "GROUP_BY" {
-			r := len(x.([]string))
-			if r < 1 {
-				continue
-			}
-			if i == "ORDER_BY" {
-				cfg.Result.Query += ` ORDER BY `
-			}
-			if i == "GROUP_BY" {
-				cfg.Result.Query += ` GROUP BY `
-			}
-			for _, w := range x.([]string) {
-				if w == "" {
-					continue
+	for a, c := range param {
+		if a == "GROUP" {
+			for i, x := range c.(map[string]interface{}) {
+				if i == "GROUP_BY" {
+					r := len(x.([]string))
+					if r < 1 {
+						continue
+					}
+					cfg.Result.Query += ` GROUP BY `
+					for _, w := range x.([]string) {
+						if w == "" {
+							continue
+						}
+						cfg.Result.Query += w + `, `
+					}
+					cfg.Result.Query = cfg.Result.Query[0 : len(cfg.Result.Query)-2]
+					cfg.Result.Query += ` `
+					found = true
 				}
-				cfg.Result.Query += w + `, `
 			}
-			cfg.Result.Query = cfg.Result.Query[0 : len(cfg.Result.Query)-2]
-			cfg.Result.Query += ` `
-			found = true
+		}
+	}
+
+	if found {
+		cfg.Result.Query = cfg.Result.Query[0 : len(cfg.Result.Query)-1]
+	}
+
+	return
+}
+
+func (cfg *QueryConfig) orderByBuilder(param map[string]interface{}) (err error) {
+	var found bool
+
+	for a, c := range param {
+		if a == "GROUP" {
+			for i, x := range c.(map[string]interface{}) {
+				if i == "ORDER_BY" {
+					r := len(x.([]string))
+					if r < 1 {
+						continue
+					}
+					cfg.Result.Query += ` ORDER BY `
+					for _, w := range x.([]string) {
+						if w == "" {
+							continue
+						}
+						cfg.Result.Query += w + `, `
+					}
+					cfg.Result.Query = cfg.Result.Query[0 : len(cfg.Result.Query)-2]
+					cfg.Result.Query += ` `
+					found = true
+				}
+			}
 		}
 	}
 
