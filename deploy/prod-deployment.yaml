@@ -84,8 +84,8 @@ metadata:
       apiVersion: ambassador/v1
       kind:  Mapping
       name:  svc-boilerplate-golang-mapping
-      prefix: /v2/finance/boilerplate
-      rewrite: /public/api/v2
+      prefix: /v1/finance/boilerplate
+      rewrite: /public/api/v1
       service: svc-boilerplate-golang.finance-production
       timeout_ms: 180000
 spec:
