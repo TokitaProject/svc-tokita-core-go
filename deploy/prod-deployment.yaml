@@ -55,11 +55,11 @@ spec:
             - name: ORACLE_DB_DRIVERNAME
               value: "godror"
             - name: ORACLE_DB_USERNAME
-              value: "keubank"
+              value: "webservice_keubank"
             - name: ORACLE_DB_PASSWORD
-              value: "testing#"
+              value: "webS3rvicek3ubankU11#2018"
             - name: ORACLE_DB_HOST
-              value: "10.30.21.17"
+              value: "192.168.8.12"
             - name: ORACLE_DB_PORT
               value: "1521"
             - name: ORACLE_DB_SERVICE_NAME
