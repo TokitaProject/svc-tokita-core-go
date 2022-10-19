@@ -64,6 +64,8 @@ spec:
               value: "1521"
             - name: ORACLE_DB_SERVICE_NAME
               value: "transdb1"
+            - name: ENV
+              value: "production"
             - name: GIN_MODE
               value: "release"
           ports:

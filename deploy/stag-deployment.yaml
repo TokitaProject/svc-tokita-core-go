@@ -64,6 +64,8 @@ spec:
               value: "transdb1"
             - name: PORT
               value: "80"
+            - name: ENV
+              value: "staging"
             - name: GIN_MODE
               value: "release"
           ports:
