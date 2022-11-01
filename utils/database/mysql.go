@@ -17,9 +17,10 @@ func SetupMysqlDatabaseConnection() (db *sql.DB, err error) {
 		host     = os.Getenv("DB_HOST")
 		port     = os.Getenv("DB_PORT")
 		name     = os.Getenv("DB_NAME")
+		location = "loc=Asia%2FJakarta"
 	)
 
-	connection := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?parseTime=true", username, password, host, port, name)
+	connection := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?parseTime=true&%s", username, password, host, port, name, location)
 
 	db, err = sql.Open(driver, connection)
 
