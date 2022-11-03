@@ -16,6 +16,28 @@ const CONTENT_TYPE = "Content-Type"
 const AUTHORIZATION = "Authorization"
 const APPLICATION_JSON = "application/json"
 
+func getBearer() string {
+	type login struct {
+		KodeMember string `json:"kd_member"`
+		Password   string `json:"password"`
+	}
+	data, err := json.Marshal(login{
+		KodeMember: os.Getenv("USER"),
+		Password:   os.Getenv("PASSWORD"),
+	})
+	if err != nil {
+		return ""
+	}
+	auth, err := HttpPost(map[string]interface{}{
+		"url":  os.Getenv("CLOUD_API") + "/v1/login",
+		"data": data,
+	})
+	if err != nil {
+		return ""
+	}
+	return auth["authorization"].(map[string]interface{})["access_token"].(string)
+}
+
 func HttpGet(param map[string]interface{}) (result map[string]interface{}, err error) {
 	request, err := http.NewRequest(http.MethodGet, param["url"].(string), nil)
 
@@ -31,7 +53,7 @@ func HttpGet(param map[string]interface{}) (result map[string]interface{}, err e
 
 	// FOR LOCAL ONLY
 	if os.Getenv(ENV) == ENV_LOCAL {
-		request.Header.Set(AUTHORIZATION, os.Getenv(BEARER))
+		request.Header.Set("Authorization", getBearer())
 	}
 
 	request.URL.RawQuery = query.Encode()
@@ -72,11 +94,6 @@ func HttpPost(param map[string]interface{}) (result map[string]interface{}, err 
 
 	if err != nil {
 		return
-	}
-
-	// FOR LOCAL ONLY
-	if os.Getenv(ENV) == ENV_LOCAL {
-		request.Header.Set(AUTHORIZATION, os.Getenv(BEARER))
 	}
 
 	request.Header.Set(CONTENT_TYPE, APPLICATION_JSON)
@@ -120,11 +137,6 @@ func HttpPut(param map[string]interface{}) (result map[string]interface{}, err e
 	}
 
 	request.Header.Set(CONTENT_TYPE, APPLICATION_JSON)
-
-	// FOR LOCAL ONLY
-	if os.Getenv(ENV) == ENV_LOCAL {
-		request.Header.Set(AUTHORIZATION, os.Getenv(BEARER))
-	}
 
 	response, err := http.DefaultClient.Do(request)
 
