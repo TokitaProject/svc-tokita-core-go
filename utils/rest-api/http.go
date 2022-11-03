@@ -10,10 +10,12 @@ import (
 )
 
 const ENV = "ENV"
-const BEARER = "BEARER"
-const ENV_LOCAL = "local"
+const USER = "USER"
+const LOCAL = "local"
+const PASSWORD = "PASSWORD"
+const CLOUD_API = "CLOUD_API"
+const LOGIN_URL = "/v1/login"
 const CONTENT_TYPE = "Content-Type"
-const AUTHORIZATION = "Authorization"
 const APPLICATION_JSON = "application/json"
 
 func getBearer() string {
@@ -22,14 +24,14 @@ func getBearer() string {
 		Password   string `json:"password"`
 	}
 	data, err := json.Marshal(login{
-		KodeMember: os.Getenv("USER"),
-		Password:   os.Getenv("PASSWORD"),
+		KodeMember: os.Getenv(USER),
+		Password:   os.Getenv(PASSWORD),
 	})
 	if err != nil {
 		return ""
 	}
 	auth, err := HttpPost(map[string]interface{}{
-		"url":  os.Getenv("CLOUD_API") + "/v1/login",
+		"url":  os.Getenv(CLOUD_API) + LOGIN_URL,
 		"data": data,
 	})
 	if err != nil {
@@ -52,7 +54,7 @@ func HttpGet(param map[string]interface{}) (result map[string]interface{}, err e
 	}
 
 	// FOR LOCAL ONLY
-	if os.Getenv(ENV) == ENV_LOCAL {
+	if os.Getenv(ENV) == LOCAL {
 		request.Header.Set("Authorization", getBearer())
 	}
 
