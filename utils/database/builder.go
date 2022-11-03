@@ -56,6 +56,8 @@ func (cfg *QueryConfig) QueryBuilder() (err error) {
 	} else if cfg.Action == "select-distinct" {
 		cfg.selectDistinctBuilder()
 		cfg.whereBuilder(cfg.OnSelect.Where)
+		cfg.groupByBuilder(cfg.OnSelect.Where)
+		cfg.orderByBuilder(cfg.OnSelect.Where)
 	} else if cfg.Action == "insert" {
 		if cfg.TechStack == "oracle" && len(cfg.OnInsert.Data) > 1 {
 			cfg.insertOracleBatchBuilder()
@@ -312,7 +314,7 @@ func (cfg *QueryConfig) orderByBuilder(param map[string]interface{}) (err error)
 	var found bool
 
 	for a, c := range param {
-		if a == "GROUP" {
+		if a == "ORDER" {
 			for i, x := range c.(map[string]interface{}) {
 				if i == "ORDER_BY" {
 					r := len(x.([]string))
