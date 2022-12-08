@@ -17,6 +17,7 @@ func NewBoilerplateHttpHandler(boilerplate boilerplate.Usecase, httpRouter *gin.
 
 	public := httpRouter.Group("/public/api/v1")
 	public.GET("/boilerplate", handler.GetAll)
+	public.GET("/boilerplate/test", handler.GetAllCategory)
 	public.GET("/boilerplate/:uuid", handler.GetByUUID)
 	public.POST("/boilerplate", handler.Store)
 	public.PUT("/boilerplate", handler.Update)

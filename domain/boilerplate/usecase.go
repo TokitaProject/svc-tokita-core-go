@@ -5,7 +5,8 @@ import (
 	"svc-boilerplate-golang/valueobject"
 )
 
-/**
+/*
+*
 why there's only one usecase interface while there can more than one repository interface?...
 ... because, at DDD (Domain Design Driven), there's only one set of usecase and...
 ... the function name inside the usecase should be unique and represent the business process...
@@ -13,6 +14,8 @@ why there's only one usecase interface while there can more than one repository 
 */
 type Usecase interface {
 	GetAll(param map[string]interface{}) ([]valueobject.Boilerplate, error)
+	GetAllCategory(param map[string]interface{}) ([]valueobject.Boilerplate, error)
+
 	GetOne(param map[string]interface{}) (valueobject.Boilerplate, error)
 
 	Store(payload valueobject.BoilerplatePayloadInsert) (valueobject.BoilerplatePayloadInsert, error)

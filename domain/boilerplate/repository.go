@@ -11,6 +11,8 @@ type MysqlRepository interface {
 	GenerateUUID() (string, error)
 
 	GetAll(param map[string]interface{}) ([]valueobject.Boilerplate, error)
+	GetAllCategory(param map[string]interface{}) ([]valueobject.Boilerplate, error)
+
 	GetOne(param map[string]interface{}) (valueobject.Boilerplate, error)
 
 	Store(column []string, data []interface{}) (database.QueryConfig, error)

@@ -4,8 +4,7 @@ import (
 	"database/sql"
 	"fmt"
 	"os"
-
-	_ "github.com/godror/godror"
+	// _ "github.com/godror/godror"
 )
 
 func SetupOracleDatabaseConnection() (db *sql.DB, err error) {

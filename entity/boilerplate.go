@@ -6,5 +6,7 @@ type BoilerplateKey struct {
 
 type Boilerplate struct {
 	BoilerplateKey
-	Column string `json:"column,omitempty"`
+	Categotry  string `json:"category_id"`
+	Name       string `json:"name"`
+	LastUpdate string `json:"last_update"`
 }
