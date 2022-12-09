@@ -19,8 +19,11 @@ type Usecase interface {
 	GetOne(param map[string]interface{}) (valueobject.Boilerplate, error)
 
 	Store(payload valueobject.BoilerplatePayloadInsert) (valueobject.BoilerplatePayloadInsert, error)
+	StoreCategory(payload valueobject.BoilerplatePayloadInsert) (valueobject.BoilerplatePayloadInsert, error)
 	Update(payload valueobject.BoilerplatePayloadUpdate) error
+	UpdateCategory(payload valueobject.BoilerplatePayloadUpdate) error
 	Delete(payload valueobject.BoilerplatePayloadDelete) error
+	DeleteCategory(payload valueobject.BoilerplatePayloadDelete) error
 
 	ProcessStore(payload valueobject.BoilerplatePayloadInsert) ([]database.QueryConfig, error)
 	ProcessUpdate(payload valueobject.BoilerplatePayloadUpdate) ([]database.QueryConfig, error)

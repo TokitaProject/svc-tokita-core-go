@@ -16,8 +16,11 @@ type MysqlRepository interface {
 	GetOne(param map[string]interface{}) (valueobject.Boilerplate, error)
 
 	Store(column []string, data []interface{}) (database.QueryConfig, error)
+	StoreCategory(column []string, data []interface{}) (database.QueryConfig, error)
 	Update(param map[string]interface{}, data map[string]interface{}) (database.QueryConfig, error)
+	UpdateCategory(param map[string]interface{}, data map[string]interface{}) (database.QueryConfig, error)
 	Delete(param map[string]interface{}) (database.QueryConfig, error)
+	DeleteCategory(param map[string]interface{}) (database.QueryConfig, error)
 }
 
 type OracleRepository interface {
