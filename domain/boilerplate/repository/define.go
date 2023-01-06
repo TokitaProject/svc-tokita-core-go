@@ -27,7 +27,7 @@ const DELETE = "delete"
 two lines below is the const of table name, please change the value of this const
 */
 const MYSQL_TABLE = "boilerplate"
-const MYSQL_CATEGORY = "category"
+const MYSQL_IDENTITAS = "identitas_sekolah"
 const ORACLE_TABLE = "boilerplate"
 
 /*

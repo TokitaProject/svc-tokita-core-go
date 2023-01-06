@@ -8,10 +8,10 @@ import (
 func (db *mysqlBoilerplateRepository) GetAllCategory(param map[string]interface{}) (response []valueobject.Boilerplate, err error) {
 	var result valueobject.Boilerplate
 
-	builder := database.New(MYSQL, MYSQL_CATEGORY, SELECT)
+	builder := database.New(MYSQL, MYSQL_IDENTITAS, SELECT)
 
 	builder.OnSelect = database.OnSelect{
-		Column: []string{"category_id", "name", "last_update"},
+		Column: []string{"id", "email", "kelas", "nis", "nama"},
 		Where:  param,
 	}
 
@@ -31,9 +31,11 @@ func (db *mysqlBoilerplateRepository) GetAllCategory(param map[string]interface{
 
 	for query.Next() {
 		err = query.Scan(
-			&result.CategoryID,
-			&result.Name,
-			&result.LastUpdate,
+			&result.ID,
+			&result.Email,
+			&result.Kelas,
+			&result.Nis,
+			&result.Nama,
 		)
 
 		if err != nil {
@@ -47,7 +49,7 @@ func (db *mysqlBoilerplateRepository) GetAllCategory(param map[string]interface{
 }
 
 func (db *mysqlBoilerplateRepository) UpdateCategory(param map[string]interface{}, data map[string]interface{}) (builder database.QueryConfig, err error) {
-	builder = database.New(MYSQL, MYSQL_CATEGORY, UPDATE)
+	builder = database.New(MYSQL, MYSQL_IDENTITAS, UPDATE)
 
 	builder.OnUpdate = database.OnUpdate{
 		Where: param,
@@ -59,7 +61,7 @@ func (db *mysqlBoilerplateRepository) UpdateCategory(param map[string]interface{
 }
 
 func (db *mysqlBoilerplateRepository) StoreCategory(column []string, data []interface{}) (builder database.QueryConfig, err error) {
-	builder = database.New(MYSQL, MYSQL_CATEGORY, INSERT)
+	builder = database.New(MYSQL, MYSQL_IDENTITAS, INSERT)
 
 	builder.OnInsert = database.OnInsert{
 		Column: column,
@@ -71,7 +73,7 @@ func (db *mysqlBoilerplateRepository) StoreCategory(column []string, data []inte
 }
 
 func (db *mysqlBoilerplateRepository) DeleteCategory(param map[string]interface{}) (builder database.QueryConfig, err error) {
-	builder = database.New(MYSQL, MYSQL_CATEGORY, DELETE)
+	builder = database.New(MYSQL, MYSQL_IDENTITAS, DELETE)
 
 	builder.OnDelete = database.OnDelete{
 		Where: param,

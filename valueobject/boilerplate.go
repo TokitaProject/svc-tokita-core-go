@@ -26,3 +26,28 @@ type BoilerplateDataUpdate struct {
 type BoilerplatePayloadDelete struct {
 	Param []Boilerplate `json:"param" binding:"required"`
 }
+
+type Nilai struct {
+	entity.Nilai
+	entity.StandardKey
+	entity.Time
+}
+
+type NilaiPayloadInsert struct {
+	Data []Nilai `json:"data" binding:"required"`
+	User string
+}
+
+type NilaiPayloadUpdate struct {
+	Data []NilaiDataUpdate `json:"data" binding:"required"`
+	User string
+}
+
+type NilaiDataUpdate struct {
+	Param Nilai `json:"param" binding:"required"`
+	Body  Nilai `json:"body" binding:"required"`
+}
+
+type NilaiPayloadDelete struct {
+	Param []Nilai `json:"param" binding:"required"`
+}

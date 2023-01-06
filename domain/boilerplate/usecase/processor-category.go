@@ -9,11 +9,11 @@ func (boilerplate boilerplateUsecase) ProcessUpdateCategory(payload valueobject.
 	for _, x := range payload.Data {
 		var param = map[string]interface{}{
 			"AND": map[string]interface{}{
-				"category_id": x.Param.CategoryID, // add the parameter to update the row
+				"nis": x.Param.Nis, // add the parameter to update the row
 			},
 		}
 		var data = map[string]interface{}{
-			"name": x.Body.Name, // add the data to update the row
+			"nama": x.Body.Nama, // add the data to update the row
 		}
 
 		queryUpdate, err := boilerplate.mysqlRepository.UpdateCategory(param, data)
@@ -34,7 +34,10 @@ func (boilerplate boilerplateUsecase) ProcessStoreCategory(payload valueobject.B
 		*/
 		data := []interface{}{
 			[]interface{}{
-				x.Name,
+				x.Email,
+				x.Kelas,
+				x.Nis,
+				x.Nama,
 				// x.UserInput,
 			},
 		}
@@ -43,7 +46,10 @@ func (boilerplate boilerplateUsecase) ProcessStoreCategory(payload valueobject.B
 		column on data and this line should have same order
 		*/
 		column := []string{
-			"name",
+			"email",
+			"kelas",
+			"nis",
+			"nama",
 		}
 
 		queryInsert, err := boilerplate.mysqlRepository.StoreCategory(column, data)
@@ -61,7 +67,7 @@ func (boilerplate boilerplateUsecase) ProcessDeleteCategory(payload valueobject.
 	for _, x := range payload.Param {
 		var param = map[string]interface{}{
 			"AND": map[string]interface{}{
-				"name": x.Name, // add the parameter to delete the row
+				"nis": x.Nis, // add the parameter to delete the row
 			},
 		}
 
